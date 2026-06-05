@@ -58,6 +58,13 @@ src/
   lib/                      # categories.ts, content.ts, fonts.ts
 ```
 
+## CMS / Keystatic
+
+Treść edytujesz przez Keystatic (`/keystatic`): **panel lokalny działa od razu**
+(`npm run dev` → `localhost:3000/keystatic`, bez logowania), a **panel produkcyjny
+aktywuje się po ustawieniu `NEXT_PUBLIC_URL` na docelową domenę w Etapie 10**
+(na subdomenie `*.netlify.app` pokazuje komunikat zamiast niedziałającego OAuth).
+
 ## Status etapów
 
 Aktualnie ukończony **Etap 1** (setup + model treści + routing). Kolejne etapy
