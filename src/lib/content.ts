@@ -211,7 +211,7 @@ export function getProjectNeighbors(slug: string): {
   return { prev: all[i - 1], next: all[i + 1] };
 }
 
-/** Archiwum /projekty: projekty danej kategorii (zachowuje sortowanie). */
+/** Projekty danej kategorii (zachowuje sortowanie). */
 export function getProjectsByCategory(category: CategorySlug): Project[] {
   return getAllProjects().filter((p) => p.category === category);
 }
@@ -255,6 +255,8 @@ export type GalleryItem = {
   title: string;
   /** Dokładnie jedna z pięciu kategorii galerii. */
   category: GalleryCategorySlug;
+  /** Rok realizacji (opcjonalny) — nagłówek bloku. */
+  year?: number;
   /** Krótki opis (1–2 zdania). */
   description: string;
   /** Zdjęcia (1–12), w oryginalnych proporcjach. */
@@ -289,10 +291,13 @@ function parseGalleryItem(fileName: string): GalleryItem {
     .filter((x): x is ImageRef => x !== null)
     .map((img) => ({ ...img, exists: publicAssetExists(img.src) }));
 
+  const yearNum = Number(data.year);
+
   return {
     slug,
     title: str(data.title) || slug,
     category,
+    year: Number.isFinite(yearNum) && yearNum > 0 ? yearNum : undefined,
     description: str(data.description),
     images,
     order: data.order !== undefined ? Number(data.order) : 0,

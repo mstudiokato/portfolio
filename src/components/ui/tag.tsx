@@ -18,14 +18,18 @@ function styles(active: boolean): string {
 
 type Props = {
   href?: string;
+  /** Gdy podane (i brak href) → renderuje klikalny <button> (np. filtr klienta). */
+  onClick?: () => void;
   active?: boolean;
   className?: string;
   children: React.ReactNode;
   "aria-current"?: "page" | undefined;
+  "aria-pressed"?: boolean;
 };
 
 export function Tag({
   href,
+  onClick,
   active = false,
   className,
   children,
@@ -37,6 +41,13 @@ export function Tag({
       <Link href={href} className={classes} {...rest}>
         {children}
       </Link>
+    );
+  }
+  if (onClick) {
+    return (
+      <button type="button" onClick={onClick} className={classes} {...rest}>
+        {children}
+      </button>
     );
   }
   return (

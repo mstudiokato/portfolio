@@ -143,6 +143,9 @@ export default config({
           })),
           defaultValue: "social-media",
         }),
+        year: fields.integer({
+          label: "Rok (opcjonalnie) — nagłówek bloku",
+        }),
         description: fields.text({
           label: "Opis (1–2 zdania)",
           multiline: true,

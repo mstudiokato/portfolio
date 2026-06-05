@@ -1,12 +1,25 @@
 {
   "title": "Startup — identyfikacja",
   "category": "branding",
+  "year": 2024,
   "description": "Podstawowy system identyfikacji wizualnej dla startupu: logo, kolory, typografia, zastosowania. (Placeholder — podmień w Keystatic.)",
   "order": 1,
   "images": [
-    { "src": "/galerie/branding-startup/01.jpg", "alt": "Logo i sygnet" },
-    { "src": "/galerie/branding-startup/02.jpg", "alt": "Paleta kolorów i typografia" },
-    { "src": "/galerie/branding-startup/03.jpg", "alt": "Wizytówki" },
-    { "src": "/galerie/branding-startup/04.jpg", "alt": "Zastosowania marki" }
+    {
+      "src": "/galerie/branding-startup/01.jpg",
+      "alt": "Logo i sygnet"
+    },
+    {
+      "src": "/galerie/branding-startup/02.jpg",
+      "alt": "Paleta kolorów i typografia"
+    },
+    {
+      "src": "/galerie/branding-startup/03.jpg",
+      "alt": "Wizytówki"
+    },
+    {
+      "src": "/galerie/branding-startup/04.jpg",
+      "alt": "Zastosowania marki"
+    }
   ]
 }

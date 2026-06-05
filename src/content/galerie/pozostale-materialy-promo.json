@@ -1,11 +1,21 @@
 {
   "title": "Materiały promo — zestaw",
   "category": "pozostale",
+  "year": 2023,
   "description": "Zestaw materiałów promocyjnych: ulotki, roll-up, gadżety. (Placeholder — podmień w Keystatic.)",
   "order": 2,
   "images": [
-    { "src": "/galerie/pozostale-materialy-promo/01.jpg", "alt": "Ulotka" },
-    { "src": "/galerie/pozostale-materialy-promo/02.jpg", "alt": "Roll-up" },
-    { "src": "/galerie/pozostale-materialy-promo/03.jpg", "alt": "Gadżety promocyjne" }
+    {
+      "src": "/galerie/pozostale-materialy-promo/01.jpg",
+      "alt": "Ulotka"
+    },
+    {
+      "src": "/galerie/pozostale-materialy-promo/02.jpg",
+      "alt": "Roll-up"
+    },
+    {
+      "src": "/galerie/pozostale-materialy-promo/03.jpg",
+      "alt": "Gadżety promocyjne"
+    }
   ]
 }

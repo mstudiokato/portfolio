@@ -1,11 +1,21 @@
 {
   "title": "Klub — system wizualny",
   "category": "branding",
+  "year": 2023,
   "description": "Spójny system wizualny klubu sportowego z zastosowaniami online i offline. (Placeholder — podmień w Keystatic.)",
   "order": 2,
   "images": [
-    { "src": "/galerie/branding-klub/01.jpg", "alt": "Herb i warianty znaku" },
-    { "src": "/galerie/branding-klub/02.jpg", "alt": "System kolorów" },
-    { "src": "/galerie/branding-klub/03.jpg", "alt": "Zastosowania na materiałach klubowych" }
+    {
+      "src": "/galerie/branding-klub/01.jpg",
+      "alt": "Herb i warianty znaku"
+    },
+    {
+      "src": "/galerie/branding-klub/02.jpg",
+      "alt": "System kolorów"
+    },
+    {
+      "src": "/galerie/branding-klub/03.jpg",
+      "alt": "Zastosowania na materiałach klubowych"
+    }
   ]
 }

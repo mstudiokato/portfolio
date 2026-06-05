@@ -1,10 +1,17 @@
 {
   "title": "Koncert — plakat",
   "category": "plakaty",
+  "year": 2023,
   "description": "Plakat koncertowy w dwóch wariantach kolorystycznych. (Placeholder — podmień w Keystatic.)",
   "order": 2,
   "images": [
-    { "src": "/galerie/plakaty-koncert/01.jpg", "alt": "Plakat koncertu — wariant ciemny" },
-    { "src": "/galerie/plakaty-koncert/02.jpg", "alt": "Plakat koncertu — wariant jasny" }
+    {
+      "src": "/galerie/plakaty-koncert/01.jpg",
+      "alt": "Plakat koncertu — wariant ciemny"
+    },
+    {
+      "src": "/galerie/plakaty-koncert/02.jpg",
+      "alt": "Plakat koncertu — wariant jasny"
+    }
   ]
 }

@@ -1,10 +1,17 @@
 {
   "title": "Wydarzenie sportowe — plakat",
   "category": "plakaty",
+  "year": 2024,
   "description": "Plakat główny i wariant informacyjny wydarzenia sportowego. (Placeholder — podmień w Keystatic.)",
   "order": 1,
   "images": [
-    { "src": "/galerie/plakaty-wydarzenie-sportowe/01.jpg", "alt": "Plakat główny — format pionowy" },
-    { "src": "/galerie/plakaty-wydarzenie-sportowe/02.jpg", "alt": "Plakat informacyjny — format pionowy" }
+    {
+      "src": "/galerie/plakaty-wydarzenie-sportowe/01.jpg",
+      "alt": "Plakat główny — format pionowy"
+    },
+    {
+      "src": "/galerie/plakaty-wydarzenie-sportowe/02.jpg",
+      "alt": "Plakat informacyjny — format pionowy"
+    }
   ]
 }

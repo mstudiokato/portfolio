@@ -67,9 +67,9 @@
   /* ── Spacing [sek. 6.04 „hierarchy that breathes"] ──────────────
      Rytm pionowy sekcji i odstępy gridów jako tokeny. Nazwane spacingi
      generują utilitki: py-section, gap-grid, p-card itd. */
-  --spacing-section: clamp(4rem, 8vw, 7rem); /* odstęp pionowy sekcji */
-  --spacing-section-tight: clamp(2.8rem, 5.6vw, 4.9rem); /* ~70% sekcji (Specjalizacje, V5) */
-  --spacing-section-sm: clamp(2.5rem, 5vw, 4rem); /* mniejsza sekcja (pasek band) */
+  --spacing-section: clamp(3rem, 6vw, 5rem); /* odstęp pionowy sekcji (−20%: oddycha, nie zieje) */
+  --spacing-section-tight: clamp(2.2rem, 4.4vw, 3.9rem); /* ~70% sekcji (Specjalizacje, V5) */
+  --spacing-section-sm: clamp(2rem, 4vw, 3.2rem); /* mniejsza sekcja (pasek band) */
   --spacing-gutter: 1.25rem; /* bazowy padding boczny strony */
   --spacing-grid: 1.5rem; /* odstęp w siatce kafli */
   --spacing-card: 1.25rem; /* wewn. padding karty */
