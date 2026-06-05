@@ -1,0 +1,12 @@
+# Netlify — wczesny deploy MVP na subdomenie *.netlify.app.
+# Domeny michal-stezaly.pl NIE dotykamy aż do launchu (masterprompt sek. 12, Etap 10).
+
+[build]
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Oficjalny runtime Next.js dla Netlify (SSR/SSG, next/image, App Router).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

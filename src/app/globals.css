@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/*
+  Editorial Sports Dark — system kolorów [ZABLOKOWANE] (masterprompt sek. 6.03).
+  Strona jest ciemna na stałe (brak trybu jasnego). Lime = akcent, nie dominanta:
+  CTA, ważne liczby, hover/active, drobne detale, pojedyncze słowa w nagłówkach.
+*/
+
+@theme {
+  /* Tła */
+  --color-navy: #0b1220; /* deep navy — główne tło */
+  --color-section: #0f1a2e; /* tło sekcji */
+  --color-surface: #152238; /* karty / powierzchnie */
+  --color-border: #1f2d44; /* obrysy */
+
+  /* Akcent */
+  --color-lime: #d4ff00; /* electric lime */
+
+  /* Tekst */
+  --color-ink: #f5f7fa; /* off-white — tekst główny */
+  --color-muted: #8b96ab; /* tekst drugorzędny */
+
+  /* Fonty (zmienne podpinane w layout.tsx przez next/font/local) */
+  --font-display: var(--font-display), system-ui, sans-serif;
+  --font-sans:
+    var(--font-sans), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-navy);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Dostępność: widoczny focus na akcencie limonkowym (masterprompt sek. 6.08). */
+:focus-visible {
+  outline: 2px solid var(--color-lime);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Szanuj preferencję ograniczonego ruchu (sek. 6.06). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
