@@ -14,6 +14,7 @@ export function Contact() {
   return (
     <Section
       id="kontakt"
+      tone="section"
       style={{ paddingTop: "calc(var(--spacing-section) * 0.7)" }}
     >
       <Container>

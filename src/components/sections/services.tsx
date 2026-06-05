@@ -11,7 +11,7 @@ import { SERVICES } from "@/lib/site-content";
  */
 export function Services() {
   return (
-    <Section id="specjalizacje" size="tight" tone="section">
+    <Section id="specjalizacje" size="tight">
       <Container>
         <Label>— Co projektuję</Label>
         <H2 className="mt-4 max-w-2xl">Specjalizacje</H2>

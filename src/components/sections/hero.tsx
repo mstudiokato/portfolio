@@ -92,16 +92,13 @@ export function Hero() {
             {HERO.subline.replace("{lata}", String(years))}
           </p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:gap-4">
-            <Button href="/#kontakt" variant="primary" className="w-full sm:w-auto">
-              {HERO.ctaPrimary}
-            </Button>
+          <div className="mt-9">
             <Button
               href="/projekty"
-              variant="secondary"
-              className="w-full sm:w-auto"
+              variant="primary"
+              className="w-full uppercase sm:w-auto"
             >
-              {HERO.ctaSecondary}
+              Zobacz moje projekty ↗
             </Button>
           </div>
         </div>

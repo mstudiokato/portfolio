@@ -21,7 +21,12 @@ export function StatsAndClients() {
   const marqueeClients = [...CREDIBILITY, ...CREDIBILITY];
 
   return (
-    <Section id="klienci" size="sm" tone="section">
+    <Section
+      id="klienci"
+      size="sm"
+      tone="section"
+      style={{ paddingTop: "calc(var(--spacing-section-sm) * 0.7)" }}
+    >
       <div className="px-6 md:px-12 lg:px-16">
         <Label>— Fakty i liczby</Label>
 
@@ -52,28 +57,32 @@ export function StatsAndClients() {
           <div className="border-border border-t pt-8 lg:col-span-7 lg:border-t-0 lg:pt-0">
             <p className="text-label text-muted uppercase">Współpracowałem z</p>
             <div className="marquee-mask relative mt-5 overflow-hidden">
-              <ul className="marquee-track flex w-max items-center gap-4">
+              <ul className="marquee-track flex w-max items-center">
                 {marqueeClients.map((c, i) => (
-                  <li key={`${c.name}-${i}`} className="shrink-0">
-                    {c.logoExists && c.logo ? (
-                      // Logo SVG w ramce 160×48, padding 12px, object-contain.
-                      <span className="border-ink flex h-12 w-40 items-center justify-center border px-3">
+                  <Fragment key={`${c.name}-${i}`}>
+                    {/* Logo bez ramki, na pełną wysokość 80px, object-contain. */}
+                    <li className="flex h-20 shrink-0 items-center">
+                      {c.logoExists && c.logo ? (
                         <Image
                           src={c.logo}
                           alt={c.name}
-                          width={140}
-                          height={40}
+                          width={240}
+                          height={80}
                           unoptimized
-                          className="max-h-6 w-auto object-contain"
+                          className="h-20 w-auto object-contain"
                         />
-                      </span>
-                    ) : (
-                      // Fallback tekstowy (prostokąt 48px z nazwą mono).
-                      <span className="border-ink bg-section text-muted rounded-button flex h-12 items-center border px-6 font-mono text-sm whitespace-nowrap">
-                        {c.name}
-                      </span>
-                    )}
-                  </li>
+                      ) : (
+                        <span className="text-muted font-mono text-sm whitespace-nowrap">
+                          {c.name}
+                        </span>
+                      )}
+                    </li>
+                    {/* Pionowy separator 1px (#1F2D44) między logami. */}
+                    <li
+                      aria-hidden="true"
+                      className="bg-border mx-6 h-12 w-px shrink-0 self-center"
+                    />
+                  </Fragment>
                 ))}
               </ul>
             </div>

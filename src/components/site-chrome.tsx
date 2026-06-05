@@ -6,11 +6,11 @@ import { CONTACT } from "@/lib/site-content";
 
 export function SiteHeader() {
   return (
-    <header className="border-border border-b">
+    <header className="border-border bg-navy/95 sticky top-0 z-50 border-b backdrop-blur-sm">
       <Container className="flex items-center justify-between gap-6 py-4">
         <Link
           href="/"
-          className="font-display text-h4 text-ink font-semibold tracking-tight"
+          className="font-display text-h4 text-lime font-semibold tracking-tight"
         >
           Michał Stężały
         </Link>
