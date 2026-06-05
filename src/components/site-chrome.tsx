@@ -6,7 +6,6 @@ import { CONTACT } from "@/lib/site-content";
 const NAV = [
   { label: "Projekty", href: "/projekty" },
   { label: "Specjalizacje", href: "/#specjalizacje" },
-  { label: "Klienci", href: "/#klienci" },
   { label: "Kontakt", href: "/#kontakt" },
 ];
 
