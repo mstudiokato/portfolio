@@ -14,6 +14,8 @@ export function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    // Nie pokazuj na panelu Keystatic (/keystatic) — nie zasłaniaj UI edytora.
+    if (window.location.pathname.startsWith("/keystatic")) return;
     try {
       if (localStorage.getItem(STORAGE_KEY) !== "1") setVisible(true);
     } catch {

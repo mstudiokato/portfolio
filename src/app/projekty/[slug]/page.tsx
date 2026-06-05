@@ -26,15 +26,18 @@ export async function generateMetadata({
   const project = getProjectBySlug(slug);
   if (!project) return {};
 
-  const description = project.context || project.description;
+  const title = project.seo.title || project.client;
+  const description =
+    project.seo.description || project.context || project.description;
+  const ogImage = project.seo.ogImage || project.cover.src;
   return {
-    title: project.client,
+    title,
     description,
     openGraph: {
-      title: project.client,
+      title,
       description,
       type: "article",
-      images: project.cover ? [{ url: project.cover }] : undefined,
+      images: ogImage ? [{ url: ogImage }] : undefined,
     },
   };
 }
@@ -177,11 +180,11 @@ function CaseStudyView({ project }: { project: Project }) {
       </header>
 
       {/* Cover jako obraz prowadzący (3:2). */}
-      {project.cover ? (
+      {project.cover.src ? (
         <div className="mt-10">
           <ProjectImage
-            src={project.cover}
-            alt={`${project.client} — projekt`}
+            src={project.cover.src}
+            alt={project.cover.alt}
             ratio="3/2"
             sizes="(min-width: 1024px) 56rem, 100vw"
             priority
@@ -210,11 +213,11 @@ function CaseStudyView({ project }: { project: Project }) {
         <div className="mt-12">
           <Label className="text-muted">Galeria</Label>
           <div className="gap-x-grid mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2">
-            {project.gallery.map((src, i) => (
+            {project.gallery.map((img) => (
               <ProjectImage
-                key={src}
-                src={src}
-                alt={`${project.client} — kadr ${i + 1}`}
+                key={img.src}
+                src={img.src}
+                alt={img.alt}
                 ratio="3/2"
                 sizes="(min-width: 640px) 28rem, 100vw"
               />
@@ -242,11 +245,11 @@ function GalleryView({ project }: { project: Project }) {
       {/* Galeria w oryginalnych proporcjach (masonry — CSS columns). */}
       {project.gallery.length > 0 ? (
         <div className="mt-10 gap-6 sm:columns-2 lg:columns-3 [&>*]:mb-6">
-          {project.gallery.map((src, i) => (
-            <div key={src} className="break-inside-avoid">
+          {project.gallery.map((img) => (
+            <div key={img.src} className="break-inside-avoid">
               <ProjectImage
-                src={src}
-                alt={`${project.client} — ${i + 1}`}
+                src={img.src}
+                alt={img.alt}
                 ratio="original"
                 sizes="(min-width: 1024px) 18rem, (min-width: 640px) 50vw, 100vw"
               />

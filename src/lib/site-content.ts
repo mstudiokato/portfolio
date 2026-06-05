@@ -1,78 +1,86 @@
+import fs from "node:fs";
+import path from "node:path";
+
 /**
- * Treść landingu jako typowany TS w repo (MVP, bez CMS — masterprompt sek. 10).
- * Źródło: SZABLON_TRESCI.md. Placeholdery kontaktu wymienia właściciel.
+ * Treść strony jako dane w repo, edytowalne przez Keystatic (singletony Site /
+ * Services / Clients → pliki JSON w src/content/settings). Ten moduł jest
+ * SERWEROWY (czyta pliki przez fs) — nie importuj go w komponentach klienckich.
+ * Cal link pozostaje z env (NEXT_PUBLIC_CAL_LINK), zgodnie z Etapem 7.
  */
+
+const SETTINGS_DIR = path.join(process.cwd(), "src/content/settings");
+
+function readJson<T>(file: string): T {
+  return JSON.parse(
+    fs.readFileSync(path.join(SETTINGS_DIR, file), "utf8"),
+  ) as T;
+}
+
+type SiteJson = {
+  hero: {
+    eyebrow: string;
+    subline: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+  };
+  numbers: { projects: string; brands: string };
+  aiWorkflow: string;
+  contact: {
+    email: string;
+    phone: string;
+    availability: string[];
+    cvHref: string;
+  };
+  seo: { defaultTitle: string; defaultDescription: string };
+};
+
+type ServicesJson = { items: Array<{ title: string; description: string }> };
+type ClientsJson = {
+  items: Array<{
+    name: string;
+    shortName: string;
+    logo: string;
+    featured: boolean;
+  }>;
+};
+
+const site = readJson<SiteJson>("site.json");
+const services = readJson<ServicesJson>("services.json");
+const clients = readJson<ClientsJson>("clients.json");
 
 export const LOCATION = "Katowice, PL";
 
-/** Sekcja 8.4 — Services. 6 obszarów, bez ikon. */
-export const SERVICES: Array<{ title: string; body: string }> = [
-  {
-    title: "Social Media Systems",
-    body: "Spójne systemy graficzne do mediów społecznościowych: szablony, key visuale i adaptacje, które trzymają markę rozpoznawalną w każdym poście.",
-  },
-  {
-    title: "Event Branding",
-    body: "Identyfikacja i oprawa wizualna wydarzeń sportowych i biznesowych — od key visuala po materiały na obiekcie i w digitalu.",
-  },
-  {
-    title: "Sponsorship & Pitch Decks",
-    body: "Prezentacje sponsorskie i ofertowe, które porządkują argumenty i wyglądają na tyle dobrze, że pomagają domykać rozmowy.",
-  },
-  {
-    title: "Identity & Campaign Design",
-    body: "Systemy identyfikacji i kampanie wizualne działające spójnie na wielu nośnikach.",
-  },
-  {
-    title: "Print & Promotional Materials",
-    body: "Materiały drukowane i promocyjne przygotowane do produkcji — od koncepcji po pliki gotowe do druku.",
-  },
-  {
-    title: "AI-Augmented Visual Production",
-    body: "AI do przyspieszenia produkcji wizualnej: moodboardy, eksploracja wariantów, assety pomocnicze — przy zachowaniu kontroli jakości po stronie projektanta.",
-  },
-];
+/** Hero — eyebrow, subline (z tokenem {lata}), etykiety CTA. */
+export const HERO = site.hero;
 
-/** Sekcja 8.5 — jeden mocny akapit o AI w workflow. */
-export const AI_WORKFLOW_PARAGRAPH =
-  "AI jest częścią mojego warsztatu, nie jego zastępstwem. Wykorzystuję je tam, gdzie realnie przyspiesza pracę — na etapie ideacji, przy moodboardach, eksploracji wariantów i tworzeniu assetów pomocniczych. Dzięki temu szybciej docieram do dobrych kierunków, a więcej czasu zostaje na to, co najważniejsze: koncepcję, decyzje projektowe i jakość finalnego efektu. Selekcja, dopracowanie i odpowiedzialność za wynik zawsze pozostają po mojej stronie.";
+/** Services (sek. 8.4) — 6 obszarów. */
+export const SERVICES = services.items;
 
-/** Sekcja 8.6 — liczby (wartości tekstowe; lata liczone osobno z experience.ts). */
+/** AI-Augmented Workflow (sek. 8.5) — jeden akapit. */
+export const AI_WORKFLOW_PARAGRAPH = site.aiWorkflow;
+
+/** Liczby (sek. 8.6) — lata liczone osobno z experience.ts. */
 export const STATS: Array<{ value: string; label: string }> = [
-  { value: "100+", label: "Projektów" },
-  { value: "20+", label: "Organizacji" },
+  { value: site.numbers.projects, label: "Projektów" },
+  { value: site.numbers.brands, label: "Organizacji" },
 ];
 
-/** Credibility strip — 6 najmocniejszych (mono, placeholder tekstowy). */
-export const CREDIBILITY_CLIENTS: string[] = [
-  "IBU",
-  "SPORTFIVE",
-  "Stadion Śląski",
-  "GKS Katowice",
-  "Polski Związek Biathlonu",
-  "Węglokoks",
-];
+/** Credibility strip — wyróżnieni klienci (krótka nazwa do logotypu). */
+export const CREDIBILITY_CLIENTS: string[] = clients.items
+  .filter((c) => c.featured)
+  .map((c) => c.shortName || c.name);
 
-/** Sekcja 8.7 — pełna lista klientów. */
-export const ALL_CLIENTS: string[] = [
-  "International Biathlon Union",
-  "Polski Związek Biathlonu",
-  "SPORTFIVE Polska",
-  "Stadion Śląski",
-  "GKS Katowice",
-  "Węglokoks",
-  "Shark Entertainment",
-  "SportValue",
-  "Coerver Coaching Poland",
-  "Football Code",
-  "Kancelaria Jara Drapała",
-];
+/** Pełna lista klientów (sek. 8.7) — nazwy formalne. */
+export const ALL_CLIENTS: string[] = clients.items.map((c) => c.name);
 
-/** Sekcja 8.8 — kontakt. Cal.com z env (właściciel wpisze link), CV = placeholder. */
+/** Domyślne SEO (fallback metadanych). */
+export const SEO_DEFAULT = site.seo;
+
+/** Kontakt (sek. 8.8). Cal link z env; reszta z CMS. */
 export const CONTACT = {
-  email: "kontakt@michal-stezaly.pl",
-  phone: "668 01 02 62",
-  calUrl: process.env.NEXT_PUBLIC_CAL_LINK || "#", // link Cal.com z .env.local
-  cvHref: "/cv.pdf", // [PLACEHOLDER — właściciel wrzuci /public/cv.pdf]
-  availability: ["zdalnie", "hybrydowo", "B2B", "UoP", "projektowo"],
+  email: site.contact.email,
+  phone: site.contact.phone,
+  calUrl: process.env.NEXT_PUBLIC_CAL_LINK || "#",
+  cvHref: site.contact.cvHref,
+  availability: site.contact.availability,
 };

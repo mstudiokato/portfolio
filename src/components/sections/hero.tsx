@@ -6,6 +6,7 @@ import { Container, Section } from "@/components/ui/layout";
 import { Button } from "@/components/ui/button";
 import { Label, Lead } from "@/components/ui/typography";
 import { yearsOfExperience } from "@/lib/experience";
+import { HERO } from "@/lib/site-content";
 
 /**
  * HERO (masterprompt sek. 8.1). Lewa kolumna dominuje nazwiskiem (H1 max).
@@ -29,7 +30,7 @@ export function Hero({ featured }: { featured: Project[] }) {
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
           {/* LEWA KOLUMNA */}
           <div className="lg:col-span-7">
-            <Label>— Projektuję dla sportu i biznesu</Label>
+            <Label>{HERO.eyebrow}</Label>
 
             <h1 className="font-display text-ink mt-6 text-[clamp(3rem,12vw,7.5rem)] leading-[0.92] font-semibold tracking-[-0.03em] uppercase">
               Michał
@@ -43,9 +44,7 @@ export function Hero({ featured }: { featured: Project[] }) {
             </p>
 
             <Lead className="mt-6 max-w-xl">
-              Projektuję komunikację wizualną dla klubów, federacji, eventów i
-              marek B2B — łącząc {years} lat doświadczenia z nowoczesnym
-              AI-augmented workflow.
+              {HERO.subline.replace("{lata}", String(years))}
             </Lead>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:gap-4">
@@ -54,14 +53,14 @@ export function Hero({ featured }: { featured: Project[] }) {
                 variant="primary"
                 className="w-full sm:w-auto"
               >
-                Porozmawiajmy ↗
+                {HERO.ctaPrimary}
               </Button>
               <Button
                 href="/projekty"
                 variant="secondary"
                 className="w-full sm:w-auto"
               >
-                Zobacz projekty
+                {HERO.ctaSecondary}
               </Button>
             </div>
           </div>

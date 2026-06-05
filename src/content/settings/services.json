@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "title": "Social Media Systems",
+      "description": "Spójne systemy graficzne do mediów społecznościowych: szablony, key visuale i adaptacje, które trzymają markę rozpoznawalną w każdym poście."
+    },
+    {
+      "title": "Event Branding",
+      "description": "Identyfikacja i oprawa wizualna wydarzeń sportowych i biznesowych — od key visuala po materiały na obiekcie i w digitalu."
+    },
+    {
+      "title": "Sponsorship & Pitch Decks",
+      "description": "Prezentacje sponsorskie i ofertowe, które porządkują argumenty i wyglądają na tyle dobrze, że pomagają domykać rozmowy."
+    },
+    {
+      "title": "Identity & Campaign Design",
+      "description": "Systemy identyfikacji i kampanie wizualne działające spójnie na wielu nośnikach."
+    },
+    {
+      "title": "Print & Promotional Materials",
+      "description": "Materiały drukowane i promocyjne przygotowane do produkcji — od koncepcji po pliki gotowe do druku."
+    },
+    {
+      "title": "AI-Augmented Visual Production",
+      "description": "AI do przyspieszenia produkcji wizualnej: moodboardy, eksploracja wariantów, assety pomocnicze — przy zachowaniu kontroli jakości po stronie projektanta."
+    }
+  ]
+}

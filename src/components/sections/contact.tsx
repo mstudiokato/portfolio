@@ -65,7 +65,7 @@ export function Contact() {
           </div>
 
           {/* FORMULARZ */}
-          <ContactForm />
+          <ContactForm calUrl={CONTACT.calUrl} />
         </div>
       </Container>
     </Section>

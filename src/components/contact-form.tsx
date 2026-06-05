@@ -4,7 +4,6 @@ import { useRef, useState } from "react";
 import Script from "next/script";
 import Link from "next/link";
 import { contactSchema } from "@/lib/contact-schema";
-import { CONTACT } from "@/lib/site-content";
 
 const FIELD =
   "bg-surface border-border rounded-button text-ink placeholder:text-muted mt-2 w-full border px-4 py-3 focus-visible:border-lime";
@@ -22,7 +21,7 @@ declare global {
   }
 }
 
-export function ContactForm() {
+export function ContactForm({ calUrl }: { calUrl: string }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState("");
@@ -123,7 +122,7 @@ export function ContactForm() {
   }
 
   if (status === "success") {
-    const calConfigured = CONTACT.calUrl !== "#";
+    const calConfigured = calUrl !== "#";
     return (
       <div
         role="status"
@@ -136,7 +135,7 @@ export function ContactForm() {
         <p className="text-caption text-muted">
           Jeśli wolisz porozmawiać od razu —{" "}
           <a
-            href={calConfigured ? CONTACT.calUrl : "#kontakt"}
+            href={calConfigured ? calUrl : "#kontakt"}
             target={calConfigured ? "_blank" : undefined}
             rel={calConfigured ? "noopener noreferrer" : undefined}
             className="text-lime hover:underline"

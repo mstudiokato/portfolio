@@ -17,7 +17,7 @@ export function Services() {
           {SERVICES.map((service) => (
             <div key={service.title} className="border-border border-t pt-5">
               <H4>{service.title}</H4>
-              <Body className="text-muted mt-3">{service.body}</Body>
+              <Body className="text-muted mt-3">{service.description}</Body>
             </div>
           ))}
         </div>

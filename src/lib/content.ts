@@ -18,9 +18,21 @@ const PROJECTS_DIR = path.join(process.cwd(), "src/content/projekty");
 /** Dwa typy podstrony projektu (masterprompt sek. 9). Domyślnie case-study. */
 export type DisplayType = "case-study" | "gallery";
 
+/** Obraz: ścieżka względem /public + alt (a11y/SEO). */
+export type ImageRef = { src: string; alt: string };
+
+/** SEO per projekt (puste pola → fallback w renderze do tytułu/kontekstu/coveru). */
+export type ProjectSeo = {
+  title: string;
+  description: string;
+  ogImage: string;
+};
+
 export type Project = {
   /** slug = nazwa pliku bez rozszerzenia; adres /projekty/[slug] */
   slug: string;
+  /** Tytuł projektu (slugField w Keystatic). */
+  title: string;
   /** Typ podstrony: pełne case-study albo lekka galeria. Fallback: case-study. */
   displayType: DisplayType;
   client: string;
@@ -34,17 +46,19 @@ export type Project = {
   context: string;
   /** Krótki opis biznesowy (2–4 zdania). */
   description: string;
-  /** Ścieżka coveru względem /public (ratio 3:2 — [ZABLOKOWANE]). */
-  cover: string;
-  /** Galeria — ścieżki względem /public. */
-  gallery: string[];
+  /** Cover (ratio 3:2 — [ZABLOKOWANE]) ze ścieżką i altem. */
+  cover: ImageRef;
+  /** Galeria — obrazy ze ścieżką i altem. */
+  gallery: ImageRef[];
   /** Tag do „powiązanych projektów". */
   tag: string;
   /** featured:true → kafel na stronie głównej (8–10 top). */
   featured: boolean;
   /** Ręczna kolejność (mniejsze = wyżej); brak → sort po roku malejąco. */
   order?: number;
-  /** Surowa treść MDX (body) — render na podstronie projektu (Etap 5). */
+  /** SEO per projekt. */
+  seo: ProjectSeo;
+  /** Surowa treść MDX (body) — render na podstronie projektu. */
   body: string;
 };
 
@@ -54,6 +68,24 @@ function toStringArray(value: unknown): string[] {
     return value.split(",").map((s) => s.trim());
   }
   return [];
+}
+
+function str(value: unknown): string {
+  return value === undefined || value === null ? "" : String(value);
+}
+
+/** Parsowanie obrazu z frontmattera ({src, alt}). */
+function toImageRef(value: unknown): ImageRef | null {
+  if (value && typeof value === "object" && "src" in value) {
+    const v = value as { src?: unknown; alt?: unknown };
+    if (str(v.src).trim() !== "") return { src: str(v.src), alt: str(v.alt) };
+  }
+  return null;
+}
+
+function toImageRefArray(value: unknown): ImageRef[] {
+  if (!Array.isArray(value)) return [];
+  return value.map(toImageRef).filter((x): x is ImageRef => x !== null);
 }
 
 function parseProject(fileName: string): Project {
@@ -94,22 +126,41 @@ function parseProject(fileName: string): Project {
   const displayType: DisplayType =
     data.displayType === "gallery" ? "gallery" : "case-study";
 
+  // cover.alt jest wymagany (a11y/SEO) — błąd buildu, jeśli brak.
+  const cover = toImageRef(data.cover);
+  if (!cover) {
+    throw new Error(
+      `Projekt "${fileName}": pole "cover" musi mieć { src, alt }.`,
+    );
+  }
+  if (cover.alt.trim() === "") {
+    throw new Error(`Projekt "${fileName}": "cover.alt" jest wymagany.`);
+  }
+
+  const seoData = (data.seo ?? {}) as Record<string, unknown>;
+
   return {
     slug,
+    title: str(data.title) || str(data.client),
     displayType,
     client: String(data.client),
     year,
     category,
-    scope: data.scope ? String(data.scope) : "",
+    scope: str(data.scope),
     deliverables: toStringArray(data.deliverables),
-    role: data.role ? String(data.role) : "",
-    context: data.context ? String(data.context) : "",
-    description: data.description ? String(data.description) : "",
-    cover: data.cover ? String(data.cover) : "",
-    gallery: toStringArray(data.gallery),
-    tag: data.tag ? String(data.tag) : "",
+    role: str(data.role),
+    context: str(data.context),
+    description: str(data.description),
+    cover,
+    gallery: toImageRefArray(data.gallery),
+    tag: str(data.tag),
     featured: data.featured === true,
     order: data.order !== undefined ? Number(data.order) : undefined,
+    seo: {
+      title: str(seoData.title),
+      description: str(seoData.description),
+      ogImage: str(seoData.ogImage),
+    },
     body: content,
   };
 }
