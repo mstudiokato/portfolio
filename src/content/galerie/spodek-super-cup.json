@@ -1,0 +1,41 @@
+{
+  "title": "Spodek Super Cup",
+  "category": "social-media",
+  "year": 2024,
+  "description": "Grafiki social media dla turnieju Spodek Super Cup.",
+  "order": 1,
+  "images": [
+    {
+      "src": "/projekty/social-media/spodeksupercup/1.png",
+      "alt": "Spodek Super Cup — grafika social media 1"
+    },
+    {
+      "src": "/projekty/social-media/spodeksupercup/3.png",
+      "alt": "Spodek Super Cup — grafika social media 2"
+    },
+    {
+      "src": "/projekty/social-media/spodeksupercup/4.png",
+      "alt": "Spodek Super Cup — grafika social media 3"
+    },
+    {
+      "src": "/projekty/social-media/spodeksupercup/6.png",
+      "alt": "Spodek Super Cup — grafika social media 4"
+    },
+    {
+      "src": "/projekty/social-media/spodeksupercup/7.jpg",
+      "alt": "Spodek Super Cup — grafika social media 5"
+    },
+    {
+      "src": "/projekty/social-media/spodeksupercup/22.png",
+      "alt": "Spodek Super Cup — grafika social media 6"
+    },
+    {
+      "src": "/projekty/social-media/spodeksupercup/38ccb723-d241-4af3-a838-149c508fc0c0_rw_1200.png",
+      "alt": "Spodek Super Cup — grafika social media 7"
+    },
+    {
+      "src": "/projekty/social-media/spodeksupercup/b6411e9a-836e-4505-b0fd-4dac5a6ee68b_rw_1200.png",
+      "alt": "Spodek Super Cup — grafika social media 8"
+    }
+  ]
+}
