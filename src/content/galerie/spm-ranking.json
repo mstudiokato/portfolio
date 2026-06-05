@@ -1,0 +1,25 @@
+{
+  "title": "SPM Ranking — 50 Kobiet",
+  "category": "logo",
+  "year": 2023,
+  "description": "Logo rankingu 50 najbardziej wpływowych kobiet w polskim biznesie sportowym.",
+  "order": 2,
+  "images": [
+    {
+      "src": "/projekty/logo/SPM Ranking/1.jpg",
+      "alt": "SPM Ranking 50 Kobiet — logo, wersja główna"
+    },
+    {
+      "src": "/projekty/logo/SPM Ranking/2.png",
+      "alt": "SPM Ranking 50 Kobiet — logo na tle redakcyjnym"
+    },
+    {
+      "src": "/projekty/logo/SPM Ranking/3.jpg",
+      "alt": "SPM Ranking 50 Kobiet — logo w aplikacji"
+    },
+    {
+      "src": "/projekty/logo/SPM Ranking/4.png",
+      "alt": "SPM Ranking 50 Kobiet — logo, wariant dodatkowy"
+    }
+  ]
+}

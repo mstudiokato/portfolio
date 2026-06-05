@@ -1,0 +1,25 @@
+{
+  "title": "Tokarska vs Urbaniak",
+  "category": "logo",
+  "year": 2023,
+  "description": "Logo podcastu o kobiecym futbolu.",
+  "order": 1,
+  "images": [
+    {
+      "src": "/projekty/logo/Tokarska/1.jpg",
+      "alt": "Tokarska vs Urbaniak — logo podcastu, wersja główna"
+    },
+    {
+      "src": "/projekty/logo/Tokarska/2.jpeg",
+      "alt": "Tokarska vs Urbaniak — logo na jasnym tle"
+    },
+    {
+      "src": "/projekty/logo/Tokarska/3.jpeg",
+      "alt": "Tokarska vs Urbaniak — logo na ciemnym tle"
+    },
+    {
+      "src": "/projekty/logo/Tokarska/4.jpeg",
+      "alt": "Tokarska vs Urbaniak — logo, wariant dodatkowy"
+    }
+  ]
+}
