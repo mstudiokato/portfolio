@@ -8,6 +8,8 @@ import {
 import { ProjectCard } from "@/components/project-card";
 import { CategoryFilter } from "@/components/category-filter";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
+import { Container, Section } from "@/components/ui/layout";
+import { H1, Lead, Body } from "@/components/ui/typography";
 
 export const metadata: Metadata = {
   title: "Projekty",
@@ -33,30 +35,32 @@ export default async function ProjektyPage({
     <>
       <SiteHeader />
 
-      <main className="mx-auto max-w-6xl px-5 pt-14 pb-8">
-        <h1 className="font-display text-ink text-4xl font-semibold">
-          Projekty
-        </h1>
-        <p className="text-muted mt-3 max-w-2xl">
-          {active
-            ? `Kategoria: ${categoryLabel(active)}`
-            : "Pełne archiwum realizacji. Filtruj po kategorii."}
-        </p>
+      <Section size="sm">
+        <Container>
+          <H1 className="text-h2">Projekty</H1>
+          <Lead className="mt-3 max-w-2xl">
+            {active
+              ? `Kategoria: ${categoryLabel(active)}`
+              : "Pełne archiwum realizacji. Filtruj po kategorii."}
+          </Lead>
 
-        <div className="mt-8">
-          <CategoryFilter active={active} />
-        </div>
-
-        {projects.length > 0 ? (
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => (
-              <ProjectCard key={project.slug} project={project} />
-            ))}
+          <div className="mt-8">
+            <CategoryFilter active={active} />
           </div>
-        ) : (
-          <p className="text-muted mt-10">Brak projektów w tej kategorii.</p>
-        )}
-      </main>
+
+          {projects.length > 0 ? (
+            <div className="gap-x-grid mt-10 grid grid-cols-1 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {projects.map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
+            </div>
+          ) : (
+            <Body className="text-muted mt-10">
+              Brak projektów w tej kategorii.
+            </Body>
+          )}
+        </Container>
+      </Section>
 
       <SiteFooter />
     </>

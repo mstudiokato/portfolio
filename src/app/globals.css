@@ -1,29 +1,81 @@
 @import "tailwindcss";
 
 /*
-  Editorial Sports Dark — system kolorów [ZABLOKOWANE] (masterprompt sek. 6.03).
+  Editorial Sports Dark — design system (masterprompt sek. 6, pkt 02–04).
   Strona jest ciemna na stałe (brak trybu jasnego). Lime = akcent, nie dominanta:
   CTA, ważne liczby, hover/active, drobne detale, pojedyncze słowa w nagłówkach.
+
+  Źródło prawdy tokenów. Skala typo i spacing są fluidowe (clamp) — jeden
+  zestaw tokenów obsługuje mobile → desktop bez breakpoint-spaghetti.
 */
 
 @theme {
-  /* Tła */
+  /* ── Kolory [ZABLOKOWANE sek. 6.03] ─────────────────────────────── */
   --color-navy: #0b1220; /* deep navy — główne tło */
   --color-section: #0f1a2e; /* tło sekcji */
   --color-surface: #152238; /* karty / powierzchnie */
   --color-border: #1f2d44; /* obrysy */
-
-  /* Akcent */
-  --color-lime: #d4ff00; /* electric lime */
-
-  /* Tekst */
+  --color-lime: #d4ff00; /* electric lime — akcent */
   --color-ink: #f5f7fa; /* off-white — tekst główny */
   --color-muted: #8b96ab; /* tekst drugorzędny */
 
-  /* Fonty (zmienne podpinane w layout.tsx przez next/font/local) */
-  --font-display: var(--font-display), system-ui, sans-serif;
+  /* ── Fonty (zmienne next/font/local podpinane w layout.tsx) ─────── */
+  --font-display: var(--font-clash), system-ui, sans-serif;
   --font-sans:
-    var(--font-sans), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    var(--font-switzer), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+
+  /* ── Skala typograficzna ────────────────────────────────────────
+     Nagłówki H1–H4 → Clash Display (klasa font-display).
+     body/label/caption → Switzer (font-sans, domyślny). Token text-* niesie
+     rozmiar + line-height + tracking + weight. */
+  --text-h1: clamp(2.75rem, 1.85rem + 4vw, 4.5rem);
+  --text-h1--line-height: 1.04;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h1--font-weight: 600;
+
+  --text-h2: clamp(2rem, 1.45rem + 2.6vw, 3rem);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h2--font-weight: 600;
+
+  --text-h3: clamp(1.5rem, 1.25rem + 1.2vw, 2rem);
+  --text-h3--line-height: 1.15;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--font-weight: 600;
+
+  --text-h4: clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem);
+  --text-h4--line-height: 1.2;
+  --text-h4--font-weight: 500;
+
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.6;
+  --text-body-lg--font-weight: 400;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-body--font-weight: 400;
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.16em;
+  --text-label--font-weight: 600;
+
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.4;
+  --text-caption--font-weight: 400;
+
+  /* ── Spacing [sek. 6.04 „hierarchy that breathes"] ──────────────
+     Rytm pionowy sekcji i odstępy gridów jako tokeny. Nazwane spacingi
+     generują utilitki: py-section, gap-grid, p-card itd. */
+  --spacing-section: clamp(4rem, 8vw, 7rem); /* odstęp pionowy sekcji */
+  --spacing-section-sm: clamp(2.5rem, 5vw, 4rem); /* mniejsza sekcja */
+  --spacing-gutter: 1.25rem; /* bazowy padding boczny strony */
+  --spacing-grid: 1.5rem; /* odstęp w siatce kafli */
+  --spacing-card: 1.25rem; /* wewn. padding karty */
+
+  /* ── Promienie ──────────────────────────────────────────────────── */
+  --radius-card: 0.625rem;
+  --radius-pill: 9999px;
 }
 
 :root {
@@ -38,11 +90,13 @@ body {
   background-color: var(--color-navy);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Dostępność: widoczny focus na akcencie limonkowym (masterprompt sek. 6.08). */
+/* Dostępność: widoczny focus na akcencie limonkowym (sek. 6.08). */
 :focus-visible {
   outline: 2px solid var(--color-lime);
   outline-offset: 2px;
