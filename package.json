@@ -15,7 +15,9 @@
     "image-size": "^2.0.2",
     "next": "15.5.19",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "resend": "^6.12.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

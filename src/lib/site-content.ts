@@ -68,11 +68,11 @@ export const ALL_CLIENTS: string[] = [
   "Kancelaria Jara Drapała",
 ];
 
-/** Sekcja 8.8 — kontakt. PLACEHOLDERY — właściciel podmienia na realne dane. */
+/** Sekcja 8.8 — kontakt. Cal.com z env (właściciel wpisze link), CV = placeholder. */
 export const CONTACT = {
-  email: "twoj@email.pl", // [PLACEHOLDER]
-  phone: "+48 xxx xxx xxx", // [PLACEHOLDER]
-  calUrl: "#", // [PLACEHOLDER — link Cal.com]
+  email: "kontakt@michal-stezaly.pl",
+  phone: "668 01 02 62",
+  calUrl: process.env.NEXT_PUBLIC_CAL_LINK || "#", // link Cal.com z .env.local
   cvHref: "/cv.pdf", // [PLACEHOLDER — właściciel wrzuci /public/cv.pdf]
   availability: ["zdalnie", "hybrydowo", "B2B", "UoP", "projektowo"],
 };

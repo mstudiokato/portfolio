@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { clashDisplay, switzer } from "@/lib/fonts";
+import { CookieBanner } from "@/components/cookie-banner";
 import "./globals.css";
 
 const SITE_NAME = "Michał Stężały — Senior Graphic Designer";
@@ -25,7 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl" className={`${clashDisplay.variable} ${switzer.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   );
 }
