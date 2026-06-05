@@ -10,9 +10,10 @@ export function SiteHeader() {
       <Container className="flex items-center justify-between gap-6 py-4">
         <Link
           href="/"
-          className="font-display text-h4 text-lime font-semibold tracking-tight"
+          className="font-display text-h4 font-semibold tracking-tight"
         >
-          Michał Stężały
+          <span className="text-ink">Michał </span>
+          <span className="text-lime">Stężały</span>
         </Link>
 
         <MainNav />

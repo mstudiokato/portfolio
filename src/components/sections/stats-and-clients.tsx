@@ -6,10 +6,11 @@ import { yearsOfExperience } from "@/lib/experience";
 import { STATS, CREDIBILITY } from "@/lib/site-content";
 
 /**
- * STATS + CREDIBILITY (NAPRAWA 2) — banda na PEŁNĄ SZEROKOŚĆ strony.
- * Liczby po lewej z pionowymi separatorami (FIX 3), loga po prawej jako marquee
- * z hover-pause (FIX 7): prawdziwe logotypy SVG w ramkach 160×48 (object-contain),
- * fallback tekstowy gdy brak pliku. Mobile: liczby na górze, marquee pod spodem.
+ * STATS + CREDIBILITY — banda na pełną szerokość. Eyebrow liczb („— Fakty
+ * i liczby") i eyebrow logo („Pracowałem dla") wyrównane do góry (items-start,
+ * FIX 3). Liczby z pionowymi separatorami; loga jako marquee z hover-pause —
+ * 56px wysokości, bez ramek, pionowe separatory między nimi (FIX 3).
+ * Padding sekcji góra i dół −15% (FIX 4).
  */
 export function StatsAndClients() {
   const stats = [
@@ -25,51 +26,55 @@ export function StatsAndClients() {
       id="klienci"
       size="sm"
       tone="section"
-      style={{ paddingTop: "calc(var(--spacing-section-sm) * 0.7)" }}
+      style={{
+        paddingTop: "calc(var(--spacing-section-sm) * 0.85)",
+        paddingBottom: "calc(var(--spacing-section-sm) * 0.85)",
+      }}
     >
       <div className="px-6 md:px-12 lg:px-16">
-        <Label>— Fakty i liczby</Label>
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
+          {/* LICZBY — eyebrow + bloki z separatorami. */}
+          <div className="lg:col-span-5 lg:border-r lg:pr-12">
+            <Label>— Fakty i liczby</Label>
+            <dl className="mt-6 flex items-center">
+              {stats.map((s, i) => (
+                <Fragment key={s.label}>
+                  {i > 0 ? (
+                    <div
+                      aria-hidden="true"
+                      className="bg-border mx-4 h-16 w-px self-center"
+                    />
+                  ) : null}
+                  <div className="flex flex-col items-start">
+                    <dd className="font-display text-lime text-[clamp(2.25rem,5vw,3.5rem)] leading-none font-semibold">
+                      {s.value}
+                    </dd>
+                    <dt className="text-label text-muted mt-3 whitespace-nowrap uppercase">
+                      {s.label}
+                    </dt>
+                  </div>
+                </Fragment>
+              ))}
+            </dl>
+          </div>
 
-        <div className="mt-6 grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
-          {/* LICZBY — bloki + pionowe separatory (FIX 3: w-px h-16 self-center). */}
-          <dl className="flex items-center lg:col-span-5 lg:border-r lg:pr-12">
-            {stats.map((s, i) => (
-              <Fragment key={s.label}>
-                {i > 0 ? (
-                  <div
-                    aria-hidden="true"
-                    className="bg-border mx-4 h-16 w-px self-center"
-                  />
-                ) : null}
-                <div className="flex flex-col items-start">
-                  <dd className="font-display text-lime text-[clamp(2.25rem,5vw,3.5rem)] leading-none font-semibold">
-                    {s.value}
-                  </dd>
-                  <dt className="text-label text-muted mt-3 whitespace-nowrap uppercase">
-                    {s.label}
-                  </dt>
-                </div>
-              </Fragment>
-            ))}
-          </dl>
-
-          {/* LOGOTYPY — marquee prawdziwych logotypów (SVG), hover-pause. */}
-          <div className="border-border border-t pt-8 lg:col-span-7 lg:border-t-0 lg:pt-0">
-            <p className="text-label text-muted uppercase">Współpracowałem z</p>
-            <div className="marquee-mask relative mt-5 overflow-hidden">
+          {/* LOGOTYPY — eyebrow + marquee 56px bez ramek, separatory pionowe. */}
+          <div className="border-border mt-2 border-t pt-8 lg:col-span-7 lg:mt-0 lg:border-t-0 lg:pt-0">
+            <p className="text-label text-muted uppercase">Pracowałem dla</p>
+            <div className="marquee-mask relative mt-6 overflow-hidden">
               <ul className="marquee-track flex w-max items-center">
                 {marqueeClients.map((c, i) => (
                   <Fragment key={`${c.name}-${i}`}>
-                    {/* Logo bez ramki, na pełną wysokość 80px, object-contain. */}
-                    <li className="flex h-20 shrink-0 items-center">
+                    {/* Logo bez ramki, wysokość 56px, object-contain. */}
+                    <li className="flex h-14 shrink-0 items-center">
                       {c.logoExists && c.logo ? (
                         <Image
                           src={c.logo}
                           alt={c.name}
-                          width={240}
-                          height={80}
+                          width={200}
+                          height={56}
                           unoptimized
-                          className="h-20 w-auto object-contain"
+                          className="h-14 w-auto object-contain"
                         />
                       ) : (
                         <span className="text-muted font-mono text-sm whitespace-nowrap">

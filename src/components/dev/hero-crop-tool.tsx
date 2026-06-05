@@ -29,39 +29,43 @@ export function HeroCropTool({
     "idle",
   );
   const overlayRef = useRef<HTMLDivElement>(null);
-  const drag = useRef<{ px: number; py: number; x: number; y: number } | null>(
-    null,
-  );
+  const dragging = useRef(false);
+  const startMouse = useRef({ x: 0, y: 0 });
+  const startPos = useRef({ x: 0, y: 0 });
 
-  // Live-podgląd: aplikuj kadr bezpośrednio na elementy hero.
+  // Live-podgląd: pozycjonowanie przez transform translate()+scale() (przesuw w
+  // OBU osiach). Sterowane stanem (useState → ten effect synchronizuje DOM hero,
+  // bo tło hero renderuje server component). 50% = środek.
   useEffect(() => {
     if (!isDev) return;
-    const img = document.getElementById("hero-photo");
-    if (img) img.style.objectPosition = `${x}% ${y}%`;
     const wrap = document.getElementById("hero-photo-scale");
-    if (wrap) wrap.style.transform = `scale(${scale / 100})`;
+    if (wrap)
+      wrap.style.transform = `translate(${50 - x}%, ${50 - y}%) scale(${
+        scale / 100
+      })`;
   }, [x, y, scale, isDev]);
 
   if (!isDev) return null;
 
   function onPointerDown(e: React.PointerEvent) {
     overlayRef.current?.setPointerCapture(e.pointerId);
-    drag.current = { px: e.clientX, py: e.clientY, x, y };
+    startMouse.current = { x: e.clientX, y: e.clientY };
+    startPos.current = { x, y };
+    dragging.current = true;
   }
   function onPointerMove(e: React.PointerEvent) {
-    if (!drag.current || !overlayRef.current) return;
+    if (!dragging.current || !overlayRef.current) return;
     const rect = overlayRef.current.getBoundingClientRect();
-    // deltaX/deltaY względem SZEROKOŚCI i WYSOKOŚCI kontenera hero (oba aktywne).
-    const deltaX = e.clientX - drag.current.px;
-    const deltaY = e.clientY - drag.current.py;
-    // Przeciągnięcie w prawo przesuwa postać w prawo (gradient pokryje brak po
-    // lewej). BEZ clampowania — wartości mogą wychodzić poza 0–100.
-    setX(Math.round(drag.current.x - (deltaX / rect.width) * 100));
-    setY(Math.round(drag.current.y - (deltaY / rect.height) * 100));
+    // deltaX/deltaY jako % szerokości/wysokości kontenera hero (oba aktywne).
+    const deltaX = ((e.clientX - startMouse.current.x) / rect.width) * 100;
+    const deltaY = ((e.clientY - startMouse.current.y) / rect.height) * 100;
+    // Drag w prawo → mniejszy X → obiekt przesuwa się w prawo. BEZ clampowania.
+    setX(Math.round(startPos.current.x - deltaX));
+    setY(Math.round(startPos.current.y - deltaY));
     if (status !== "idle") setStatus("idle");
   }
   function onPointerUp(e: React.PointerEvent) {
-    drag.current = null;
+    dragging.current = false;
     overlayRef.current?.releasePointerCapture(e.pointerId);
   }
 

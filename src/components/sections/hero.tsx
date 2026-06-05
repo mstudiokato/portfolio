@@ -44,13 +44,16 @@ export function Hero() {
 
   return (
     <section className="bg-navy relative isolate flex min-h-[510px] items-start overflow-hidden lg:min-h-[85vh]">
-      {/* Tło — zdjęcie (za treścią). Wrapper skaluje (zoom), zdjęcie zawsze fill+cover. */}
+      {/* Tło — zdjęcie (za treścią). Kadr przez transform translate()+scale():
+          zoom daje nadmiar w obu osiach, translate przesuwa X i Y. 50% = środek. */}
       {heroImage ? (
         <div className="absolute inset-0 -z-20 overflow-hidden">
           <div
             id="hero-photo-scale"
             className="relative h-full w-full"
-            style={{ transform: `scale(${scale / 100})` }}
+            style={{
+              transform: `translate(${50 - posX}%, ${50 - posY}%) scale(${scale / 100})`,
+            }}
           >
             <Image
               id="hero-photo"
@@ -60,7 +63,6 @@ export function Hero() {
               sizes="100vw"
               priority
               className="object-cover"
-              style={{ objectPosition: `${posX}% ${posY}%` }}
             />
           </div>
         </div>

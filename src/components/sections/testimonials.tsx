@@ -4,9 +4,9 @@ import { H2, Label } from "@/components/ui/typography";
 import { TESTIMONIALS } from "@/lib/site-content";
 
 /**
- * TESTIMONIALE (T1) — karta ze zdjęciem-okładką u góry (gradient w tło karty),
- * pod nim duży limonkowy cudzysłów lekko nachodzący na zdjęcie, cytat i stopka
- * (linia + imię + stanowisko). Bez zdjęcia → szary placeholder z inicjałami.
+ * TESTIMONIALE (FIX 2) — układ lewo/prawo: po lewej pionowe zdjęcie 80×120
+ * (object-cover od góry) lub szary placeholder z inicjałami; po prawej cytat
+ * (kursywa, z cudzysłowami typograficznymi) + imię (bold) + stanowisko.
  * Karty surface, sekcja section (kontrast). Grid 2×2 desktop / 1 kolumna mobile.
  */
 
@@ -19,10 +19,6 @@ function initials(name: string): string {
     .map((word) => word[0]?.toUpperCase() ?? "")
     .join("");
 }
-
-// Gradient wtapiający dół zdjęcia w tło karty (surface #152238) — płynne przejście.
-const COVER_FADE =
-  "linear-gradient(to bottom, transparent 40%, #152238 100%)";
 
 export function Testimonials() {
   if (TESTIMONIALS.length === 0) return null;
@@ -42,48 +38,36 @@ export function Testimonials() {
           {TESTIMONIALS.map((t) => (
             <figure
               key={t.name}
-              className="bg-surface flex flex-col overflow-hidden rounded-[4px]"
+              className="bg-surface flex gap-5 rounded-[4px] p-6"
             >
-              {/* Okładka — zdjęcie z gradientem w tło karty, albo placeholder. */}
-              <div className="relative h-[180px] w-full">
-                {t.imageExists && t.image ? (
-                  <>
-                    <Image
-                      src={t.image}
-                      alt={t.name}
-                      fill
-                      sizes="(min-width: 1024px) 50vw, 100vw"
-                      className="object-cover object-top"
-                    />
-                    <div
-                      className="absolute inset-0"
-                      style={{ background: COVER_FADE }}
-                      aria-hidden="true"
-                    />
-                  </>
-                ) : (
-                  <div className="bg-section flex h-full w-full items-center justify-center">
-                    <span className="font-display text-muted text-2xl font-semibold">
-                      {initials(t.name)}
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              {/* Treść — cudzysłów nachodzi lekko na zdjęcie (-mt-4). */}
-              <div className="px-6 pb-6">
-                <span
+              {/* Lewa — pionowe zdjęcie 80×120 albo placeholder z inicjałami. */}
+              {t.imageExists && t.image ? (
+                <div className="relative h-[120px] w-[80px] shrink-0 overflow-hidden rounded-[2px]">
+                  <Image
+                    src={t.image}
+                    alt={t.name}
+                    fill
+                    sizes="80px"
+                    className="object-cover object-top"
+                  />
+                </div>
+              ) : (
+                <div
+                  className="bg-section flex h-[120px] w-[80px] shrink-0 items-center justify-center rounded-[2px]"
                   aria-hidden="true"
-                  className="font-display text-lime block -mt-4 text-[4rem] leading-none"
                 >
-                  &ldquo;
-                </span>
+                  <span className="text-muted text-xs font-semibold">
+                    {initials(t.name)}
+                  </span>
+                </div>
+              )}
 
-                <blockquote className="text-ink text-body -mt-2 italic">
-                  {t.quote}
+              {/* Prawa — cytat + autor. */}
+              <div className="flex flex-col">
+                <blockquote className="text-ink text-body italic">
+                  „{t.quote}”
                 </blockquote>
-
-                <figcaption className="border-border mt-4 border-t pt-4">
+                <figcaption className="mt-4">
                   <p className="font-display text-ink font-semibold">{t.name}</p>
                   <p className="text-caption text-muted mt-0.5">{t.role}</p>
                 </figcaption>

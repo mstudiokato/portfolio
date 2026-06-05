@@ -14,7 +14,10 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
   return (
     <Section
       id="wybrane"
-      style={{ paddingTop: "calc(var(--spacing-section) * 0.7)" }}
+      style={{
+        paddingTop: "calc(var(--spacing-section) * 0.85)",
+        paddingBottom: "calc(var(--spacing-section) * 0.85)",
+      }}
     >
       <Container>
         <Label>— Wybrane realizacje</Label>
