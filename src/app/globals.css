@@ -98,6 +98,15 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Poziomy scroll galerii (P5) — chowamy scrollbar wizualnie, scroll działa. */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* starsze Edge/IE */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* WebKit/Blink */
+}
+
 /* Dostępność: widoczny focus na akcencie limonkowym (sek. 6.08). */
 :focus-visible {
   outline: 2px solid var(--color-lime);

@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { cn } from "@/lib/cn";
 import type { GalleryItem, GalleryImage } from "@/lib/content";
 import {
   GALLERY_CATEGORIES,
@@ -13,41 +12,46 @@ import { Lightbox } from "@/components/lightbox";
 
 /**
  * „Pozostałe prace" na /projekty: poziome filtry kategorii (chipy design-systemu,
- * active = lime fill) + bloki galerii. Filtrowanie po stronie klienta (płynne,
- * bez przeładowania). Jeden blok = jeden wpis kolekcji Galerie: nagłówek
- * (klient + rok) → masonry zdjęć w oryginalnych proporcjach → opis → separator.
- * Kliknięcie zdjęcia otwiera Lightbox (zakres nawigacji = zdjęcia danego bloku).
+ * active = lime fill; domyślnie LOGO) + bloki galerii. Filtrowanie po stronie
+ * klienta (płynne, bez przeładowania). Jeden blok = wpis kolekcji Galerie:
+ * nagłówek (KLIENT + nazwa | Data realizacji + rok) → poziomy, przewijalny rząd
+ * zdjęć (stała wysokość, oryginalne proporcje, scroll-snap) → opis. Kliknięcie
+ * zdjęcia otwiera Lightbox (zakres nawigacji = zdjęcia danego bloku).
  */
 
-type Filter = GalleryCategorySlug | "all";
-
-/** Placeholderowe proporcje (gdy brak realnego pliku) — pokazują różne kadry. */
-const PLACEHOLDER_ASPECTS = [
-  "aspect-[4/5]",
-  "aspect-square",
-  "aspect-[3/4]",
-  "aspect-[4/3]",
+// Kolejność chipów filtrów (P3) — LOGO pierwszy i domyślnie aktywny.
+const FILTER_ORDER: GalleryCategorySlug[] = [
+  "logo",
+  "social-media",
+  "plakaty",
+  "branding",
+  "pozostale",
 ];
+const labelOf = (slug: GalleryCategorySlug) =>
+  GALLERY_CATEGORIES.find((c) => c.slug === slug)?.label ?? slug;
+
+// Placeholderowe proporcje (gdy brak realnego pliku) — różne kadry przy stałej wysokości.
+const PLACEHOLDER_RATIOS = ["4 / 5", "1 / 1", "3 / 4", "4 / 3"];
 
 function GalleryImg({ image, index }: { image: GalleryImage; index: number }) {
   if (image.exists) {
-    // Oryginalne proporcje, bez kadrowania (w-full h-auto), lazy.
+    // Stała wysokość, szerokość auto → oryginalne proporcje, bez kadrowania.
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={image.src}
         alt={image.alt}
         loading="lazy"
-        className="h-auto w-full"
+        className="h-[200px] w-auto lg:h-[280px]"
       />
     );
   }
   return (
     <div
-      className={cn(
-        "bg-section flex items-center justify-center p-2 text-center",
-        PLACEHOLDER_ASPECTS[index % PLACEHOLDER_ASPECTS.length],
-      )}
+      style={{
+        aspectRatio: PLACEHOLDER_RATIOS[index % PLACEHOLDER_RATIOS.length],
+      }}
+      className="bg-section flex h-[200px] items-center justify-center p-3 text-center lg:h-[280px]"
     >
       <span className="text-caption text-muted">{image.alt || "zdjęcie"}</span>
     </div>
@@ -56,37 +60,88 @@ function GalleryImg({ image, index }: { image: GalleryImage; index: number }) {
 
 function GalleryBlock({ item }: { item: GalleryItem }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+
+  // Strzałki przewijają o pełną szerokość widoku (~4 zdjęcia na desktopie).
+  function scrollByView(dir: number) {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({
+      left: dir * el.clientWidth,
+      behavior: reduce ? "auto" : "smooth",
+    });
+  }
+
+  const NAV =
+    "absolute top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-navy/70 text-ink text-xl backdrop-blur transition-colors hover:bg-navy sm:flex";
 
   return (
-    <article className="py-10 first:pt-0">
-      {/* Nagłówek: klient (bold) + rok po prawej. */}
-      <div className="flex items-baseline justify-between gap-4">
-        <h3 className="font-display text-h4 text-ink font-semibold">
-          {item.title}
-        </h3>
+    <article className="py-7 first:pt-0">
+      {/* Nagłówek bloku (P4): KLIENT + nazwa po lewej, Data realizacji + rok po prawej. */}
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <span className="bg-lime text-navy text-label rounded-button px-2 py-1 uppercase">
+            Klient
+          </span>
+          <h3 className="font-display text-h4 text-ink font-semibold">
+            {item.title}
+          </h3>
+        </div>
         {item.year ? (
-          <span className="text-caption text-muted shrink-0">{item.year}</span>
+          <div className="shrink-0 text-right">
+            <p className="text-label text-muted uppercase">Data realizacji</p>
+            <p className="font-display text-ink text-h4 mt-1 font-semibold">
+              {item.year}
+            </p>
+          </div>
         ) : null}
       </div>
 
-      {/* Masonry: 4 kolumny desktop / 2 mobile, naturalne proporcje, bez kadru. */}
-      <div className="mt-5 columns-2 gap-3 lg:columns-4">
-        {item.images.map((img, i) => (
-          <button
-            key={img.src || i}
-            type="button"
-            onClick={() => setOpenIndex(i)}
-            aria-label={`Powiększ: ${img.alt || item.title}`}
-            className="border-border rounded-card mb-3 block w-full break-inside-avoid overflow-hidden border transition-opacity hover:opacity-90"
-          >
-            <GalleryImg image={img} index={i} />
-          </button>
-        ))}
+      {/* Poziomy, przewijalny rząd zdjęć (P5). */}
+      <div className="relative mt-6">
+        {item.images.length > 1 ? (
+          <>
+            <button
+              type="button"
+              onClick={() => scrollByView(-1)}
+              aria-label="Przewiń w lewo"
+              className={`${NAV} left-1`}
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByView(1)}
+              aria-label="Przewiń w prawo"
+              className={`${NAV} right-1`}
+            >
+              ›
+            </button>
+          </>
+        ) : null}
+
+        <div
+          ref={scrollRef}
+          className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto"
+        >
+          {item.images.map((img, i) => (
+            <button
+              key={img.src || i}
+              type="button"
+              onClick={() => setOpenIndex(i)}
+              aria-label={`Powiększ: ${img.alt || item.title}`}
+              className="border-border rounded-card block shrink-0 snap-start overflow-hidden border transition-opacity hover:opacity-90"
+            >
+              <GalleryImg image={img} index={i} />
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Opis. */}
+      {/* Opis (P4) — secondary, lekko mniejszy font niż body. */}
       {item.description ? (
-        <p className="text-muted text-body mt-5 max-w-2xl">
+        <p className="text-muted text-caption mt-5 max-w-2xl">
           {item.description}
         </p>
       ) : null}
@@ -105,36 +160,25 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
 }
 
 export function GalleryArchive({ items }: { items: GalleryItem[] }) {
-  const [active, setActive] = useState<Filter>("all");
+  const [active, setActive] = useState<GalleryCategorySlug>("logo");
   const reduce = useReducedMotion();
 
-  const filtered =
-    active === "all" ? items : items.filter((i) => i.category === active);
+  const filtered = items.filter((i) => i.category === active);
 
   return (
     <div>
-      {/* Filtry — chipy design-systemu (pill, active = lime fill). */}
+      {/* Filtry — chipy design-systemu (pill, active = lime fill). Bez „Wszystkie". */}
       <nav aria-label="Filtruj pozostałe prace po kategorii">
         <ul className="flex flex-wrap gap-2">
-          <li>
-            <Tag
-              onClick={() => setActive("all")}
-              active={active === "all"}
-              aria-pressed={active === "all"}
-              className="uppercase"
-            >
-              Wszystkie
-            </Tag>
-          </li>
-          {GALLERY_CATEGORIES.map((c) => (
-            <li key={c.slug}>
+          {FILTER_ORDER.map((slug) => (
+            <li key={slug}>
               <Tag
-                onClick={() => setActive(c.slug)}
-                active={active === c.slug}
-                aria-pressed={active === c.slug}
+                onClick={() => setActive(slug)}
+                active={active === slug}
+                aria-pressed={active === slug}
                 className="uppercase"
               >
-                {c.label}
+                {labelOf(slug)}
               </Tag>
             </li>
           ))}

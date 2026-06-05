@@ -6,7 +6,8 @@ import { TESTIMONIALS } from "@/lib/site-content";
  * TESTIMONIALE (N1) — social proof (masterprompt sek. 7). Grid 2×2 na desktop,
  * 1 kolumna na mobile. Karta: avatar (inicjały na ciemnym kole), imię,
  * stanowisko, cytat. Treść edytowalna w Keystatic (singleton testimonials);
- * domyślnie placeholder do podmiany przez właściciela. Karty na tle surface.
+ * domyślnie placeholder do podmiany przez właściciela. Tło sekcji = section
+ * (T1) — karty surface wyraźnie odróżniają się od sąsiednich sekcji.
  */
 
 /** Inicjały z dwóch pierwszych słów imienia i nazwiska. */
@@ -23,7 +24,7 @@ export function Testimonials() {
   if (TESTIMONIALS.length === 0) return null;
 
   return (
-    <Section id="opinie">
+    <Section id="opinie" tone="section">
       <Container>
         <Label>Co mówią klienci</Label>
         <H2 className="mt-4 max-w-2xl">Opinie</H2>

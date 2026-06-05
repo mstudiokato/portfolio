@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import Image from "next/image";
-import type { Project } from "@/lib/content";
 import { Container, Section } from "@/components/ui/layout";
 import { Button } from "@/components/ui/button";
 import { Label, Lead } from "@/components/ui/typography";
@@ -10,9 +9,9 @@ import { HERO } from "@/lib/site-content";
 
 /**
  * HERO (masterprompt sek. 8.1). Lewa kolumna dominuje nazwiskiem (H1 max).
- * Prawa kolumna (desktop): zdjęcie projektanta + kolaż miniatur projektów.
- * Bez animacji (Etap 8). Zdjęcie: /public/zdjecie.jpg — gdy brak pliku,
- * pokazujemy placeholder-box (fallback, build się nie wywala).
+ * Prawa kolumna (tylko desktop): zdjęcie projektanta jako tło z gradientową
+ * maską — wtapia się w ciemne tło po lewej i zanika ku dołowi, więc teksty hero
+ * pozostają czytelne. Zdjęcie: /public/zdjecie.jpg (fallback gdy brak pliku).
  */
 
 // Sprawdzenie istnienia pliku w czasie buildu (Hero to server component).
@@ -20,9 +19,13 @@ const hasPhoto = fs.existsSync(
   path.join(process.cwd(), "public", "zdjecie.jpg"),
 );
 
-export function Hero({ featured }: { featured: Project[] }) {
+// Maska: część prawa widoczna (fade od lewej), zanik ku dołowi. Złożenie obu
+// gradientów przez mask-composite: intersect (z prefiksem WebKit: source-in).
+const PHOTO_MASK =
+  "linear-gradient(to right, transparent 0%, black 25%), linear-gradient(to bottom, black 60%, transparent 100%)";
+
+export function Hero() {
   const years = yearsOfExperience();
-  const thumbs = featured.slice(0, 3);
 
   return (
     <Section>
@@ -65,38 +68,31 @@ export function Hero({ featured }: { featured: Project[] }) {
             </div>
           </div>
 
-          {/* PRAWA KOLUMNA — ukryta na mobile/tablet (nazwisko dominuje). */}
+          {/* PRAWA KOLUMNA — zdjęcie tła z gradientową maską; ukryte na mobile. */}
           <div className="hidden lg:col-span-5 lg:block">
-            <div className="grid h-[28rem] grid-cols-3 grid-rows-3 gap-3">
-              {/* Zdjęcie projektanta (next/image) lub fallback placeholder. */}
-              <div className="bg-surface border-border rounded-card relative col-span-2 row-span-3 overflow-hidden border">
-                {hasPhoto ? (
-                  <Image
-                    src="/zdjecie.jpg"
-                    alt="Michał Stężały — Senior Graphic Designer"
-                    fill
-                    sizes="(min-width: 1024px) 28vw, 0px"
-                    className="object-cover"
-                    priority
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center p-4 text-center">
-                    <span className="text-label text-muted uppercase">
-                      [ZDJĘCIE — /public/zdjecie.jpg]
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              {/* Kolaż miniatur projektów (placeholdery coverów). */}
-              {thumbs.map((p) => (
-                <div
-                  key={p.slug}
-                  className="bg-section border-border rounded-card flex items-center justify-center border p-2 text-center"
-                >
-                  <span className="text-caption text-muted">{p.client}</span>
+            <div className="relative h-[34rem]">
+              {hasPhoto ? (
+                <Image
+                  src="/zdjecie.jpg"
+                  alt="Michał Stężały — Senior Graphic Designer"
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 0px"
+                  className="object-cover object-top"
+                  priority
+                  style={{
+                    maskImage: PHOTO_MASK,
+                    WebkitMaskImage: PHOTO_MASK,
+                    maskComposite: "intersect",
+                    WebkitMaskComposite: "source-in",
+                  }}
+                />
+              ) : (
+                <div className="bg-surface border-border rounded-card flex h-full items-center justify-center border p-4 text-center">
+                  <span className="text-label text-muted uppercase">
+                    [ZDJĘCIE — /public/zdjecie.jpg]
+                  </span>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>

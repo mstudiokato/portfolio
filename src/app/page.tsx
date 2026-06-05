@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <SiteHeader />
       <main>
-        <Hero featured={featured} />
+        <Hero />
         <StatsAndClients />
         <SelectedWork projects={featured} />
         <Testimonials />
