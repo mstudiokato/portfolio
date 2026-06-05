@@ -16,7 +16,7 @@ export function Testimonials() {
   return (
     <Section id="opinie-klientow" tone="surface" size="tight">
       <Container>
-        <Label>Co mówią klienci</Label>
+        <Label>— Co mówią klienci</Label>
         <H2 className="mt-4 max-w-2xl">Opinie klientów</H2>
 
         <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -27,7 +27,8 @@ export function Testimonials() {
             >
               {/* Popiersie (~80×100): zdjęcie z Keystatic albo placeholder „FOTO". */}
               {t.imageExists && t.image ? (
-                <div className="border-border relative h-[100px] w-[80px] shrink-0 overflow-hidden rounded-[2px] border">
+                // Limonkowa ramka 2px (NAPRAWA 4); kadr od góry → twarz widoczna.
+                <div className="border-lime relative h-[100px] w-[80px] shrink-0 overflow-hidden rounded-[2px] border-2">
                   <Image
                     src={t.image}
                     alt={t.name}

@@ -5,9 +5,9 @@
     "ctaPrimary": "Porozmawiajmy ↗",
     "ctaSecondary": "Zobacz projekty",
     "image": null,
-    "positionX": 50,
-    "positionY": 50,
-    "scale": 100
+    "positionX": 45,
+    "positionY": 71,
+    "scale": 174
   },
   "numbers": {
     "projects": "100+",
@@ -17,7 +17,13 @@
   "contact": {
     "email": "kontakt@michal-stezaly.pl",
     "phone": "668 01 02 62",
-    "availability": ["zdalnie", "hybrydowo", "B2B", "UoP", "projektowo"],
+    "availability": [
+      "zdalnie",
+      "hybrydowo",
+      "B2B",
+      "UoP",
+      "projektowo"
+    ],
     "cvHref": "/cv.pdf"
   },
   "seo": {

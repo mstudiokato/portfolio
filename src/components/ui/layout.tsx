@@ -39,18 +39,21 @@ export function Section({
   tone = "navy",
   size = "md",
   className,
+  style,
   children,
 }: {
   id?: string;
   tone?: "navy" | "section" | "surface";
   size?: "md" | "tight" | "sm";
   className?: string;
+  style?: React.CSSProperties;
   children: React.ReactNode;
 }) {
   return (
     <section
       id={id}
       className={cn(SECTION_SIZE[size], SECTION_TONE[tone], className)}
+      style={style}
     >
       {children}
     </section>

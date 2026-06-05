@@ -23,7 +23,7 @@ export default function ProjektyPage() {
       {/* SEKCJA 1 — Case studies (featured): grid 3-kol desktop / 1 mobile (P1, P2). */}
       <Section>
         <Container>
-          <Label>Wybrane realizacje</Label>
+          <Label>— Wybrane realizacje</Label>
           <H1 className="text-h2 mt-4">Case Studies</H1>
 
           <div className="gap-x-grid mt-10 grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
@@ -35,10 +35,14 @@ export default function ProjektyPage() {
       </Section>
 
       {/* SEKCJA 2 — Pozostałe prace: filtry kategorii + bloki galerii (P1).
-          Tło section + górna linia = wyraźny podział od sekcji case studies. */}
-      <Section tone="section" className="border-border border-t">
+          Tło section + górna linia = wyraźny podział. Padding-top −40% (NAPRAWA 5). */}
+      <Section
+        tone="section"
+        className="border-border border-t"
+        style={{ paddingTop: "calc(var(--spacing-section) * 0.6)" }}
+      >
         <Container>
-          <Label>Pozostałe prace</Label>
+          <Label>— Pozostałe prace</Label>
           <H2 className="mt-4">Projekty</H2>
 
           <div className="mt-8">

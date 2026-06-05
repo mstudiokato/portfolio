@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/typography";
 import { yearsOfExperience } from "@/lib/experience";
 import { HERO } from "@/lib/site-content";
+import { HeroCropTool } from "@/components/dev/hero-crop-tool";
+
+const isDev = process.env.NODE_ENV === "development";
 
 /**
  * HERO (masterprompt sek. 8.1). Zdjęcie projektanta jako pełne tło sekcji
@@ -40,15 +43,17 @@ export function Hero() {
   const scale = HERO.scale ?? 100;
 
   return (
-    <section className="bg-navy relative isolate flex min-h-[600px] items-start overflow-hidden lg:min-h-screen">
+    <section className="bg-navy relative isolate flex min-h-[510px] items-start overflow-hidden lg:min-h-[85vh]">
       {/* Tło — zdjęcie (za treścią). Wrapper skaluje (zoom), zdjęcie zawsze fill+cover. */}
       {heroImage ? (
         <div className="absolute inset-0 -z-20 overflow-hidden">
           <div
+            id="hero-photo-scale"
             className="relative h-full w-full"
             style={{ transform: `scale(${scale / 100})` }}
           >
             <Image
+              id="hero-photo"
               src={heroImage}
               alt=""
               fill
@@ -101,6 +106,11 @@ export function Hero() {
           </div>
         </div>
       </Container>
+
+      {/* Narzędzie kadrowania — TYLKO w dev (w produkcji nie renderowane). */}
+      {isDev && heroImage ? (
+        <HeroCropTool initialX={posX} initialY={posY} initialScale={scale} />
+      ) : null}
     </section>
   );
 }

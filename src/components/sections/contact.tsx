@@ -14,7 +14,7 @@ export function Contact() {
   return (
     <Section id="kontakt">
       <Container>
-        <Label>Kontakt</Label>
+        <Label>— Kontakt</Label>
         <H2 className="mt-4 max-w-2xl">Chcesz porozmawiać?</H2>
 
         <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-2">

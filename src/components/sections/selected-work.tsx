@@ -1,6 +1,6 @@
 import type { Project } from "@/lib/content";
 import { Container, Section } from "@/components/ui/layout";
-import { Label } from "@/components/ui/typography";
+import { H2, Label } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { ProjectCard } from "@/components/project-card";
 
@@ -14,7 +14,8 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
   return (
     <Section id="wybrane">
       <Container>
-        <Label>Wybrane projekty</Label>
+        <Label>— Wybrane realizacje</Label>
+        <H2 className="mt-4 max-w-2xl">Case Studies</H2>
 
         <div className="gap-x-grid mt-10 grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
