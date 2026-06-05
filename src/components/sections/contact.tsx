@@ -12,7 +12,10 @@ export function Contact() {
   const calConfigured = CONTACT.calUrl !== "#";
 
   return (
-    <Section id="kontakt">
+    <Section
+      id="kontakt"
+      style={{ paddingTop: "calc(var(--spacing-section) * 0.7)" }}
+    >
       <Container>
         <Label>— Kontakt</Label>
         <H2 className="mt-4 max-w-2xl">Chcesz porozmawiać?</H2>

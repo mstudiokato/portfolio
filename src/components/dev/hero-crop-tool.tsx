@@ -10,10 +10,6 @@ import { useEffect, useRef, useState } from "react";
  * hero (#hero-photo / #hero-photo-scale).
  */
 
-function clamp(n: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, n));
-}
-
 export function HeroCropTool({
   initialX,
   initialY,
@@ -55,11 +51,13 @@ export function HeroCropTool({
   function onPointerMove(e: React.PointerEvent) {
     if (!drag.current || !overlayRef.current) return;
     const rect = overlayRef.current.getBoundingClientRect();
+    // Pozycja myszy względem szerokości/wysokości kontenera hero (responsywnie).
     const dx = e.clientX - drag.current.px;
     const dy = e.clientY - drag.current.py;
-    // Przeciąganie zdjęcia w prawo (dx>0) odsłania lewą stronę → X maleje.
-    setX(clamp(Math.round(drag.current.x - (dx / rect.width) * 100), 0, 100));
-    setY(clamp(Math.round(drag.current.y - (dy / rect.height) * 100), 0, 100));
+    // Przeciąganie w prawo = wyższy X; w dół = wyższy Y. BEZ clampowania do
+    // granic obrazu (gradient po lewej pokrywa brakujący obszar).
+    setX(Math.round(drag.current.x + (dx / rect.width) * 100));
+    setY(Math.round(drag.current.y + (dy / rect.height) * 100));
     if (status !== "idle") setStatus("idle");
   }
   function onPointerUp(e: React.PointerEvent) {

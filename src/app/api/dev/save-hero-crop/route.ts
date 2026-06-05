@@ -36,10 +36,10 @@ export async function POST(request: Request) {
   };
   json.hero = json.hero ?? {};
 
-  if (Number.isFinite(positionX))
-    json.hero.positionX = clamp(Number(positionX), 0, 100);
-  if (Number.isFinite(positionY))
-    json.hero.positionY = clamp(Number(positionY), 0, 100);
+  // X/Y bez clampowania (FIX 1 — dozwolone poza 0–100, gradient pokrywa brak).
+  if (Number.isFinite(positionX)) json.hero.positionX = Math.round(Number(positionX));
+  if (Number.isFinite(positionY)) json.hero.positionY = Math.round(Number(positionY));
+  // Scale trzymamy w sensownym zakresie 100–200%.
   if (Number.isFinite(scale)) json.hero.scale = clamp(Number(scale), 100, 200);
 
   await fs.writeFile(file, JSON.stringify(json, null, 2) + "\n", "utf8");

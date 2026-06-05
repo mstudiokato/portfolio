@@ -1,20 +1,34 @@
-import Image from "next/image";
 import { Container, Section } from "@/components/ui/layout";
 import { H2, Label } from "@/components/ui/typography";
 import { TESTIMONIALS } from "@/lib/site-content";
 
 /**
- * TESTIMONIALE (N1 / T1, T2) — social proof (masterprompt sek. 7). Tło sekcji =
- * surface (#152238), id=opinie-klientow; padding zwarty (NAPRAWA 3, −30%).
- * Karta: po lewej popiersie (zdjęcie z Keystatic albo placeholder „FOTO"),
- * po prawej cytat (kursywa) + imię (bold) + stanowisko (secondary). Poziomo
- * na desktop, pionowy stack na mobile.
+ * TESTIMONIALE (FIX 9) — nowy układ karty: duży limonkowy cudzysłów u góry,
+ * cytat (kursywa), na dole inicjały w kółku (lime border) + imię + stanowisko.
+ * Karty na tle surface, sekcja na tle section (kontrast). Grid 2×2 desktop /
+ * 1 kolumna mobile. Padding sekcji zwarty, top −30% (FIX 5).
  */
+
+/** Inicjały z dwóch pierwszych słów imienia i nazwiska. */
+function initials(name: string): string {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
 export function Testimonials() {
   if (TESTIMONIALS.length === 0) return null;
 
   return (
-    <Section id="opinie-klientow" tone="surface" size="tight">
+    <Section
+      id="opinie-klientow"
+      tone="section"
+      size="tight"
+      style={{ paddingTop: "calc(var(--spacing-section-tight) * 0.7)" }}
+    >
       <Container>
         <Label>— Co mówią klienci</Label>
         <H2 className="mt-4 max-w-2xl">Opinie klientów</H2>
@@ -23,41 +37,32 @@ export function Testimonials() {
           {TESTIMONIALS.map((t) => (
             <figure
               key={t.name}
-              className="bg-navy border-border flex flex-col gap-5 rounded-card border p-6 sm:flex-row sm:gap-6 sm:p-8"
+              className="bg-surface border-border flex flex-col gap-4 rounded-[2px] border p-8"
             >
-              {/* Popiersie (~80×100): zdjęcie z Keystatic albo placeholder „FOTO". */}
-              {t.imageExists && t.image ? (
-                // Limonkowa ramka 2px (NAPRAWA 4); kadr od góry → twarz widoczna.
-                <div className="border-lime relative h-[100px] w-[80px] shrink-0 overflow-hidden rounded-[2px] border-2">
-                  <Image
-                    src={t.image}
-                    alt={t.name}
-                    fill
-                    sizes="80px"
-                    className="object-cover object-top"
-                  />
-                </div>
-              ) : (
-                <div
-                  className="bg-section border-border text-label text-muted flex h-[100px] w-[80px] shrink-0 items-center justify-center rounded-[2px] border uppercase"
-                  aria-hidden="true"
-                >
-                  Foto
-                </div>
-              )}
+              {/* Duży cudzysłów otwierający (lime). */}
+              <span
+                aria-hidden="true"
+                className="font-display text-lime text-[4rem] leading-none"
+              >
+                &ldquo;
+              </span>
 
-              {/* Tekst opinii + autor. */}
-              <div className="flex flex-col">
-                <blockquote className="text-ink text-body italic">
-                  „{t.quote}”
-                </blockquote>
-                <figcaption className="mt-4">
-                  <p className="font-display text-ink font-semibold">
-                    {t.name}
-                  </p>
-                  <p className="text-caption text-muted mt-0.5">{t.role}</p>
-                </figcaption>
-              </div>
+              <blockquote className="text-ink text-body-lg italic">
+                {t.quote}
+              </blockquote>
+
+              <figcaption className="mt-auto flex items-center gap-3 pt-2">
+                <span
+                  aria-hidden="true"
+                  className="bg-surface border-lime text-ink text-caption flex h-10 w-10 shrink-0 items-center justify-center rounded-full border font-semibold"
+                >
+                  {initials(t.name)}
+                </span>
+                <div>
+                  <p className="font-display text-ink font-semibold">{t.name}</p>
+                  <p className="text-caption text-muted">{t.role}</p>
+                </div>
+              </figcaption>
             </figure>
           ))}
         </div>

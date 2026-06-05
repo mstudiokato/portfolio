@@ -12,7 +12,10 @@ import { ProjectCard } from "@/components/project-card";
  */
 export function SelectedWork({ projects }: { projects: Project[] }) {
   return (
-    <Section id="wybrane">
+    <Section
+      id="wybrane"
+      style={{ paddingTop: "calc(var(--spacing-section) * 0.7)" }}
+    >
       <Container>
         <Label>— Wybrane realizacje</Label>
         <H2 className="mt-4 max-w-2xl">Case Studies</H2>

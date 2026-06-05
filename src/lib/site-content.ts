@@ -88,19 +88,21 @@ export const TESTIMONIALS = testimonials.items.map((t) => ({
   imageExists: publicAssetExists(t.image),
 }));
 
-/** AI-Augmented Workflow (sek. 8.5) — jeden akapit. */
-export const AI_WORKFLOW_PARAGRAPH = site.aiWorkflow;
-
 /** Liczby (sek. 8.6) — lata liczone osobno z experience.ts. */
 export const STATS: Array<{ value: string; label: string }> = [
   { value: site.numbers.projects, label: "Projektów" },
   { value: site.numbers.brands, label: "Organizacji" },
 ];
 
-/** Credibility strip — wyróżnieni klienci (krótka nazwa do logotypu). */
-export const CREDIBILITY_CLIENTS: string[] = clients.items
+/** Credibility strip — wyróżnieni klienci: nazwa + logo (SVG) z flagą istnienia.
+ *  logoExists liczone w buildzie (fs) → render <Image> albo fallback tekstowy. */
+export const CREDIBILITY = clients.items
   .filter((c) => c.featured)
-  .map((c) => c.shortName || c.name);
+  .map((c) => ({
+    name: c.shortName || c.name,
+    logo: c.logo ?? null,
+    logoExists: publicAssetExists(c.logo),
+  }));
 
 /** Pełna lista klientów (sek. 8.7) — nazwy formalne. */
 export const ALL_CLIENTS: string[] = clients.items.map((c) => c.name);
