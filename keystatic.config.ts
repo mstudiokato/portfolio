@@ -1,5 +1,6 @@
 import { config, fields, collection, singleton } from "@keystatic/core";
 import { CATEGORIES } from "./src/lib/categories";
+import { GALLERY_CATEGORIES } from "./src/lib/gallery-categories";
 
 /**
  * Keystatic — Git-based CMS. Treść nadal żyje w repo (src/content/projekty/*.mdx
@@ -114,6 +115,59 @@ export default config({
           { label: "SEO" },
         ),
         content: fields.mdx({ label: "Treść podstrony (body)" }),
+      },
+    }),
+
+    galerie: collection({
+      label: "Galerie (pozostałe prace)",
+      slugField: "title",
+      path: "src/content/galerie/*",
+      format: { data: "json" },
+      columns: ["title", "order"],
+      schema: {
+        title: fields.slug({
+          name: {
+            label: "Tytuł / klient",
+            validation: { isRequired: true },
+          },
+          slug: {
+            label: "Slug (nazwa pliku)",
+            description: "Identyfikator wpisu. URL-safe.",
+          },
+        }),
+        category: fields.select({
+          label: "Kategoria",
+          options: GALLERY_CATEGORIES.map((c) => ({
+            label: c.label,
+            value: c.slug,
+          })),
+          defaultValue: "social-media",
+        }),
+        description: fields.text({
+          label: "Opis (1–2 zdania)",
+          multiline: true,
+        }),
+        order: fields.integer({
+          label: "Kolejność (w kategorii)",
+          validation: { isRequired: true },
+          defaultValue: 1,
+        }),
+        images: fields.array(
+          fields.object({
+            src: fields.text({
+              label: "Ścieżka pliku",
+              description: "np. /galerie/<slug>/01.jpg (oryginalne proporcje)",
+            }),
+            alt: fields.text({
+              label: "Alt (opis obrazu)",
+              validation: { isRequired: true },
+            }),
+          }),
+          {
+            label: "Zdjęcia (1–12)",
+            itemLabel: (p) => p.fields.alt.value || p.fields.src.value || "zdjęcie",
+          },
+        ),
       },
     }),
   },

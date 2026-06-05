@@ -1,0 +1,11 @@
+{
+  "title": "Marka B2B — kampania social",
+  "category": "social-media",
+  "description": "Seria postów i stories pod kampanię produktową marki B2B. (Placeholder — podmień w Keystatic.)",
+  "order": 2,
+  "images": [
+    { "src": "/galerie/social-media-marka-b2b/01.jpg", "alt": "Post kampanijny — kwadrat" },
+    { "src": "/galerie/social-media-marka-b2b/02.jpg", "alt": "Post kampanijny — wariant" },
+    { "src": "/galerie/social-media-marka-b2b/03.jpg", "alt": "Stories — adaptacja pionowa" }
+  ]
+}

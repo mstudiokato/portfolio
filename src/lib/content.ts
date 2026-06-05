@@ -6,6 +6,11 @@ import {
   CATEGORIES,
   isCategorySlug,
 } from "@/lib/categories";
+import {
+  type GalleryCategorySlug,
+  GALLERY_CATEGORY_SLUGS,
+  isGalleryCategorySlug,
+} from "@/lib/gallery-categories";
 
 /**
  * Model treści MVP: projekty jako pliki MDX z typowanym frontmatterem w repo
@@ -230,4 +235,88 @@ export function countByCategory(): Record<CategorySlug, number> {
   const counts = {} as Record<CategorySlug, number>;
   for (const { slug } of CATEGORIES) counts[slug] = grouped[slug].length;
   return counts;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   GALERIE („Pozostałe prace") — osobny, lekki model treści od projektów MDX.
+   Jeden wpis = grupa zdjęć (oryginalne proporcje) + metadane, BEZ podstrony.
+   Pliki: src/content/galerie/<slug>.json (kolekcja Keystatic „Galerie").
+   ────────────────────────────────────────────────────────────────────────── */
+
+const GALLERY_DIR = path.join(process.cwd(), "src/content/galerie");
+
+/** Obraz galerii: ścieżka + alt + flaga istnienia pliku w /public (liczona w buildzie). */
+export type GalleryImage = { src: string; alt: string; exists: boolean };
+
+export type GalleryItem = {
+  /** slug = nazwa pliku bez rozszerzenia. */
+  slug: string;
+  /** Nazwa klienta / projektu. */
+  title: string;
+  /** Dokładnie jedna z pięciu kategorii galerii. */
+  category: GalleryCategorySlug;
+  /** Krótki opis (1–2 zdania). */
+  description: string;
+  /** Zdjęcia (1–12), w oryginalnych proporcjach. */
+  images: GalleryImage[];
+  /** Kolejność w obrębie kategorii (mniejsze = wyżej). */
+  order: number;
+};
+
+/** Czy plik obrazu (ścieżka względem /public) istnieje — render: <img> vs placeholder. */
+function publicAssetExists(src: string): boolean {
+  if (!src || src.trim() === "") return false;
+  const rel = src.replace(/^\//, "");
+  return fs.existsSync(path.join(process.cwd(), "public", rel));
+}
+
+function parseGalleryItem(fileName: string): GalleryItem {
+  const slug = fileName.replace(/\.json$/, "");
+  const raw = fs.readFileSync(path.join(GALLERY_DIR, fileName), "utf8");
+  const data = JSON.parse(raw) as Record<string, unknown>;
+
+  const category = data.category;
+  if (!isGalleryCategorySlug(category)) {
+    throw new Error(
+      `Galeria "${fileName}": "category" musi być jedną z: ${GALLERY_CATEGORY_SLUGS.join(", ")}. ` +
+        `Otrzymano: ${JSON.stringify(category)}.`,
+    );
+  }
+
+  const rawImages = Array.isArray(data.images) ? data.images : [];
+  const images: GalleryImage[] = rawImages
+    .map(toImageRef)
+    .filter((x): x is ImageRef => x !== null)
+    .map((img) => ({ ...img, exists: publicAssetExists(img.src) }));
+
+  return {
+    slug,
+    title: str(data.title) || slug,
+    category,
+    description: str(data.description),
+    images,
+    order: data.order !== undefined ? Number(data.order) : 0,
+  };
+}
+
+function byOrderThenTitle(a: GalleryItem, b: GalleryItem): number {
+  if (a.order !== b.order) return a.order - b.order;
+  return a.title.localeCompare(b.title, "pl");
+}
+
+/** Wszystkie wpisy galerii, posortowane (kolejność → tytuł). */
+export function getGalleryItems(): GalleryItem[] {
+  if (!fs.existsSync(GALLERY_DIR)) return [];
+  return fs
+    .readdirSync(GALLERY_DIR)
+    .filter((f) => f.endsWith(".json"))
+    .map(parseGalleryItem)
+    .sort(byOrderThenTitle);
+}
+
+/** Wpisy galerii danej kategorii (zachowuje sortowanie). */
+export function getGalleryByCategory(
+  category: GalleryCategorySlug,
+): GalleryItem[] {
+  return getGalleryItems().filter((g) => g.category === category);
 }

@@ -18,9 +18,11 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
           <Label>Wybrane projekty</Label>
           <Link
             href="/projekty"
-            className="text-label text-lime shrink-0 uppercase hover:underline"
+            // Wyróżniony link — off-white, medium, hover lime (nie ginie w tle).
+            className="text-label text-ink hover:text-lime shrink-0 uppercase transition-colors"
+            style={{ fontWeight: 500 }}
           >
-            Zobacz wszystkie →
+            Zobacz wszystkie projekty →
           </Link>
         </div>
 

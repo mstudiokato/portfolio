@@ -1,0 +1,12 @@
+{
+  "title": "Klub piłkarski — pakiet matchday",
+  "category": "social-media",
+  "description": "Zestaw grafik meczowych: zapowiedzi, składy i wyniki w spójnym systemie wizualnym. (Placeholder — podmień zdjęcia i opis w Keystatic.)",
+  "order": 1,
+  "images": [
+    { "src": "/galerie/social-media-klub-matchday/01.jpg", "alt": "Zapowiedź meczu — grafika social" },
+    { "src": "/galerie/social-media-klub-matchday/02.jpg", "alt": "Skład meczowy — grafika social" },
+    { "src": "/galerie/social-media-klub-matchday/03.jpg", "alt": "Wynik meczu — grafika social" },
+    { "src": "/galerie/social-media-klub-matchday/04.jpg", "alt": "Stories — adaptacja pionowa" }
+  ]
+}

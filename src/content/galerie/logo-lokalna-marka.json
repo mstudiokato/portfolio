@@ -1,0 +1,10 @@
+{
+  "title": "Lokalna marka — logo",
+  "category": "logo",
+  "description": "Znak i podstawowe warianty logo dla lokalnej marki. (Placeholder — podmień w Keystatic.)",
+  "order": 1,
+  "images": [
+    { "src": "/galerie/logo-lokalna-marka/01.jpg", "alt": "Logo — wersja podstawowa" },
+    { "src": "/galerie/logo-lokalna-marka/02.jpg", "alt": "Logo — wersja monochromatyczna" }
+  ]
+}

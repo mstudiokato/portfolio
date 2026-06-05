@@ -1,64 +1,66 @@
 import type { Metadata } from "next";
-import { getAllProjects, getProjectsByCategory } from "@/lib/content";
-import {
-  type CategorySlug,
-  categoryLabel,
-  isCategorySlug,
-} from "@/lib/categories";
+import { getFeaturedProjects, getGalleryByCategory } from "@/lib/content";
+import { GALLERY_CATEGORIES } from "@/lib/gallery-categories";
 import { ProjectCard } from "@/components/project-card";
-import { CategoryFilter } from "@/components/category-filter";
+import {
+  GalleryAccordion,
+  type GalleryGroup,
+} from "@/components/gallery-accordion";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Container, Section } from "@/components/ui/layout";
-import { H1, Lead, Body } from "@/components/ui/typography";
+import { H1, H2, Lead, Label } from "@/components/ui/typography";
 
 export const metadata: Metadata = {
   title: "Projekty",
   description:
-    "Archiwum projektów — branding, event branding, social media, print, prezentacje. Filtruj po kategorii.",
+    "Wybrane projekty case-study oraz archiwum pozostałych prac: social media, logo, plakaty, branding i więcej.",
 };
 
-export default async function ProjektyPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ kategoria?: string }>;
-}) {
-  const { kategoria } = await searchParams;
+export default function ProjektyPage() {
+  const featured = getFeaturedProjects();
 
-  // Domyślnie „wszystkie"; nieznana kategoria → traktujemy jak brak filtra.
-  const active: CategorySlug | null = isCategorySlug(kategoria)
-    ? kategoria
-    : null;
-
-  const projects = active ? getProjectsByCategory(active) : getAllProjects();
+  // Grupy do accordionu „Pozostałe prace" — kolejność z GALLERY_CATEGORIES.
+  const groups: GalleryGroup[] = GALLERY_CATEGORIES.map((c) => ({
+    slug: c.slug,
+    label: c.label,
+    items: getGalleryByCategory(c.slug),
+  }));
 
   return (
     <>
       <SiteHeader />
 
-      <Section size="sm">
+      {/* SEKCJA 1 — Wyróżnione projekty (te same karty co na homepage). */}
+      <Section>
         <Container>
           <H1 className="text-h2">Projekty</H1>
           <Lead className="mt-3 max-w-2xl">
-            {active
-              ? `Kategoria: ${categoryLabel(active)}`
-              : "Pełne archiwum realizacji. Filtruj po kategorii."}
+            Wybrane realizacje case-study oraz archiwum pozostałych prac.
           </Lead>
 
-          <div className="mt-8">
-            <CategoryFilter active={active} />
-          </div>
-
-          {projects.length > 0 ? (
-            <div className="gap-x-grid mt-10 grid grid-cols-1 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project) => (
+          <div className="mt-12">
+            <Label>Wybrane projekty</Label>
+            <div className="gap-x-grid mt-8 grid grid-cols-1 gap-y-12 lg:grid-cols-2">
+              {featured.map((project) => (
                 <ProjectCard key={project.slug} project={project} />
               ))}
             </div>
-          ) : (
-            <Body className="text-muted mt-10">
-              Brak projektów w tej kategorii.
-            </Body>
-          )}
+          </div>
+        </Container>
+      </Section>
+
+      {/* SEKCJA 2 — Pozostałe prace (accordion galerii). */}
+      <Section tone="section">
+        <Container>
+          <Label>Pozostałe prace</Label>
+          <H2 className="mt-4 max-w-2xl">Archiwum</H2>
+          <Lead className="mt-3 max-w-2xl">
+            Mniejsze projekty i pojedyncze realizacje, pogrupowane tematycznie.
+          </Lead>
+
+          <div className="mt-10">
+            <GalleryAccordion groups={groups} />
+          </div>
         </Container>
       </Section>
 

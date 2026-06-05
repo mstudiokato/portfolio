@@ -1,0 +1,10 @@
+{
+  "title": "Projekt różny — opracowanie",
+  "category": "pozostale",
+  "description": "Pojedyncze opracowanie graficzne spoza głównych kategorii. (Placeholder — podmień w Keystatic.)",
+  "order": 1,
+  "images": [
+    { "src": "/galerie/pozostale-projekt-rozny/01.jpg", "alt": "Opracowanie graficzne — widok 1" },
+    { "src": "/galerie/pozostale-projekt-rozny/02.jpg", "alt": "Opracowanie graficzne — widok 2" }
+  ]
+}
