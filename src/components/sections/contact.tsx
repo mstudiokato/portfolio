@@ -12,7 +12,7 @@ export function Contact() {
   const calConfigured = CONTACT.calUrl !== "#";
 
   return (
-    <Section id="kontakt" tone="section">
+    <Section id="kontakt">
       <Container>
         <Label>Kontakt</Label>
         <H2 className="mt-4 max-w-2xl">Chcesz porozmawiać?</H2>
@@ -40,20 +40,27 @@ export function Contact() {
               </Body>
             </div>
             <div>
-              {calConfigured ? (
-                <Button
-                  href={CONTACT.calUrl}
-                  variant="secondary"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  // Lime outline 2px (V2) — inline style wygrywa pewnie nad klasami wariantu.
-                  style={{ borderColor: "#D4FF00", borderWidth: "2px" }}
-                >
-                  Zarezerwuj rozmowę ↗
-                </Button>
-              ) : (
-                <Body className="text-muted">Cal.com (link wkrótce)</Body>
-              )}
+              <Label className="text-muted">Wolisz porozmawiać od razu?</Label>
+              <Body className="text-muted mt-2 max-w-md">
+                Zarezerwuj 30 minut w moim kalendarzu — bez zobowiązań, po prostu
+                porozmawiajmy o projekcie.
+              </Body>
+              <div className="mt-4">
+                {calConfigured ? (
+                  <Button
+                    href={CONTACT.calUrl}
+                    variant="secondary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    // Lime outline 2px (V2) — inline style wygrywa pewnie nad klasami wariantu.
+                    style={{ borderColor: "#D4FF00", borderWidth: "2px" }}
+                  >
+                    Zarezerwuj rozmowę ↗
+                  </Button>
+                ) : (
+                  <Body className="text-muted">Cal.com (link wkrótce)</Body>
+                )}
+              </div>
             </div>
             <div>
               <Label className="text-muted">Dostępność</Label>

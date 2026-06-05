@@ -1,13 +1,8 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/layout";
 import { Button } from "@/components/ui/button";
+import { MainNav } from "@/components/main-nav";
 import { CONTACT } from "@/lib/site-content";
-
-const NAV = [
-  { label: "Projekty", href: "/projekty" },
-  { label: "Specjalizacje", href: "/#specjalizacje" },
-  { label: "Kontakt", href: "/#kontakt" },
-];
 
 export function SiteHeader() {
   return (
@@ -20,20 +15,7 @@ export function SiteHeader() {
           Michał Stężały
         </Link>
 
-        <nav aria-label="Główna nawigacja" className="hidden lg:block">
-          <ul className="text-caption text-muted flex items-center gap-7 tracking-wide uppercase">
-            {NAV.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="hover:text-ink transition-colors"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <MainNav />
 
         <div className="flex items-center gap-5">
           <Button href="/#kontakt" variant="primary" size="sm">

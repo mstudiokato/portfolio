@@ -63,12 +63,23 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
 
-  // Strzałki przewijają o pełną szerokość widoku (~4 zdjęcia na desktopie).
-  function scrollByView(dir: number) {
+  // > 4 zdjęcia → poziomy scroll; ≤ 4 → statyczny rząd (G1).
+  const scrollable = item.images.length > 4;
+
+  // Strzałka przewija dokładnie o jedno zdjęcie (do następnej/poprzedniej kafli).
+  function scrollOne(dir: number) {
     const el = scrollRef.current;
     if (!el) return;
-    el.scrollBy({
-      left: dir * el.clientWidth,
+    const items = Array.from(
+      el.querySelectorAll<HTMLElement>("[data-gallery-item]"),
+    );
+    const cur = el.scrollLeft;
+    const target =
+      dir > 0
+        ? items.find((it) => it.offsetLeft > cur + 1)
+        : [...items].reverse().find((it) => it.offsetLeft < cur - 1);
+    el.scrollTo({
+      left: target ? target.offsetLeft : dir > 0 ? el.scrollWidth : 0,
       behavior: reduce ? "auto" : "smooth",
     });
   }
@@ -78,8 +89,8 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
 
   return (
     <article className="py-7 first:pt-0">
-      {/* Nagłówek bloku (P4): KLIENT + nazwa po lewej, Data realizacji + rok po prawej. */}
-      <div className="flex items-start justify-between gap-4">
+      {/* Nagłówek bloku (P4): KLIENT + nazwa po lewej, data po prawej. */}
+      <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <span className="bg-lime text-navy text-label rounded-button px-2 py-1 uppercase">
             Klient
@@ -88,23 +99,26 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
             {item.title}
           </h3>
         </div>
+        {/* D1 — „Data realizacji" limonkowy label + rok w tej samej linii i wielkości. */}
         {item.year ? (
-          <div className="shrink-0 text-right">
-            <p className="text-label text-muted uppercase">Data realizacji</p>
-            <p className="font-display text-ink text-h4 mt-1 font-semibold">
+          <div className="flex shrink-0 items-baseline gap-2">
+            <span className="text-label text-lime uppercase">
+              Data realizacji
+            </span>
+            <span className="text-label text-ink font-semibold">
               {item.year}
-            </p>
+            </span>
           </div>
         ) : null}
       </div>
 
-      {/* Poziomy, przewijalny rząd zdjęć (P5). */}
+      {/* Rząd zdjęć — poziomy scroll (>4) lub statyczny rząd (≤4) (P5/G1). */}
       <div className="relative mt-6">
-        {item.images.length > 1 ? (
+        {scrollable ? (
           <>
             <button
               type="button"
-              onClick={() => scrollByView(-1)}
+              onClick={() => scrollOne(-1)}
               aria-label="Przewiń w lewo"
               className={`${NAV} left-1`}
             >
@@ -112,7 +126,7 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
             </button>
             <button
               type="button"
-              onClick={() => scrollByView(1)}
+              onClick={() => scrollOne(1)}
               aria-label="Przewiń w prawo"
               className={`${NAV} right-1`}
             >
@@ -123,12 +137,17 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
 
         <div
           ref={scrollRef}
-          className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto"
+          className={
+            scrollable
+              ? "no-scrollbar relative flex snap-x snap-mandatory gap-3 overflow-x-auto"
+              : "flex flex-wrap gap-3"
+          }
         >
           {item.images.map((img, i) => (
             <button
               key={img.src || i}
               type="button"
+              data-gallery-item
               onClick={() => setOpenIndex(i)}
               aria-label={`Powiększ: ${img.alt || item.title}`}
               className="border-border rounded-card block shrink-0 snap-start overflow-hidden border transition-opacity hover:opacity-90"

@@ -28,6 +28,12 @@ const SECTION_SIZE: Record<"md" | "tight" | "sm", string> = {
   sm: "py-section-sm",
 };
 
+const SECTION_TONE: Record<"navy" | "section" | "surface", string> = {
+  navy: "", // domyślne tło body (navy)
+  section: "bg-section",
+  surface: "bg-surface",
+};
+
 export function Section({
   id,
   tone = "navy",
@@ -36,7 +42,7 @@ export function Section({
   children,
 }: {
   id?: string;
-  tone?: "navy" | "section";
+  tone?: "navy" | "section" | "surface";
   size?: "md" | "tight" | "sm";
   className?: string;
   children: React.ReactNode;
@@ -44,11 +50,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn(
-        SECTION_SIZE[size],
-        tone === "section" && "bg-section",
-        className,
-      )}
+      className={cn(SECTION_SIZE[size], SECTION_TONE[tone], className)}
     >
       {children}
     </section>

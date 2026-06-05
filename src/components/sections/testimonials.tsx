@@ -3,55 +3,47 @@ import { H2, Label } from "@/components/ui/typography";
 import { TESTIMONIALS } from "@/lib/site-content";
 
 /**
- * TESTIMONIALE (N1) — social proof (masterprompt sek. 7). Grid 2×2 na desktop,
- * 1 kolumna na mobile. Karta: avatar (inicjały na ciemnym kole), imię,
- * stanowisko, cytat. Treść edytowalna w Keystatic (singleton testimonials);
- * domyślnie placeholder do podmiany przez właściciela. Tło sekcji = section
- * (T1) — karty surface wyraźnie odróżniają się od sąsiednich sekcji.
+ * TESTIMONIALE (N1 / T1, T2) — social proof (masterprompt sek. 7). Tło sekcji =
+ * surface (#152238), wyraźnie inne niż sąsiednie sekcje; id=opinie-klientow.
+ * Karta: po lewej placeholder popiersia (docelowo wycięta postać), po prawej
+ * cytat (kursywa) + imię (bold) + stanowisko (secondary). Poziomo na desktop,
+ * pionowy stack na mobile. Treść edytowalna w Keystatic (singleton testimonials).
  */
-
-/** Inicjały z dwóch pierwszych słów imienia i nazwiska. */
-function initials(name: string): string {
-  return name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((word) => word[0]?.toUpperCase() ?? "")
-    .join("");
-}
-
 export function Testimonials() {
   if (TESTIMONIALS.length === 0) return null;
 
   return (
-    <Section id="opinie" tone="section">
+    <Section id="opinie-klientow" tone="surface">
       <Container>
         <Label>Co mówią klienci</Label>
-        <H2 className="mt-4 max-w-2xl">Opinie</H2>
+        <H2 className="mt-4 max-w-2xl">Opinie klientów</H2>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {TESTIMONIALS.map((t) => (
             <figure
               key={t.name}
-              className="bg-surface border-border rounded-card flex flex-col gap-5 border p-6 sm:p-8"
+              className="bg-navy border-border flex flex-col gap-5 rounded-card border p-6 sm:flex-row sm:gap-6 sm:p-8"
             >
-              <div className="flex items-center gap-4">
-                <div
-                  className="bg-navy border-border flex h-12 w-12 shrink-0 items-center justify-center rounded-full border"
-                  aria-hidden="true"
-                >
-                  <span className="font-display text-ink text-body font-semibold">
-                    {initials(t.name)}
-                  </span>
-                </div>
-                <figcaption>
-                  <p className="font-display text-ink text-h4">{t.name}</p>
+              {/* Placeholder popiersia (~80×100px) — docelowo wycięta postać. */}
+              <div
+                className="bg-section border-border text-label text-muted flex h-[100px] w-[80px] shrink-0 items-center justify-center rounded-[2px] border uppercase"
+                aria-hidden="true"
+              >
+                Foto
+              </div>
+
+              {/* Tekst opinii + autor. */}
+              <div className="flex flex-col">
+                <blockquote className="text-ink text-body italic">
+                  „{t.quote}”
+                </blockquote>
+                <figcaption className="mt-4">
+                  <p className="font-display text-ink font-semibold">
+                    {t.name}
+                  </p>
                   <p className="text-caption text-muted mt-0.5">{t.role}</p>
                 </figcaption>
               </div>
-              <blockquote className="text-muted text-body italic">
-                „{t.quote}”
-              </blockquote>
             </figure>
           ))}
         </div>
