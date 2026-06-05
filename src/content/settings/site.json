@@ -5,9 +5,9 @@
     "ctaPrimary": "Porozmawiajmy ↗",
     "ctaSecondary": "Zobacz projekty",
     "image": null,
-    "positionX": 50,
-    "positionY": 50,
-    "scale": 100
+    "positionX": 25,
+    "positionY": 54,
+    "scale": 109
   },
   "numbers": {
     "projects": "100+",
