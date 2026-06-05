@@ -68,7 +68,8 @@
      Rytm pionowy sekcji i odstępy gridów jako tokeny. Nazwane spacingi
      generują utilitki: py-section, gap-grid, p-card itd. */
   --spacing-section: clamp(4rem, 8vw, 7rem); /* odstęp pionowy sekcji */
-  --spacing-section-sm: clamp(2.5rem, 5vw, 4rem); /* mniejsza sekcja */
+  --spacing-section-tight: clamp(2.8rem, 5.6vw, 4.9rem); /* ~70% sekcji (Specjalizacje, V5) */
+  --spacing-section-sm: clamp(2.5rem, 5vw, 4rem); /* mniejsza sekcja (pasek band) */
   --spacing-gutter: 1.25rem; /* bazowy padding boczny strony */
   --spacing-grid: 1.5rem; /* odstęp w siatce kafli */
   --spacing-card: 1.25rem; /* wewn. padding karty */

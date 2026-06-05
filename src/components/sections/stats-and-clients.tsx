@@ -15,7 +15,7 @@ export function StatsAndClients() {
   ];
 
   return (
-    <Section size="sm" tone="section">
+    <Section id="klienci" size="sm" tone="section">
       <Container>
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
           {/* LICZBY */}

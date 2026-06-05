@@ -33,10 +33,12 @@ type Props = {
   target?: string;
   rel?: string;
   className?: string;
+  // Inline style — przekazywany do obu gałęzi (link i button), np. override bordera.
+  style?: React.CSSProperties;
   children: React.ReactNode;
 } & Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "className" | "children"
+  "className" | "children" | "style"
 >;
 
 export function Button({
@@ -46,6 +48,7 @@ export function Button({
   target,
   rel,
   className,
+  style,
   children,
   ...rest
 }: Props) {
@@ -53,14 +56,14 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} target={target} rel={rel} className={classes}>
+      <Link href={href} target={target} rel={rel} className={classes} style={style}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button className={classes} {...rest}>
+    <button className={classes} style={style} {...rest}>
       {children}
     </button>
   );

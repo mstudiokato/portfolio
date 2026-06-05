@@ -15,7 +15,7 @@ export function Contact() {
     <Section id="kontakt" tone="section">
       <Container>
         <Label>Kontakt</Label>
-        <H2 className="mt-4 max-w-2xl">Porozmawiajmy o projekcie</H2>
+        <H2 className="mt-4 max-w-2xl">Chcesz porozmawiać?</H2>
 
         <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-2">
           {/* DANE KONTAKTOWE */}
@@ -40,21 +40,20 @@ export function Contact() {
               </Body>
             </div>
             <div>
-              <Label className="text-muted">Umów rozmowę</Label>
-              <div className="mt-3">
-                {calConfigured ? (
-                  <Button
-                    href={CONTACT.calUrl}
-                    variant="secondary"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Zarezerwuj rozmowę ↗
-                  </Button>
-                ) : (
-                  <Body className="text-muted">Cal.com (link wkrótce)</Body>
-                )}
-              </div>
+              {calConfigured ? (
+                <Button
+                  href={CONTACT.calUrl}
+                  variant="secondary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  // Lime outline 2px (V2) — inline style wygrywa pewnie nad klasami wariantu.
+                  style={{ borderColor: "#D4FF00", borderWidth: "2px" }}
+                >
+                  Zarezerwuj rozmowę ↗
+                </Button>
+              ) : (
+                <Body className="text-muted">Cal.com (link wkrótce)</Body>
+              )}
             </div>
             <div>
               <Label className="text-muted">Dostępność</Label>

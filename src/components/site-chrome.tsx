@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/layout";
 import { Button } from "@/components/ui/button";
-import { LOCATION, CONTACT } from "@/lib/site-content";
+import { CONTACT } from "@/lib/site-content";
 
 const NAV = [
   { label: "Projekty", href: "/projekty" },
@@ -37,9 +37,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-5">
-          <span className="text-label text-muted hidden uppercase sm:inline">
-            {LOCATION}
-          </span>
           <Button href="/#kontakt" variant="primary" size="sm">
             Porozmawiajmy ↗
           </Button>

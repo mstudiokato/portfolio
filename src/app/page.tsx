@@ -3,9 +3,8 @@ import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Hero } from "@/components/sections/hero";
 import { StatsAndClients } from "@/components/sections/stats-and-clients";
 import { SelectedWork } from "@/components/sections/selected-work";
+import { Testimonials } from "@/components/sections/testimonials";
 import { Services } from "@/components/sections/services";
-import { AiWorkflow } from "@/components/sections/ai-workflow";
-import { ClientList } from "@/components/sections/client-list";
 import { Contact } from "@/components/sections/contact";
 
 export default function Home() {
@@ -18,9 +17,8 @@ export default function Home() {
         <Hero featured={featured} />
         <StatsAndClients />
         <SelectedWork projects={featured} />
+        <Testimonials />
         <Services />
-        <AiWorkflow />
-        <ClientList />
         <Contact />
       </main>
       <SiteFooter />

@@ -22,6 +22,12 @@ export function Container({
   );
 }
 
+const SECTION_SIZE: Record<"md" | "tight" | "sm", string> = {
+  md: "py-section",
+  tight: "py-section-tight", // ~30% mniej (Specjalizacje, V5)
+  sm: "py-section-sm",
+};
+
 export function Section({
   id,
   tone = "navy",
@@ -31,7 +37,7 @@ export function Section({
 }: {
   id?: string;
   tone?: "navy" | "section";
-  size?: "md" | "sm";
+  size?: "md" | "tight" | "sm";
   className?: string;
   children: React.ReactNode;
 }) {
@@ -39,7 +45,7 @@ export function Section({
     <section
       id={id}
       className={cn(
-        size === "sm" ? "py-section-sm" : "py-section",
+        SECTION_SIZE[size],
         tone === "section" && "bg-section",
         className,
       )}

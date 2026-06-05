@@ -6,6 +6,58 @@ import "./globals.css";
 
 const SITE_NAME = "Michał Stężały — Senior Graphic Designer";
 
+// JSON-LD schema.org (S2) — Person + ProfessionalService. URL podglądu (netlify).
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      name: "Michał Stężały",
+      jobTitle: "Senior Graphic Designer",
+      description: "Visual communication design for sport, events and business",
+      url: "https://michal-stezaly.netlify.app",
+      email: "kontakt@michal-stezaly.pl",
+      telephone: "+48668010262",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Katowice",
+        addressRegion: "Śląsk",
+        addressCountry: "Polska",
+      },
+      knowsAbout: [
+        "sport branding",
+        "event design",
+        "social media",
+        "graphic design",
+        "visual identity",
+      ],
+      sameAs: [],
+    },
+    {
+      "@type": "ProfessionalService",
+      name: "Michał Stężały — Senior Graphic Designer",
+      description: "Visual communication design for sport, events and business",
+      url: "https://michal-stezaly.netlify.app",
+      email: "kontakt@michal-stezaly.pl",
+      telephone: "+48668010262",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Katowice",
+        addressRegion: "Śląsk",
+        addressCountry: "Polska",
+      },
+      knowsAbout: [
+        "sport branding",
+        "event design",
+        "social media",
+        "graphic design",
+        "visual identity",
+      ],
+      sameAs: [],
+    },
+  ],
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://michal-stezaly.pl"),
   title: {
@@ -27,6 +79,10 @@ export default function RootLayout({
   return (
     <html lang="pl" className={`${clashDisplay.variable} ${switzer.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        />
         {children}
         <CookieBanner />
       </body>

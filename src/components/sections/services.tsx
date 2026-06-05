@@ -1,14 +1,17 @@
 import { Container, Section } from "@/components/ui/layout";
 import { H2, H4, Body, Label } from "@/components/ui/typography";
-import { SERVICES } from "@/lib/site-content";
+import { SERVICES, AI_WORKFLOW_PARAGRAPH } from "@/lib/site-content";
 
 /**
  * WHAT I DESIGN / SERVICES (sek. 8.4). 6 obszarów bez ikon: nazwa (H4) +
  * 1–2 zdania. Układ: 3 kolumny desktop / 2 tablet / 1 mobile.
+ * Tło sekcji = section (inne niż Selected Work) i zwarty padding (V5).
+ * AI-Augmented Workflow przeniesiony tu jako wyróżniony 7. element —
+ * pełna szerokość pod siatką, na tle surface (V4).
  */
 export function Services() {
   return (
-    <Section id="specjalizacje">
+    <Section id="specjalizacje" size="tight" tone="section">
       <Container>
         <Label>Co projektuję</Label>
         <H2 className="mt-4 max-w-2xl">Specjalizacje</H2>
@@ -20,6 +23,14 @@ export function Services() {
               <Body className="text-muted mt-3">{service.description}</Body>
             </div>
           ))}
+        </div>
+
+        {/* 7. element — AI-Augmented Workflow, pełna szerokość, tło surface. */}
+        <div className="bg-surface border-border rounded-card mt-10 border p-8 sm:p-12">
+          <Label>AI-Augmented Workflow</Label>
+          <p className="text-ink text-h4 mt-6 max-w-3xl leading-relaxed font-normal">
+            {AI_WORKFLOW_PARAGRAPH}
+          </p>
         </div>
       </Container>
     </Section>

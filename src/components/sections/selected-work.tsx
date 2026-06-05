@@ -5,14 +5,12 @@ import { Label } from "@/components/ui/typography";
 import { ProjectCard } from "@/components/project-card";
 
 /**
- * SELECTED WORK (sek. 8.3). Czytelna hierarchia: pierwszy projekt (order:1)
- * na pełną szerokość (jeden szeroki kadr 3:2), reszta w równym 2-kolumnowym
- * gridzie (6/6). Na mobile wszystko 1 kolumna, kolejność zachowana.
- * Ratio kafli 3:2 [ZABLOKOWANE].
+ * SELECTED WORK (sek. 8.3). Czysty, równy 2-kolumnowy grid wszystkich
+ * featured projektów — bez karty full-width (V6). Na mobile 1 kolumna,
+ * kolejność zachowana. Ratio kafli 3:2 [ZABLOKOWANE], hover states i linki
+ * w ProjectCard.
  */
 export function SelectedWork({ projects }: { projects: Project[] }) {
-  const [lead, ...rest] = projects;
-
   return (
     <Section id="wybrane">
       <Container>
@@ -26,18 +24,10 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
           </Link>
         </div>
 
-        <div className="mt-10 flex flex-col gap-12">
-          {/* Główny projekt — pełna szerokość. */}
-          {lead ? <ProjectCard project={lead} /> : null}
-
-          {/* Pozostałe — równy 2-kolumnowy grid. */}
-          {rest.length > 0 ? (
-            <div className="gap-x-grid grid grid-cols-1 gap-y-12 lg:grid-cols-2">
-              {rest.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </div>
-          ) : null}
+        <div className="gap-x-grid mt-10 grid grid-cols-1 gap-y-12 lg:grid-cols-2">
+          {projects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
         </div>
       </Container>
     </Section>

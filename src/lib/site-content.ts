@@ -43,10 +43,14 @@ type ClientsJson = {
     featured: boolean;
   }>;
 };
+type TestimonialsJson = {
+  items: Array<{ name: string; role: string; quote: string }>;
+};
 
 const site = readJson<SiteJson>("site.json");
 const services = readJson<ServicesJson>("services.json");
 const clients = readJson<ClientsJson>("clients.json");
+const testimonials = readJson<TestimonialsJson>("testimonials.json");
 
 export const LOCATION = "Katowice, PL";
 
@@ -55,6 +59,9 @@ export const HERO = site.hero;
 
 /** Services (sek. 8.4) — 6 obszarów. */
 export const SERVICES = services.items;
+
+/** Testimoniale (N1) — opinie klientów; treść podmieniana przez Keystatic. */
+export const TESTIMONIALS = testimonials.items;
 
 /** AI-Augmented Workflow (sek. 8.5) — jeden akapit. */
 export const AI_WORKFLOW_PARAGRAPH = site.aiWorkflow;

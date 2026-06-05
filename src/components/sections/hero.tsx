@@ -27,7 +27,7 @@ export function Hero({ featured }: { featured: Project[] }) {
   return (
     <Section>
       <Container>
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
+        <div className="grid items-center gap-12 pt-4 sm:pt-8 lg:grid-cols-12 lg:gap-10 lg:pt-10">
           {/* LEWA KOLUMNA */}
           <div className="lg:col-span-7">
             <Label>{HERO.eyebrow}</Label>

@@ -187,6 +187,22 @@ export default config({
       },
     }),
 
+    testimonials: singleton({
+      label: "Testimoniale (opinie)",
+      path: "src/content/settings/testimonials",
+      format: { data: "json" },
+      schema: {
+        items: fields.array(
+          fields.object({
+            name: fields.text({ label: "Imię i nazwisko" }),
+            role: fields.text({ label: "Stanowisko / organizacja" }),
+            quote: fields.text({ label: "Opinia (cytat)", multiline: true }),
+          }),
+          { label: "Opinie", itemLabel: (p) => p.fields.name.value },
+        ),
+      },
+    }),
+
     clients: singleton({
       label: "Klienci",
       path: "src/content/settings/clients",
