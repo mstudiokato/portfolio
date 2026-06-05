@@ -6,8 +6,8 @@ import { Tag } from "@/components/ui/tag";
 /**
  * Editorial tile kafla Selected Work (sek. 6.04 / 7). Cover w stałym ratio 3:2
  * [ZABLOKOWANE]. W tej fazie cover to placeholder (pliki grafik dochodzą później)
- * — bez next/image. Tytuł linkuje do podstrony projektu; chip kategorii linkuje
- * do archiwum przefiltrowanego (osobny link — nie zagnieżdżamy <a> w <a>).
+ * — bez next/image. Tytuł linkuje do podstrony projektu; chip kategorii to
+ * statyczna etykieta (bez linku — archiwum nie ma już filtrów ?kategoria=).
  */
 export function ProjectCard({ project }: { project: Project }) {
   return (
@@ -45,9 +45,7 @@ export function ProjectCard({ project }: { project: Project }) {
         ) : null}
 
         <div className="mt-1">
-          <Tag href={`/projekty?kategoria=${project.category}`}>
-            {categoryLabel(project.category)}
-          </Tag>
+          <Tag>{categoryLabel(project.category)}</Tag>
         </div>
       </div>
     </article>
