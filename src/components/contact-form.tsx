@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Script from "next/script";
 import Link from "next/link";
 import { contactSchema } from "@/lib/contact-schema";
+import { CONTACT } from "@/lib/site-content";
 
 const FIELD =
   "bg-surface border-border rounded-button text-ink placeholder:text-muted mt-2 w-full border px-4 py-3 focus-visible:border-lime";
@@ -122,13 +123,27 @@ export function ContactForm() {
   }
 
   if (status === "success") {
+    const calConfigured = CONTACT.calUrl !== "#";
     return (
       <div
         role="status"
         className="border-lime/40 bg-surface rounded-card flex flex-col gap-3 border p-6"
       >
         <p className="font-display text-ink text-h4">
-          Wiadomość wysłana — odezwę się wkrótce.
+          Dziękuję za wiadomość! Odezwę się najszybciej jak to możliwe —
+          zazwyczaj w ciągu 24 godzin.
+        </p>
+        <p className="text-caption text-muted">
+          Jeśli wolisz porozmawiać od razu —{" "}
+          <a
+            href={calConfigured ? CONTACT.calUrl : "#kontakt"}
+            target={calConfigured ? "_blank" : undefined}
+            rel={calConfigured ? "noopener noreferrer" : undefined}
+            className="text-lime hover:underline"
+          >
+            zarezerwuj termin poniżej
+          </a>
+          .
         </p>
         <button
           type="button"

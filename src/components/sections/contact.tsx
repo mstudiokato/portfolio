@@ -1,5 +1,6 @@
 import { Container, Section } from "@/components/ui/layout";
 import { H2, Body, Label } from "@/components/ui/typography";
+import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/contact-form";
 import { CONTACT } from "@/lib/site-content";
 
@@ -40,15 +41,20 @@ export function Contact() {
             </div>
             <div>
               <Label className="text-muted">Umów rozmowę</Label>
-              <Body className="mt-2">
+              <div className="mt-3">
                 {calConfigured ? (
-                  <a href={CONTACT.calUrl} className="hover:text-lime">
-                    Cal.com →
-                  </a>
+                  <Button
+                    href={CONTACT.calUrl}
+                    variant="secondary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Zarezerwuj rozmowę ↗
+                  </Button>
                 ) : (
-                  <span className="text-muted">Cal.com (link wkrótce)</span>
+                  <Body className="text-muted">Cal.com (link wkrótce)</Body>
                 )}
-              </Body>
+              </div>
             </div>
             <div>
               <Label className="text-muted">Dostępność</Label>

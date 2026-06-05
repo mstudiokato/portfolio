@@ -29,6 +29,9 @@ type Props = {
   variant?: Variant;
   size?: Size;
   href?: string;
+  // Przekazywane do <a>, gdy renderujemy jako link (np. link zewnętrzny).
+  target?: string;
+  rel?: string;
   className?: string;
   children: React.ReactNode;
 } & Omit<
@@ -40,6 +43,8 @@ export function Button({
   variant = "primary",
   size = "md",
   href,
+  target,
+  rel,
   className,
   children,
   ...rest
@@ -48,7 +53,7 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} target={target} rel={rel} className={classes}>
         {children}
       </Link>
     );
