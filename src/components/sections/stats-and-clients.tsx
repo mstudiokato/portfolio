@@ -21,10 +21,14 @@ export function StatsAndClients() {
     <Section id="klienci" size="sm" tone="section">
       <Container>
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-12">
-          {/* LICZBY — pionowe separatory + większy padding między nimi (C1). */}
+          {/* LICZBY (C1, NAPRAWA 4) — pełnowysokościowe separatory (cele rozciągnięte),
+              treść wyrównana do dolnej linii bazowej (justify-end), symetryczny padding. */}
           <dl className="divide-border grid grid-cols-3 divide-x lg:col-span-5 lg:border-r lg:pr-12">
             {stats.map((s) => (
-              <div key={s.label} className="px-5 first:pl-0 sm:px-8">
+              <div
+                key={s.label}
+                className="flex flex-col justify-end px-5 sm:px-6"
+              >
                 <dd className="font-display text-lime text-[clamp(2.25rem,5vw,3.5rem)] leading-none font-semibold">
                   {s.value}
                 </dd>
@@ -35,15 +39,16 @@ export function StatsAndClients() {
             ))}
           </dl>
 
-          {/* LOGOTYPY — marquee prostokątów (C2). */}
+          {/* LOGOTYPY (C2, NAPRAWA 4) — marquee prostokątów o jednakowej wysokości 48px.
+              Oddzielone od liczb: na desktop border-r dl + gap, na mobile border-t + pt. */}
           <div className="border-border border-t pt-8 lg:col-span-7 lg:border-t-0 lg:pt-0">
             <p className="text-label text-muted uppercase">Współpracowałem z</p>
             <div className="marquee-mask relative mt-5 overflow-hidden">
               <ul className="marquee-track flex w-max items-center gap-4">
                 {marqueeClients.map((name, i) => (
                   <li key={`${name}-${i}`} className="shrink-0">
-                    {/* Placeholder nazwy mono w prostokącie-outline (docelowo SVG logo). */}
-                    <span className="border-ink bg-section text-muted rounded-button block border px-6 py-4 font-mono text-sm whitespace-nowrap">
+                    {/* Prostokąt-outline 48px z nazwą mono (docelowo SVG logo z Keystatic). */}
+                    <span className="border-ink bg-section text-muted rounded-button flex h-12 items-center border px-6 font-mono text-sm whitespace-nowrap">
                       {name}
                     </span>
                   </li>

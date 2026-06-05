@@ -15,10 +15,17 @@ import { HERO } from "@/lib/site-content";
  * miało przestrzeń. Zdjęcie: /public/zdjecie.jpg (fallback gdy brak pliku).
  */
 
+// Zdjęcie hero z Keystatic (PANEL 3) z fallbackiem na /public/zdjecie.jpg.
 // Sprawdzenie istnienia pliku w czasie buildu (Hero to server component).
-const hasPhoto = fs.existsSync(
-  path.join(process.cwd(), "public", "zdjecie.jpg"),
-);
+function resolveHeroImage(): string | null {
+  const configured =
+    HERO.image && HERO.image.trim() !== "" ? HERO.image : "/zdjecie.jpg";
+  const exists = fs.existsSync(
+    path.join(process.cwd(), "public", configured.replace(/^\//, "")),
+  );
+  return exists ? configured : null;
+}
+const heroImage = resolveHeroImage();
 
 // Overlay: lewa prawie nieprzezroczysta (czytelność tekstu) → prawa prześwituje.
 const HERO_OVERLAY =
@@ -27,18 +34,31 @@ const HERO_OVERLAY =
 export function Hero() {
   const years = yearsOfExperience();
 
+  // Kadrowanie z Keystatic (PANEL 3): pozycja X/Y (0–100%) i zoom (100–200%).
+  const posX = HERO.positionX ?? 50;
+  const posY = HERO.positionY ?? 50;
+  const scale = HERO.scale ?? 100;
+
   return (
     <section className="bg-navy relative isolate flex min-h-[600px] items-start overflow-hidden lg:min-h-screen">
-      {/* Tło — zdjęcie (za treścią). */}
-      {hasPhoto ? (
-        <Image
-          src="/zdjecie.jpg"
-          alt=""
-          fill
-          sizes="100vw"
-          priority
-          className="-z-20 object-cover object-top"
-        />
+      {/* Tło — zdjęcie (za treścią). Wrapper skaluje (zoom), zdjęcie zawsze fill+cover. */}
+      {heroImage ? (
+        <div className="absolute inset-0 -z-20 overflow-hidden">
+          <div
+            className="relative h-full w-full"
+            style={{ transform: `scale(${scale / 100})` }}
+          >
+            <Image
+              src={heroImage}
+              alt=""
+              fill
+              sizes="100vw"
+              priority
+              className="object-cover"
+              style={{ objectPosition: `${posX}% ${posY}%` }}
+            />
+          </div>
+        </div>
       ) : null}
 
       {/* Overlay gradientowy nad zdjęciem, pod treścią. */}

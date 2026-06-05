@@ -22,6 +22,11 @@ type SiteJson = {
     subline: string;
     ctaPrimary: string;
     ctaSecondary: string;
+    // Kadrowanie zdjęcia hero (PANEL 3) — opcjonalne, z fallbackiem w hero.tsx.
+    image?: string | null;
+    positionX?: number;
+    positionY?: number;
+    scale?: number;
   };
   numbers: { projects: string; brands: string };
   aiWorkflow: string;
@@ -39,12 +44,17 @@ type ClientsJson = {
   items: Array<{
     name: string;
     shortName: string;
-    logo: string;
+    logo: string | null;
     featured: boolean;
   }>;
 };
 type TestimonialsJson = {
-  items: Array<{ name: string; role: string; quote: string }>;
+  items: Array<{
+    name: string;
+    role: string;
+    quote: string;
+    image?: string | null;
+  }>;
 };
 
 const site = readJson<SiteJson>("site.json");
@@ -52,16 +62,31 @@ const services = readJson<ServicesJson>("services.json");
 const clients = readJson<ClientsJson>("clients.json");
 const testimonials = readJson<TestimonialsJson>("testimonials.json");
 
+/** Czy plik (ścieżka względem /public) istnieje — render obrazu vs placeholder. */
+function publicAssetExists(src?: string | null): boolean {
+  if (!src || src.trim() === "") return false;
+  return fs.existsSync(
+    path.join(process.cwd(), "public", src.replace(/^\//, "")),
+  );
+}
+
 export const LOCATION = "Katowice, PL";
 
-/** Hero — eyebrow, subline (z tokenem {lata}), etykiety CTA. */
+/** Hero — eyebrow, subline (z tokenem {lata}), etykiety CTA, kadrowanie zdjęcia. */
 export const HERO = site.hero;
 
 /** Services (sek. 8.4) — 6 obszarów. */
 export const SERVICES = services.items;
 
-/** Testimoniale (N1) — opinie klientów; treść podmieniana przez Keystatic. */
-export const TESTIMONIALS = testimonials.items;
+/** Testimoniale (N1) — opinie klientów; treść + popiersie podmieniane w Keystatic.
+ *  imageExists liczone w buildzie (fs) → render <Image> albo placeholder „FOTO". */
+export const TESTIMONIALS = testimonials.items.map((t) => ({
+  name: t.name,
+  role: t.role,
+  quote: t.quote,
+  image: t.image ?? null,
+  imageExists: publicAssetExists(t.image),
+}));
 
 /** AI-Augmented Workflow (sek. 8.5) — jeden akapit. */
 export const AI_WORKFLOW_PARAGRAPH = site.aiWorkflow;

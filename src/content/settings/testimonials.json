@@ -3,22 +3,26 @@
     {
       "name": "Wojciech Cygan",
       "role": "Wiceprezes PZPN / Prezes Rakowa Częstochowa",
-      "quote": "Fachowiec. Bez dwóch zdań. Polecam! 👍"
+      "quote": "Fachowiec. Bez dwóch zdań. Polecam! 👍",
+      "image": null
     },
     {
       "name": "Marcin Janicki",
       "role": "Prezes Pierwsza Liga Piłkarska",
-      "quote": "Zawsze zaangażowany na 100% Kreatywny i nietuzinkowy. Wszystkie aktywności na czas. Praca z Michałem to czysta przyjemność."
+      "quote": "Zawsze zaangażowany na 100% Kreatywny i nietuzinkowy. Wszystkie aktywności na czas. Praca z Michałem to czysta przyjemność.",
+      "image": null
     },
     {
       "name": "Karol Kuśka",
       "role": "Prezes ROW Rybnik",
-      "quote": "Jakieś zmyślone 2-3 zdania na temat tego grafika :D "
+      "quote": "Jakieś zmyślone 2-3 zdania na temat tego grafika :D ",
+      "image": null
     },
     {
       "name": "Monika Płaczkowska",
       "role": "Superbet",
-      "quote": "Coś miłego o tym projektancie - nie ważne czy szczerze :D "
+      "quote": "Coś miłego o tym projektancie - nie ważne czy szczerze :D ",
+      "image": null
     }
   ]
 }

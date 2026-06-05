@@ -3,7 +3,11 @@
     "eyebrow": "— Projektuję dla sportu i biznesu",
     "subline": "Projektuję komunikację wizualną dla klubów, federacji, eventów i marek B2B — łącząc {lata} lat doświadczenia z nowoczesnym AI-augmented workflow.",
     "ctaPrimary": "Porozmawiajmy ↗",
-    "ctaSecondary": "Zobacz projekty"
+    "ctaSecondary": "Zobacz projekty",
+    "image": null,
+    "positionX": 50,
+    "positionY": 50,
+    "scale": 100
   },
   "numbers": {
     "projects": "100+",

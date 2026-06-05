@@ -63,7 +63,7 @@ export function MainNav() {
 
   return (
     <nav aria-label="Główna nawigacja" className="hidden lg:block">
-      <ul className="text-caption text-muted flex items-center gap-7 tracking-wide uppercase">
+      <ul className="text-caption text-ink flex items-center gap-7 tracking-wide uppercase">
         {NAV.map((item) => {
           const active = isActive(item);
           return (
@@ -71,9 +71,11 @@ export function MainNav() {
               <Link
                 href={item.href}
                 aria-current={active ? "page" : undefined}
+                // Jednolity styl: off-white, medium. Aktywny = tylko limonkowe
+                // podkreślenie (tekst koloru NIE zmienia); hover dokłada podkreślenie.
                 className={cn(
-                  "hover:text-ink hover:border-lime inline-block border-b-2 border-transparent pb-1 transition-colors",
-                  active && "text-ink border-lime",
+                  "hover:border-lime inline-block border-b-2 border-transparent pb-1 font-medium transition-colors",
+                  active && "border-lime",
                 )}
               >
                 {item.label}

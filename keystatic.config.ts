@@ -190,6 +190,23 @@ export default config({
             }),
             ctaPrimary: fields.text({ label: "CTA primary" }),
             ctaSecondary: fields.text({ label: "CTA secondary" }),
+            image: fields.image({
+              label: "Zdjęcie hero (tło sekcji)",
+              directory: "public",
+              publicPath: "/",
+            }),
+            positionX: fields.integer({
+              label: "Kadr — pozycja X (0–100%, domyślnie 50)",
+              defaultValue: 50,
+            }),
+            positionY: fields.integer({
+              label: "Kadr — pozycja Y (0–100%, domyślnie 50)",
+              defaultValue: 50,
+            }),
+            scale: fields.integer({
+              label: "Zoom (100–200%, domyślnie 100)",
+              defaultValue: 100,
+            }),
           },
           { label: "Hero" },
         ),
@@ -254,6 +271,11 @@ export default config({
             name: fields.text({ label: "Imię i nazwisko" }),
             role: fields.text({ label: "Stanowisko / organizacja" }),
             quote: fields.text({ label: "Opinia (cytat)", multiline: true }),
+            image: fields.image({
+              label: "Popiersie (zdjęcie)",
+              directory: "public/opinie",
+              publicPath: "/opinie",
+            }),
           }),
           { label: "Opinie", itemLabel: (p) => p.fields.name.value },
         ),
@@ -271,7 +293,11 @@ export default config({
             shortName: fields.text({
               label: "Krótka nazwa (pasek credibility)",
             }),
-            logo: fields.text({ label: "Logo (ścieżka, opcjonalnie)" }),
+            logo: fields.image({
+              label: "Logo (SVG/PNG)",
+              directory: "public/klienci",
+              publicPath: "/klienci",
+            }),
             featured: fields.checkbox({
               label: "Wyróżniony (pasek na górze)",
               defaultValue: false,

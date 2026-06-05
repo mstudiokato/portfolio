@@ -1,15 +1,15 @@
 {
   "items": [
-    { "name": "International Biathlon Union", "shortName": "IBU", "logo": "", "featured": true },
-    { "name": "SPORTFIVE Polska", "shortName": "SPORTFIVE", "logo": "", "featured": true },
-    { "name": "Stadion Śląski", "shortName": "Stadion Śląski", "logo": "", "featured": true },
-    { "name": "GKS Katowice", "shortName": "GKS Katowice", "logo": "", "featured": true },
-    { "name": "Polski Związek Biathlonu", "shortName": "Polski Związek Biathlonu", "logo": "", "featured": true },
-    { "name": "Węglokoks", "shortName": "Węglokoks", "logo": "", "featured": true },
-    { "name": "Shark Entertainment", "shortName": "", "logo": "", "featured": false },
-    { "name": "SportValue", "shortName": "", "logo": "", "featured": false },
-    { "name": "Coerver Coaching Poland", "shortName": "", "logo": "", "featured": false },
-    { "name": "Football Code", "shortName": "", "logo": "", "featured": false },
-    { "name": "Kancelaria Jara Drapała", "shortName": "", "logo": "", "featured": false }
+    { "name": "International Biathlon Union", "shortName": "IBU", "logo": null, "featured": true },
+    { "name": "SPORTFIVE Polska", "shortName": "SPORTFIVE", "logo": null, "featured": true },
+    { "name": "Stadion Śląski", "shortName": "Stadion Śląski", "logo": null, "featured": true },
+    { "name": "GKS Katowice", "shortName": "GKS Katowice", "logo": null, "featured": true },
+    { "name": "Polski Związek Biathlonu", "shortName": "Polski Związek Biathlonu", "logo": null, "featured": true },
+    { "name": "Węglokoks", "shortName": "Węglokoks", "logo": null, "featured": true },
+    { "name": "Shark Entertainment", "shortName": "", "logo": null, "featured": false },
+    { "name": "SportValue", "shortName": "", "logo": null, "featured": false },
+    { "name": "Coerver Coaching Poland", "shortName": "", "logo": null, "featured": false },
+    { "name": "Football Code", "shortName": "", "logo": null, "featured": false },
+    { "name": "Kancelaria Jara Drapała", "shortName": "", "logo": null, "featured": false }
   ]
 }

@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { cn } from "@/lib/cn";
 import type { GalleryItem, GalleryImage } from "@/lib/content";
 import {
   GALLERY_CATEGORIES,
@@ -33,17 +34,41 @@ const labelOf = (slug: GalleryCategorySlug) =>
 // Placeholderowe proporcje (gdy brak realnego pliku) — różne kadry przy stałej wysokości.
 const PLACEHOLDER_RATIOS = ["4 / 5", "1 / 1", "3 / 4", "4 / 3"];
 
-function GalleryImg({ image, index }: { image: GalleryImage; index: number }) {
+// row=true (≤4 zdjęć): równa kolumna, obraz mieści się w niej (object-contain),
+// nie zawija. row=false (>4): naturalna szerokość przy stałej wysokości (scroll).
+function GalleryImg({
+  image,
+  index,
+  row,
+}: {
+  image: GalleryImage;
+  index: number;
+  row: boolean;
+}) {
+  const H = "h-[200px] lg:h-[280px]";
   if (image.exists) {
-    // Stała wysokość, szerokość auto → oryginalne proporcje, bez kadrowania.
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={image.src}
         alt={image.alt}
         loading="lazy"
-        className="h-[200px] w-auto lg:h-[280px]"
+        className={cn(H, row ? "w-full object-contain" : "w-auto")}
       />
+    );
+  }
+  if (row) {
+    return (
+      <div
+        className={cn(
+          H,
+          "bg-section flex w-full items-center justify-center p-3 text-center",
+        )}
+      >
+        <span className="text-caption text-muted">
+          {image.alt || "zdjęcie"}
+        </span>
+      </div>
     );
   }
   return (
@@ -51,7 +76,7 @@ function GalleryImg({ image, index }: { image: GalleryImage; index: number }) {
       style={{
         aspectRatio: PLACEHOLDER_RATIOS[index % PLACEHOLDER_RATIOS.length],
       }}
-      className="bg-section flex h-[200px] items-center justify-center p-3 text-center lg:h-[280px]"
+      className={cn(H, "bg-section flex items-center justify-center p-3 text-center")}
     >
       <span className="text-caption text-muted">{image.alt || "zdjęcie"}</span>
     </div>
@@ -140,7 +165,7 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
           className={
             scrollable
               ? "no-scrollbar relative flex snap-x snap-mandatory gap-3 overflow-x-auto"
-              : "flex flex-wrap gap-3"
+              : "flex gap-3"
           }
         >
           {item.images.map((img, i) => (
@@ -150,9 +175,12 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
               data-gallery-item
               onClick={() => setOpenIndex(i)}
               aria-label={`Powiększ: ${img.alt || item.title}`}
-              className="border-border rounded-card block shrink-0 snap-start overflow-hidden border transition-opacity hover:opacity-90"
+              className={cn(
+                "border-border rounded-card block overflow-hidden border transition-opacity hover:opacity-90",
+                scrollable ? "shrink-0 snap-start" : "min-w-0 flex-1",
+              )}
             >
-              <GalleryImg image={img} index={i} />
+              <GalleryImg image={img} index={i} row={!scrollable} />
             </button>
           ))}
         </div>
