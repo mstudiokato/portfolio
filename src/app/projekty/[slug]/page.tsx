@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllProjects, getProjectBySlug } from "@/lib/content";
+import {
+  getAllProjects,
+  getProjectBySlug,
+  getProjectNeighbors,
+  type Project,
+} from "@/lib/content";
 import { categoryLabel } from "@/lib/categories";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Container, Section } from "@/components/ui/layout";
-import { H1, Lead, Label, Caption } from "@/components/ui/typography";
+import { H1, Lead, Body, Label, Caption } from "@/components/ui/typography";
+import { ProjectImage } from "@/components/project-image";
 
 export function generateStaticParams() {
   return getAllProjects().map((p) => ({ slug: p.slug }));
@@ -19,10 +25,104 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) return {};
+
+  const description = project.context || project.description;
   return {
     title: project.client,
-    description: project.context || project.description,
+    description,
+    openGraph: {
+      title: project.client,
+      description,
+      type: "article",
+      images: project.cover ? [{ url: project.cover }] : undefined,
+    },
   };
+}
+
+/** Breadcrumb: Projekty → Kategoria → Tytuł projektu. */
+function Breadcrumb({ project }: { project: Project }) {
+  return (
+    <nav aria-label="Ścieżka nawigacji">
+      <ol className="text-caption text-muted flex flex-wrap items-center gap-2">
+        <li>
+          <Link href="/projekty" className="hover:text-ink">
+            Projekty
+          </Link>
+        </li>
+        <li aria-hidden>/</li>
+        <li>
+          <Link
+            href={`/projekty?kategoria=${project.category}`}
+            className="hover:text-ink"
+          >
+            {categoryLabel(project.category)}
+          </Link>
+        </li>
+        <li aria-hidden>/</li>
+        <li className="text-ink" aria-current="page">
+          {project.client}
+        </li>
+      </ol>
+    </nav>
+  );
+}
+
+/** Dolna nawigacja: „Więcej projektów" + poprzedni/następny. */
+function ProjectFooterNav({ project }: { project: Project }) {
+  const { prev, next } = getProjectNeighbors(project.slug);
+  return (
+    <div className="border-border mt-section border-t pt-8">
+      <Link
+        href={`/projekty?kategoria=${project.category}`}
+        className="text-label text-lime uppercase hover:underline"
+      >
+        Więcej projektów →
+      </Link>
+
+      <div className="mt-6 flex items-center justify-between gap-4">
+        {prev ? (
+          <Link
+            href={`/projekty/${prev.slug}`}
+            className="text-muted hover:text-ink group flex flex-col gap-1"
+          >
+            <span className="text-caption">← Poprzedni</span>
+            <span className="font-display text-ink">{prev.client}</span>
+          </Link>
+        ) : (
+          <span />
+        )}
+        {next ? (
+          <Link
+            href={`/projekty/${next.slug}`}
+            className="text-muted hover:text-ink flex flex-col gap-1 text-right"
+          >
+            <span className="text-caption">Następny →</span>
+            <span className="font-display text-ink">{next.client}</span>
+          </Link>
+        ) : (
+          <span />
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** Body MDX renderowane jako proste akapity (pełny MDX-runtime nie jest potrzebny w MVP). */
+function BodyParagraphs({ body }: { body: string }) {
+  const paragraphs = body
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  if (paragraphs.length === 0) return null;
+  return (
+    <div className="mt-6 flex max-w-2xl flex-col gap-4">
+      {paragraphs.map((p, i) => (
+        <Body key={i} className="text-muted">
+          {p}
+        </Body>
+      ))}
+    </div>
+  );
 }
 
 export default async function ProjectPage({
@@ -34,59 +134,128 @@ export default async function ProjectPage({
   const project = getProjectBySlug(slug);
   if (!project) notFound();
 
+  return (
+    <>
+      <SiteHeader />
+      <Section size="sm">
+        <Container className="max-w-4xl">
+          <Breadcrumb project={project} />
+
+          {project.displayType === "gallery" ? (
+            <GalleryView project={project} />
+          ) : (
+            <CaseStudyView project={project} />
+          )}
+
+          <ProjectFooterNav project={project} />
+        </Container>
+      </Section>
+      <SiteFooter />
+    </>
+  );
+}
+
+/* ── SZABLON: case-study ──────────────────────────────────────────────── */
+function CaseStudyView({ project }: { project: Project }) {
   const meta: Array<[string, string]> = [
     ["Klient", project.client],
     ["Rok", String(project.year)],
     ["Scope", project.scope],
     ["Deliverables", project.deliverables.join(", ")],
     ["Rola", project.role],
+    ["Kontekst", project.context],
   ];
 
   return (
     <>
-      <SiteHeader />
+      <header className="mt-8">
+        <Label className="text-muted">{categoryLabel(project.category)}</Label>
+        <H1 className="text-h2 mt-3">{project.client}</H1>
+        {project.description ? (
+          <Lead className="mt-5">{project.description}</Lead>
+        ) : null}
+      </header>
 
-      <Section size="sm">
-        <Container className="max-w-3xl">
-          <Link
-            href="/projekty"
-            className="text-caption text-lime hover:underline"
-          >
-            ← Wszystkie projekty
-          </Link>
+      {/* Cover jako obraz prowadzący (3:2). */}
+      {project.cover ? (
+        <div className="mt-10">
+          <ProjectImage
+            src={project.cover}
+            alt={`${project.client} — projekt`}
+            ratio="3/2"
+            sizes="(min-width: 1024px) 56rem, 100vw"
+            priority
+          />
+        </div>
+      ) : null}
 
-          <Link
-            href={`/projekty?kategoria=${project.category}`}
-            className="mt-6 block hover:underline"
-          >
-            <Label>{categoryLabel(project.category)}</Label>
-          </Link>
-          <H1 className="text-h2 mt-2">{project.client}</H1>
+      {/* Pola projektu. */}
+      <dl className="border-border mt-10 grid grid-cols-1 gap-x-8 gap-y-4 border-t pt-8 sm:grid-cols-2">
+        {meta
+          .filter(([, value]) => value)
+          .map(([label, value]) => (
+            <div key={label} className="flex flex-col">
+              <dt>
+                <Label className="text-muted">{label}</Label>
+              </dt>
+              <dd className="text-ink mt-1">{value}</dd>
+            </div>
+          ))}
+      </dl>
 
-          {project.description ? (
-            <Lead className="mt-5">{project.description}</Lead>
-          ) : null}
+      <BodyParagraphs body={project.body} />
 
-          <dl className="border-border mt-8 grid grid-cols-1 gap-x-8 gap-y-3 border-t pt-6 sm:grid-cols-2">
-            {meta
-              .filter(([, value]) => value)
-              .map(([label, value]) => (
-                <div key={label} className="flex flex-col">
-                  <dt>
-                    <Label className="text-muted">{label}</Label>
-                  </dt>
-                  <dd className="text-ink mt-1">{value}</dd>
-                </div>
-              ))}
-          </dl>
+      {/* Galeria (3:2). */}
+      {project.gallery.length > 0 ? (
+        <div className="mt-12">
+          <Label className="text-muted">Galeria</Label>
+          <div className="gap-x-grid mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2">
+            {project.gallery.map((src, i) => (
+              <ProjectImage
+                key={src}
+                src={src}
+                alt={`${project.client} — kadr ${i + 1}`}
+                ratio="3/2"
+                sizes="(min-width: 640px) 28rem, 100vw"
+              />
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
+}
 
-          <Caption className="mt-10">
-            Galeria i pełny opis projektu powstają w Etapie 5.
-          </Caption>
-        </Container>
-      </Section>
+/* ── SZABLON: gallery (lekki) ─────────────────────────────────────────── */
+function GalleryView({ project }: { project: Project }) {
+  return (
+    <>
+      <header className="mt-8">
+        <Label className="text-muted">{categoryLabel(project.category)}</Label>
+        <H1 className="text-h2 mt-3">{project.client}</H1>
+        <Caption className="mt-3">{project.year}</Caption>
+        {project.context ? (
+          <Lead className="mt-5 max-w-2xl">{project.context}</Lead>
+        ) : null}
+      </header>
 
-      <SiteFooter />
+      {/* Galeria w oryginalnych proporcjach (masonry — CSS columns). */}
+      {project.gallery.length > 0 ? (
+        <div className="mt-10 gap-6 sm:columns-2 lg:columns-3 [&>*]:mb-6">
+          {project.gallery.map((src, i) => (
+            <div key={src} className="break-inside-avoid">
+              <ProjectImage
+                src={src}
+                alt={`${project.client} — ${i + 1}`}
+                ratio="original"
+                sizes="(min-width: 1024px) 18rem, (min-width: 640px) 50vw, 100vw"
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <Caption className="mt-10">Galeria w przygotowaniu.</Caption>
+      )}
     </>
   );
 }

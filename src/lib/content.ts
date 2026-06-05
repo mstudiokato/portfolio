@@ -15,9 +15,14 @@ import {
 
 const PROJECTS_DIR = path.join(process.cwd(), "src/content/projekty");
 
+/** Dwa typy podstrony projektu (masterprompt sek. 9). Domyślnie case-study. */
+export type DisplayType = "case-study" | "gallery";
+
 export type Project = {
   /** slug = nazwa pliku bez rozszerzenia; adres /projekty/[slug] */
   slug: string;
+  /** Typ podstrony: pełne case-study albo lekka galeria. Fallback: case-study. */
+  displayType: DisplayType;
   client: string;
   year: number;
   /** Dokładnie jedna z sześciu kategorii — pole WYMAGANE. */
@@ -85,8 +90,13 @@ function parseProject(fileName: string): Project {
     throw new Error(`Projekt "${fileName}": "year" musi być liczbą.`);
   }
 
+  // displayType: tylko "gallery" przełącza tryb; cokolwiek innego/brak → case-study.
+  const displayType: DisplayType =
+    data.displayType === "gallery" ? "gallery" : "case-study";
+
   return {
     slug,
+    displayType,
     client: String(data.client),
     year,
     category,
@@ -129,6 +139,20 @@ export function getFeaturedProjects(): Project[] {
 
 export function getProjectBySlug(slug: string): Project | undefined {
   return getAllProjects().find((p) => p.slug === slug);
+}
+
+/**
+ * Sąsiedzi projektu (poprzedni/następny) wg globalnej kolejności getAllProjects
+ * (order → rok → klient). Do nawigacji „← poprzedni / następny →" na podstronie.
+ */
+export function getProjectNeighbors(slug: string): {
+  prev: Project | undefined;
+  next: Project | undefined;
+} {
+  const all = getAllProjects();
+  const i = all.findIndex((p) => p.slug === slug);
+  if (i === -1) return { prev: undefined, next: undefined };
+  return { prev: all[i - 1], next: all[i + 1] };
 }
 
 /** Archiwum /projekty: projekty danej kategorii (zachowuje sortowanie). */
