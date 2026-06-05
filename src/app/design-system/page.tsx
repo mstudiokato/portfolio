@@ -155,7 +155,8 @@ export default function DesignSystemPage() {
                 </Button>
               </div>
               <Caption>
-                Polimorficzny: z href → link, bez → &lt;button&gt;.
+                Kant ostry (rounded-button · 2px) — sportowy, pewny; świadomie
+                NIE pill. Polimorficzny: z href → link, bez → &lt;button&gt;.
                 Focus-visible (lime) — sprawdź klawiszem Tab.
               </Caption>
             </div>

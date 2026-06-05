@@ -74,8 +74,9 @@
   --spacing-card: 1.25rem; /* wewn. padding karty */
 
   /* ── Promienie ──────────────────────────────────────────────────── */
+  --radius-button: 2px; /* ostry, sportowy kant — NIE pill (Editorial Sports Dark) */
   --radius-card: 0.625rem;
-  --radius-pill: 9999px;
+  --radius-pill: 9999px; /* tylko małe elementy: chipy/tagi filtrów */
 }
 
 :root {

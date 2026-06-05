@@ -21,8 +21,9 @@ const SIZES: Record<Size, string> = {
   lg: "px-8 py-4 text-body-lg",
 };
 
+// rounded-button (2px) — ostry, sportowy kant; świadomie NIE pill (Editorial Sports Dark).
 const BASE =
-  "inline-flex items-center justify-center gap-2 rounded-pill font-medium transition-[opacity,border-color,color] duration-200";
+  "inline-flex items-center justify-center gap-2 rounded-button font-medium transition-[opacity,border-color,color] duration-200";
 
 type Props = {
   variant?: Variant;
