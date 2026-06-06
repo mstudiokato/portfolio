@@ -46,14 +46,58 @@ function envErrorResponse(problems: string[]): Response {
   });
 }
 
+// TODO(debug): TYMCZASOWE logowanie diagnostyczne 500 na Vercel. Usunąć po
+// rozwiązaniu. Wypisuje TYLKO obecność zmiennych (boolean) + długość sekretu
+// (nie wartości!) oraz pełny stack trace błędu z handlera Keystatic.
+function logEnvDiagnostics(method: string): void {
+  console.error("[keystatic-debug] ===== request:", method, "=====");
+  console.error("[keystatic-debug] NODE_ENV:", process.env.NODE_ENV);
+  console.error(
+    "[keystatic-debug] KEYSTATIC_SECRET exists:",
+    Boolean(process.env.KEYSTATIC_SECRET),
+    "| length:",
+    process.env.KEYSTATIC_SECRET?.length ?? 0,
+  );
+  console.error(
+    "[keystatic-debug] KEYSTATIC_GITHUB_CLIENT_ID exists:",
+    Boolean(process.env.KEYSTATIC_GITHUB_CLIENT_ID),
+  );
+  console.error(
+    "[keystatic-debug] KEYSTATIC_GITHUB_CLIENT_SECRET exists:",
+    Boolean(process.env.KEYSTATIC_GITHUB_CLIENT_SECRET),
+  );
+  console.error(
+    "[keystatic-debug] NEXT_PUBLIC_URL:",
+    process.env.NEXT_PUBLIC_URL ?? "(unset)",
+  );
+}
+
 export async function GET(req: Request): Promise<Response> {
+  logEnvDiagnostics("GET");
   const problems = envProblems();
-  if (problems.length) return envErrorResponse(problems);
-  return makeRouteHandler({ config }).GET(req);
+  if (problems.length) {
+    console.error("[keystatic-debug] envProblems:", problems);
+    return envErrorResponse(problems);
+  }
+  try {
+    return await makeRouteHandler({ config }).GET(req);
+  } catch (err) {
+    console.error("[keystatic-debug] GET handler threw:", err);
+    throw err;
+  }
 }
 
 export async function POST(req: Request): Promise<Response> {
+  logEnvDiagnostics("POST");
   const problems = envProblems();
-  if (problems.length) return envErrorResponse(problems);
-  return makeRouteHandler({ config }).POST(req);
+  if (problems.length) {
+    console.error("[keystatic-debug] envProblems:", problems);
+    return envErrorResponse(problems);
+  }
+  try {
+    return await makeRouteHandler({ config }).POST(req);
+  } catch (err) {
+    console.error("[keystatic-debug] POST handler threw:", err);
+    throw err;
+  }
 }
