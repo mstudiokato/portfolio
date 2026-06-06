@@ -32,11 +32,11 @@ export function StatsAndClients() {
       }}
     >
       <div className="px-6 md:px-12 lg:px-16">
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-8">
           {/* LICZBY — eyebrow + bloki z separatorami. */}
-          <div className="lg:col-span-5 lg:border-r lg:pr-12">
+          <div className="min-w-0 lg:col-span-5 lg:border-r lg:pr-8">
             <Label>— Fakty i liczby</Label>
-            <dl className="mt-6 flex items-center">
+            <dl className="mt-6 flex items-center justify-center lg:justify-start">
               {stats.map((s, i) => (
                 <Fragment key={s.label}>
                   {i > 0 ? (
@@ -45,7 +45,7 @@ export function StatsAndClients() {
                       className="bg-border mx-4 h-16 w-px self-center"
                     />
                   ) : null}
-                  <div className="flex flex-col items-start">
+                  <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
                     <dd className="font-display text-lime text-[clamp(2.25rem,5vw,3.5rem)] leading-none font-semibold">
                       {s.value}
                     </dd>
@@ -59,9 +59,9 @@ export function StatsAndClients() {
           </div>
 
           {/* LOGOTYPY — eyebrow + marquee 56px bez ramek, separatory pionowe. */}
-          <div className="border-border mt-2 border-t pt-8 lg:col-span-7 lg:mt-0 lg:border-t-0 lg:pt-0">
+          <div className="border-border mt-2 min-w-0 border-t pt-8 lg:col-span-7 lg:mt-0 lg:border-t-0 lg:pt-0">
             <p className="text-label text-muted uppercase">Pracowałem dla</p>
-            <div className="marquee-mask relative mt-6 overflow-hidden">
+            <div className="marquee-mask relative mt-6 w-full max-w-full overflow-hidden">
               <ul className="marquee-track flex w-max items-center">
                 {marqueeClients.map((c, i) => (
                   <Fragment key={`${c.name}-${i}`}>

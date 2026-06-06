@@ -159,7 +159,7 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
               // szerokość 1/4 rzędu, by pierwsze 4 zdjęcia były w pełni widoczne.
               style={scrollable ? { width: SCROLL_ITEM_WIDTH } : undefined}
               className={cn(
-                "border-border block overflow-hidden rounded-none border transition-opacity hover:opacity-90",
+                "block overflow-hidden rounded-none transition-opacity hover:opacity-90",
                 scrollable ? "shrink-0 snap-start" : "min-w-0 flex-1",
               )}
             >

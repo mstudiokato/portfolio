@@ -4,10 +4,10 @@
     { "name": "SPORTFIVE Polska", "shortName": "SPORTFIVE", "logo": null, "featured": true },
     { "name": "Stadion Śląski", "shortName": "Stadion Śląski", "logo": "/klienci/stadion_logo.svg", "featured": true },
     { "name": "GKS Katowice", "shortName": "GKS Katowice", "logo": "/klienci/gks_logo.svg", "featured": true },
-    { "name": "Polski Związek Biathlonu", "shortName": "Polski Związek Biathlonu", "logo": null, "featured": true },
-    { "name": "Węglokoks", "shortName": "Węglokoks", "logo": null, "featured": true },
+    { "name": "Polski Związek Biathlonu", "shortName": "Polski Związek Biathlonu", "logo": "/klienci/logo_pzbiath.svg", "featured": true },
+    { "name": "Węglokoks", "shortName": "Węglokoks", "logo": "/klienci/weglokoks_logo.png", "featured": true },
     { "name": "Shark Entertainment", "shortName": "", "logo": null, "featured": false },
-    { "name": "SportValue", "shortName": "", "logo": null, "featured": false },
+    { "name": "SportValue", "shortName": "", "logo": "/klienci/sportvalue_logo.svg", "featured": false },
     { "name": "Coerver Coaching Poland", "shortName": "Coerver", "logo": "/klienci/coerver.svg", "featured": false },
     { "name": "Football Code", "shortName": "", "logo": null, "featured": false },
     { "name": "Kancelaria Jara Drapała", "shortName": "", "logo": null, "featured": false }

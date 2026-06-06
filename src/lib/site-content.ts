@@ -114,7 +114,7 @@ export const SEO_DEFAULT = site.seo;
 export const CONTACT = {
   email: site.contact.email,
   phone: site.contact.phone,
-  calUrl: process.env.NEXT_PUBLIC_CAL_LINK || "#",
+  calUrl: process.env.NEXT_PUBLIC_CAL_LINK || "https://cal.com/michal-stezaly",
   cvHref: site.contact.cvHref,
   availability: site.contact.availability,
 };

@@ -126,7 +126,7 @@ export function Lightbox({
             className="max-h-[90vh] max-w-[90vw] object-contain"
           />
         ) : (
-          <div className="bg-section border-border flex aspect-[3/4] w-[min(85vw,520px)] max-w-[90vw] items-center justify-center rounded-card border p-6 text-center">
+          <div className="bg-section flex aspect-[3/4] w-[min(85vw,520px)] max-w-[90vw] items-center justify-center rounded-card p-6 text-center">
             <span className="text-body text-muted">{img.alt || "zdjęcie"}</span>
           </div>
         )}

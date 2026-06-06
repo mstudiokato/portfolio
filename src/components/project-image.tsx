@@ -46,7 +46,7 @@ export function ProjectImage({
     return (
       <div
         className={cn(
-          "bg-section border-border rounded-card flex items-center justify-center border p-3 text-center",
+          "bg-section rounded-card flex items-center justify-center p-3 text-center",
           ratio === "original" ? "aspect-[3/4]" : "aspect-[3/2]",
           className,
         )}
