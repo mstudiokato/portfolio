@@ -76,8 +76,37 @@ async function buildHandler() {
   });
 }
 
+// Diagnostyka callbacku OAuth: czy `code`/`state` dotarły w query i czy cookie
+// (ks-<state> + keystatic-gh-*) są w żądaniu. Logujemy TYLKO obecność (bool),
+// nigdy wartości. Potwierdza, czy SameSite/redirect nie gubi cookie/paramów.
+function logCallbackDiagnostics(req: Request): void {
+  let u: URL;
+  try {
+    u = new URL(req.url);
+  } catch {
+    return;
+  }
+  if (!u.pathname.includes("github/oauth/callback")) return;
+  const cookieHeader = req.headers.get("cookie") ?? "";
+  console.error(
+    "[keystatic-debug] callback: code present:",
+    u.searchParams.has("code"),
+    "| state present:",
+    u.searchParams.has("state"),
+    "| error param:",
+    u.searchParams.get("error") ?? "(none)",
+  );
+  console.error(
+    "[keystatic-debug] callback: has ks-* state cookie:",
+    /(?:^|;\s*)ks-/.test(cookieHeader),
+    "| has keystatic-gh-* cookie:",
+    cookieHeader.includes("keystatic-gh-"),
+  );
+}
+
 async function run(method: "GET" | "POST", req: Request): Promise<Response> {
   logEnvDiagnostics(method, req);
+  logCallbackDiagnostics(req);
   try {
     const handler = await buildHandler();
     const res =
