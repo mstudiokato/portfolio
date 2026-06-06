@@ -1,20 +1,22 @@
 import fs from "node:fs";
 import path from "node:path";
+import siteJson from "@/content/settings/site.json";
+import servicesJson from "@/content/settings/services.json";
+import clientsJson from "@/content/settings/clients.json";
+import testimonialsJson from "@/content/settings/testimonials.json";
 
 /**
  * Treść strony jako dane w repo, edytowalne przez Keystatic (singletony Site /
- * Services / Clients → pliki JSON w src/content/settings). Ten moduł jest
- * SERWEROWY (czyta pliki przez fs) — nie importuj go w komponentach klienckich.
+ * Services / Clients → pliki JSON w src/content/settings).
+ *
+ * Pliki są wczytywane przez STATYCZNE importy JSON — webpack pakuje je do
+ * bundla w buildzie. (Wcześniej fs.readFileSync(process.cwd()/src/content/...)
+ * padał ENOENT na trasach dynamicznych w funkcji serverless na Vercel — np.
+ * /keystatic, które przechodzi przez root layout importujący ten moduł — bo
+ * pliki treści nie były trace'owane do bundla funkcji.)
+ *
  * Cal link pozostaje z env (NEXT_PUBLIC_CAL_LINK), zgodnie z Etapem 7.
  */
-
-const SETTINGS_DIR = path.join(process.cwd(), "src/content/settings");
-
-function readJson<T>(file: string): T {
-  return JSON.parse(
-    fs.readFileSync(path.join(SETTINGS_DIR, file), "utf8"),
-  ) as T;
-}
 
 type SiteJson = {
   hero: {
@@ -62,12 +64,14 @@ type TestimonialsJson = {
   }>;
 };
 
-const site = readJson<SiteJson>("site.json");
-const services = readJson<ServicesJson>("services.json");
-const clients = readJson<ClientsJson>("clients.json");
-const testimonials = readJson<TestimonialsJson>("testimonials.json");
+const site = siteJson as SiteJson;
+const services = servicesJson as ServicesJson;
+const clients = clientsJson as ClientsJson;
+const testimonials = testimonialsJson as TestimonialsJson;
 
-/** Czy plik (ścieżka względem /public) istnieje — render obrazu vs placeholder. */
+/** Czy plik (ścieżka względem /public) istnieje — render obrazu vs placeholder.
+ *  fs.existsSync nie rzuca (zwraca false dla braku), więc jest bezpieczny także
+ *  na trasach dynamicznych; liczony build-time dla stron statycznych. */
 function publicAssetExists(src?: string | null): boolean {
   if (!src || src.trim() === "") return false;
   return fs.existsSync(
