@@ -30,9 +30,9 @@ function resolveHeroImage(): string | null {
 }
 const heroImage = resolveHeroImage();
 
-// Overlay: lewa prawie nieprzezroczysta (czytelność tekstu) → prawa prześwituje.
+// Overlay: lewa pełna (czytelność tekstu) → prawa całkowicie prześwituje (FIX 2).
 const HERO_OVERLAY =
-  "linear-gradient(to right, rgba(11,18,32,0.95) 0%, rgba(11,18,32,0.7) 50%, rgba(11,18,32,0.2) 100%)";
+  "linear-gradient(to right, rgba(11,18,32,1) 0%, rgba(11,18,32,0.85) 25%, rgba(11,18,32,0.4) 55%, transparent 75%)";
 
 export function Hero() {
   const years = yearsOfExperience();
@@ -47,7 +47,7 @@ export function Hero() {
       {/* Tło — zdjęcie (za treścią). Kadr przez transform translate()+scale():
           zoom daje nadmiar w obu osiach, translate przesuwa X i Y. 50% = środek. */}
       {heroImage ? (
-        <div className="absolute inset-0 -z-20 overflow-hidden">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <div
             id="hero-photo-scale"
             className="relative h-full w-full"
@@ -68,14 +68,14 @@ export function Hero() {
         </div>
       ) : null}
 
-      {/* Overlay gradientowy nad zdjęciem, pod treścią. */}
+      {/* Overlay gradientowy nad zdjęciem, pod treścią (FIX 2: z-index 1). */}
       <div
-        className="absolute inset-0 -z-10"
+        className="absolute inset-0 z-[1]"
         style={{ background: HERO_OVERLAY }}
         aria-hidden="true"
       />
 
-      <Container className="w-full pt-8 pb-16 lg:pt-14">
+      <Container className="relative z-[2] w-full pt-8 pb-16 lg:pt-14">
         <div className="max-w-2xl">
           <Label>{HERO.eyebrow}</Label>
 

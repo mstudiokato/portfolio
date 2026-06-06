@@ -31,29 +31,40 @@ export function Testimonials() {
       style={{ paddingTop: "calc(var(--spacing-section-tight) * 0.7)" }}
     >
       <Container>
-        <Label>— Co mówią klienci</Label>
-        <H2 className="mt-4 max-w-2xl">Opinie</H2>
+        <Label>— CO MÓWIĄ ZLECENIODAWCY</Label>
+        <H2 className="mt-4 max-w-2xl">Rekomendacje</H2>
 
         <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {TESTIMONIALS.map((t) => (
             <figure
               key={t.name}
-              className="bg-surface flex gap-5 rounded-[4px] p-6"
+              className="group bg-surface flex gap-5 rounded-[4px] p-6"
             >
-              {/* Lewa — pionowe zdjęcie 80×120 albo placeholder z inicjałami. */}
+              {/* Lewa — pionowe zdjęcie 100×140 (FIX 3). Wrapper relative+overflow-hidden:
+                  zdjęcie skaluje się przy hover karty (scale 1.05), gradient od dołu
+                  wtapia zdjęcie w tło karty (#152238). prefers-reduced-motion → bez ruchu. */}
               {t.imageExists && t.image ? (
-                <div className="relative h-[120px] w-[80px] shrink-0 overflow-hidden rounded-[2px]">
+                <div className="relative h-[140px] w-[100px] shrink-0 overflow-hidden rounded-[4px]">
                   <Image
                     src={t.image}
                     alt={t.name}
                     fill
-                    sizes="80px"
-                    className="object-cover object-top"
+                    sizes="100px"
+                    className="object-cover object-top transition-transform duration-300 ease-in-out group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
+                  />
+                  {/* Gradient od dołu — zdjęcie wtapia się w tło karty. */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to bottom, transparent 50%, #152238 100%)",
+                    }}
                   />
                 </div>
               ) : (
                 <div
-                  className="bg-section flex h-[120px] w-[80px] shrink-0 items-center justify-center rounded-[2px]"
+                  className="bg-section flex h-[140px] w-[100px] shrink-0 items-center justify-center rounded-[4px]"
                   aria-hidden="true"
                 >
                   <span className="text-muted text-xs font-semibold">

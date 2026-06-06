@@ -18,8 +18,8 @@ export function Contact() {
       style={{ paddingTop: "calc(var(--spacing-section) * 0.7)" }}
     >
       <Container>
-        <Label>— Kontakt</Label>
-        <H2 className="mt-4 max-w-2xl">Chcesz porozmawiać?</H2>
+        <Label>— KONTAKT</Label>
+        <H2 className="mt-4 max-w-2xl">Porozmawiajmy o projekcie</H2>
 
         <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-2">
           {/* DANE KONTAKTOWE */}
