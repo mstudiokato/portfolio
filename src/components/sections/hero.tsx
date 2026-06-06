@@ -30,9 +30,11 @@ function resolveHeroImage(): string | null {
 }
 const heroImage = resolveHeroImage();
 
-// Overlay: lewa pełna (czytelność tekstu) → prawa całkowicie prześwituje (FIX 2).
+// Overlay: pełne krycie navy aż za lewą krawędź zdjęcia (translate przesuwa je
+// w prawo, krawędź wypada ~20% szer. sekcji), potem płynne wygaszanie → prawa
+// strona prześwituje. Dzięki temu krawędzi zdjęcia nie widać.
 const HERO_OVERLAY =
-  "linear-gradient(to right, rgba(11,18,32,1) 0%, rgba(11,18,32,0.85) 25%, rgba(11,18,32,0.4) 55%, transparent 75%)";
+  "linear-gradient(to right, rgba(11,18,32,1) 0%, rgba(11,18,32,1) 32%, rgba(11,18,32,0.55) 60%, rgba(11,18,32,0) 88%)";
 
 export function Hero() {
   const years = yearsOfExperience();

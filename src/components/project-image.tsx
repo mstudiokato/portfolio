@@ -65,10 +65,7 @@ export function ProjectImage({
         height={dims.height}
         sizes={sizes}
         priority={priority}
-        className={cn(
-          "rounded-card border-border h-auto w-full border",
-          className,
-        )}
+        className={cn("rounded-card h-auto w-full", className)}
       />
     );
   }
@@ -76,7 +73,7 @@ export function ProjectImage({
   return (
     <div
       className={cn(
-        "rounded-card border-border relative aspect-[3/2] overflow-hidden border",
+        "rounded-card relative aspect-[3/2] overflow-hidden",
         className,
       )}
     >
