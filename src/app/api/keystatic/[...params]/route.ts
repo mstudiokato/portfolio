@@ -1,9 +1,12 @@
 import { makeRouteHandler } from "@keystatic/next/route-handler";
-import config from "../../../../../keystatic.config";
 
-// Handler tworzony leniwie (przy żądaniu), nie przy ładowaniu modułu — inaczej
-// w trybie github build/deploy padałby bez kluczy GitHub (KEYSTATIC_*). Dzięki
-// temu build nigdy nie zależy od tych kluczy; panel działa po ich ustawieniu.
+// WAŻNE: nic nie inicjalizujemy w module scope. `keystatic.config` (budujący
+// pełną konfigurację przez @keystatic/core) ORAZ makeRouteHandler są wczytywane
+// DOPIERO w obrębie żądania (dynamiczny import + wywołanie w GET/POST). Gdyby
+// import configu rzucił przy cold-starcie, padłby cały moduł route'a — a Vercel
+// pokazywał to jako 404 dla tej trasy (przy /api/kontakt, który ładuje się bez
+// problemu, dostawaliśmy 405). Teraz ewentualny błąd inicjalizacji trafia do
+// try/catch jako czytelny 500 z logiem, zamiast znikać jako 404.
 export const dynamic = "force-dynamic";
 
 /**
@@ -46,13 +49,10 @@ function envErrorResponse(problems: string[]): Response {
   });
 }
 
-// TODO(debug): TYMCZASOWE logowanie diagnostyczne 500 na Vercel. Usunąć po
-// rozwiązaniu. Wypisuje TYLKO obecność zmiennych (boolean) + długość sekretu
-// (nie wartości!) oraz pełny stack trace błędu z handlera Keystatic.
+// TODO(debug): TYMCZASOWE logowanie diagnostyczne. Usunąć po rozwiązaniu.
+// Wypisuje TYLKO obecność zmiennych (boolean) + długość sekretu (nie wartości!)
+// oraz ścieżkę żądania — w logach Vercel widać, czy request dociera do funkcji.
 function logEnvDiagnostics(method: string, req: Request): void {
-  // Loguj ścieżkę żądania → w logach Vercel widać, czy /github/login i
-  // /github/oauth/callback w ogóle docierają do funkcji (czy nie gubią się
-  // wcześniej na routingu/middleware/rewrite).
   let pathname = "(unparsable)";
   try {
     pathname = new URL(req.url).pathname;
@@ -81,6 +81,13 @@ function logEnvDiagnostics(method: string, req: Request): void {
   );
 }
 
+/** Leniwa budowa handlera: dynamiczny import configu + makeRouteHandler DOPIERO
+ *  przy żądaniu (poza module scope). Wspólne dla GET i POST. */
+async function buildHandler() {
+  const { default: config } = await import("../../../../../keystatic.config");
+  return makeRouteHandler({ config });
+}
+
 export async function GET(req: Request): Promise<Response> {
   logEnvDiagnostics("GET", req);
   const problems = envProblems();
@@ -89,7 +96,8 @@ export async function GET(req: Request): Promise<Response> {
     return envErrorResponse(problems);
   }
   try {
-    return await makeRouteHandler({ config }).GET(req);
+    const handler = await buildHandler();
+    return await handler.GET(req);
   } catch (err) {
     console.error("[keystatic-debug] GET handler threw:", err);
     throw err;
@@ -104,7 +112,8 @@ export async function POST(req: Request): Promise<Response> {
     return envErrorResponse(problems);
   }
   try {
-    return await makeRouteHandler({ config }).POST(req);
+    const handler = await buildHandler();
+    return await handler.POST(req);
   } catch (err) {
     console.error("[keystatic-debug] POST handler threw:", err);
     throw err;
