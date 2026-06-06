@@ -15,7 +15,7 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
     <Section
       id="wybrane"
       style={{
-        paddingTop: "calc(var(--spacing-section) * 0.85)",
+        paddingTop: "calc(var(--spacing-section-tight) * 0.7)",
         paddingBottom: "calc(var(--spacing-section) * 0.85)",
       }}
     >

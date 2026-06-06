@@ -7,7 +7,7 @@
     { "name": "Polski Związek Biathlonu", "shortName": "Polski Związek Biathlonu", "logo": "/klienci/logo_pzbiath.svg", "featured": true },
     { "name": "Węglokoks", "shortName": "Węglokoks", "logo": "/klienci/weglokoks_logo.png", "featured": true },
     { "name": "Shark Entertainment", "shortName": "", "logo": null, "featured": false },
-    { "name": "SportValue", "shortName": "", "logo": "/klienci/sportvalue_logo.svg", "featured": false },
+    { "name": "SportValue", "shortName": "", "logo": "/klienci/sportvalue_logo.svg", "featured": true },
     { "name": "Coerver Coaching Poland", "shortName": "Coerver", "logo": "/klienci/coerver.svg", "featured": false },
     { "name": "Football Code", "shortName": "", "logo": null, "featured": false },
     { "name": "Kancelaria Jara Drapała", "shortName": "", "logo": null, "featured": false }
