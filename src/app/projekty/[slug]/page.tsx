@@ -208,19 +208,20 @@ function CaseStudyView({ project }: { project: Project }) {
 
       <BodyParagraphs body={project.body} />
 
-      {/* Galeria (3:2). */}
+      {/* Galeria — jednolita wysokość, poziomy scroll (spójnie z resztą strony). */}
       {project.gallery.length > 0 ? (
         <div className="mt-12">
           <Label className="text-muted">Galeria</Label>
-          <div className="gap-x-grid mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2">
+          <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto">
             {project.gallery.map((img) => (
-              <ProjectImage
-                key={img.src}
-                src={img.src}
-                alt={img.alt}
-                ratio="3/2"
-                sizes="(min-width: 640px) 28rem, 100vw"
-              />
+              <div key={img.src} className="shrink-0 snap-start">
+                <ProjectImage
+                  src={img.src}
+                  alt={img.alt}
+                  ratio="strip"
+                  sizes="(min-width: 1024px) 18rem, 50vw"
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -242,15 +243,15 @@ function GalleryView({ project }: { project: Project }) {
         ) : null}
       </header>
 
-      {/* Galeria w oryginalnych proporcjach (masonry — CSS columns). */}
+      {/* Galeria — jednolita wysokość, poziomy scroll (spójnie z resztą strony). */}
       {project.gallery.length > 0 ? (
-        <div className="mt-10 gap-6 sm:columns-2 lg:columns-3 [&>*]:mb-6">
+        <div className="no-scrollbar mt-10 flex snap-x snap-mandatory gap-3 overflow-x-auto">
           {project.gallery.map((img) => (
-            <div key={img.src} className="break-inside-avoid">
+            <div key={img.src} className="shrink-0 snap-start">
               <ProjectImage
                 src={img.src}
                 alt={img.alt}
-                ratio="original"
+                ratio="strip"
                 sizes="(min-width: 1024px) 18rem, (min-width: 640px) 50vw, 100vw"
               />
             </div>

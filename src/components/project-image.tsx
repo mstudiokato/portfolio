@@ -25,11 +25,16 @@ function readDims(src: string): { width: number; height: number } | null {
 type Props = {
   src: string;
   alt: string;
-  ratio?: "3/2" | "original";
+  /** "3/2" = kadr cover · "original" = proporcje pliku · "strip" = jednolita
+   *  wysokość + naturalna szerokość (do poziomych galerii ze scrollem). */
+  ratio?: "3/2" | "original" | "strip";
   sizes?: string;
   priority?: boolean;
   className?: string;
 };
+
+/** Jednolita wysokość zdjęć w galeriach (spójnie: slider / masonry / grid). */
+const STRIP_H = "h-56 lg:h-72";
 
 export function ProjectImage({
   src,
@@ -41,8 +46,21 @@ export function ProjectImage({
 }: Props) {
   const dims = src ? readDims(src) : null;
 
-  // Brak pliku → placeholder-box (proporcja zależna od trybu).
+  // Brak pliku → placeholder-box (proporcja/wymiar zależny od trybu).
   if (!dims) {
+    if (ratio === "strip") {
+      return (
+        <div
+          className={cn(
+            "bg-section rounded-card flex w-72 shrink-0 items-center justify-center p-3 text-center",
+            STRIP_H,
+            className,
+          )}
+        >
+          <span className="text-caption text-muted">{alt}</span>
+        </div>
+      );
+    }
     return (
       <div
         className={cn(
@@ -53,6 +71,22 @@ export function ProjectImage({
       >
         <span className="text-caption text-muted">{alt}</span>
       </div>
+    );
+  }
+
+  // Strip: stała wysokość, szerokość z proporcji pliku (w-auto) → bez przycięcia,
+  // szersze zdjęcia po prostu zajmują więcej miejsca i scrollują się w rzędzie.
+  if (ratio === "strip") {
+    return (
+      <Image
+        src={src}
+        alt={alt}
+        width={dims.width}
+        height={dims.height}
+        sizes={sizes}
+        priority={priority}
+        className={cn("rounded-card w-auto object-cover", STRIP_H, className)}
+      />
     );
   }
 

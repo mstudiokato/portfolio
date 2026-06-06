@@ -36,24 +36,29 @@ export function ProjectCard({ project }: { project: Project }) {
       </Link>
 
       <div className="flex flex-col gap-2">
-        <div className="flex items-baseline justify-between gap-3">
-          <h3 className="font-display text-h4 text-ink">
-            <Link
-              href={`/projekty/${project.slug}`}
-              className="hover:text-lime transition-colors"
-            >
-              {project.client}
-            </Link>
-          </h3>
-          <span className="text-caption text-muted shrink-0">
-            {project.year}
+        {/* Oznaczenie KLIENT — limonkowy badge (spójnie z /projekty/[slug]). */}
+        <div className="flex items-center gap-2">
+          <span className="bg-lime text-navy text-label rounded-button px-2 py-1 uppercase">
+            Klient
           </span>
+          <span className="text-caption text-muted">{project.client}</span>
         </div>
+
+        {/* Większy tekst = nazwa projektu (nie klienta). */}
+        <h3 className="font-display text-h4 text-ink">
+          <Link
+            href={`/projekty/${project.slug}`}
+            className="hover:text-lime transition-colors"
+          >
+            {project.title}
+          </Link>
+        </h3>
 
         {project.scope ? (
           <p className="text-caption text-muted">{project.scope}</p>
         ) : null}
 
+        {/* Kategoria — ta sama etykieta/pisownia co na /projekty (categoryLabel). */}
         <div className="mt-1">
           <Tag>{categoryLabel(project.category)}</Tag>
         </div>

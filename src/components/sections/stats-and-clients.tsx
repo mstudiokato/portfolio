@@ -86,8 +86,15 @@ export function StatsAndClients() {
                           width={200}
                           height={56}
                           unoptimized
-                          // SportValue −30% (h-[39px] ≈ 56px × 0.7); pozostałe 56px.
-                          className={`${c.name === "SportValue" ? "h-[39px]" : "h-14"} w-auto object-contain`}
+                          // Indywidualne wysokości: SportValue −30% (39px→27px),
+                          // Lombards −20% (56px→45px); pozostałe 56px (h-14).
+                          className={`${
+                            c.name === "SportValue"
+                              ? "h-[27px]"
+                              : c.name === "Lombards"
+                                ? "h-[45px]"
+                                : "h-14"
+                          } w-auto object-contain`}
                         />
                       ) : (
                         <span className="text-muted font-mono text-sm whitespace-nowrap">
