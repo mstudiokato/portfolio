@@ -32,11 +32,12 @@ export function StatsAndClients() {
       }}
     >
       <div className="px-6 md:px-12 lg:px-16">
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-8">
-          {/* LICZBY — eyebrow + bloki z separatorami. */}
-          <div className="min-w-0 lg:col-span-5 lg:border-r lg:pr-8">
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-8">
+          {/* LICZBY — eyebrow + bloki z separatorami; wycentrowane i wertykalnie
+              wyrównane do logów, dosunięte do linii podziału (lg:pr-4). */}
+          <div className="min-w-0 lg:col-span-5 lg:flex lg:flex-col lg:items-center lg:border-r lg:pr-4">
             <Label>— Fakty i liczby</Label>
-            <dl className="mt-6 flex items-center justify-center lg:justify-start">
+            <dl className="mt-6 flex items-center justify-center">
               {stats.map((s, i) => (
                 <Fragment key={s.label}>
                   {i > 0 ? (
@@ -45,7 +46,7 @@ export function StatsAndClients() {
                       className="bg-border mx-4 h-16 w-px self-center"
                     />
                   ) : null}
-                  <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+                  <div className="flex flex-col items-center text-center">
                     <dd className="font-display text-lime text-[clamp(2.25rem,5vw,3.5rem)] leading-none font-semibold">
                       {s.value}
                     </dd>
@@ -74,7 +75,8 @@ export function StatsAndClients() {
                           width={200}
                           height={56}
                           unoptimized
-                          className="h-14 w-auto object-contain"
+                          // SportValue −30% (h-[39px] ≈ 56px × 0.7); pozostałe 56px.
+                          className={`${c.name === "SportValue" ? "h-[39px]" : "h-14"} w-auto object-contain`}
                         />
                       ) : (
                         <span className="text-muted font-mono text-sm whitespace-nowrap">
