@@ -28,7 +28,12 @@ type SiteJson = {
     positionY?: number;
     scale?: number;
   };
-  numbers: { projects: string; clients: string; brands: string };
+  numbers: {
+    experience: string;
+    projects: string;
+    clients: string;
+    brands: string;
+  };
   aiWorkflow: string;
   contact: {
     email: string;
@@ -88,8 +93,13 @@ export const TESTIMONIALS = testimonials.items.map((t) => ({
   imageExists: publicAssetExists(t.image),
 }));
 
-/** Liczby (sek. 8.6). */
-export const STATS: Array<{ value: string; label: string }> = [
+/** Liczby (sek. 8.6). Opcjonalny prefix (np. „Ponad") renderowany nad liczbą. */
+export const STATS: Array<{ value: string; label: string; prefix?: string }> = [
+  {
+    value: site.numbers.experience,
+    label: "lat doświadczenia projektowego",
+    prefix: "Ponad",
+  },
   { value: site.numbers.projects, label: "Zrealizowanych projektów" },
   { value: site.numbers.clients, label: "Zadowolonych klientów" },
   { value: site.numbers.brands, label: "Organizacji" },

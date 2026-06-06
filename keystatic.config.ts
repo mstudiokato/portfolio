@@ -212,6 +212,9 @@ export default config({
         ),
         numbers: fields.object(
           {
+            experience: fields.text({
+              label: "Lat doświadczenia (np. 14)",
+            }),
             projects: fields.text({
               label: "Zrealizowanych projektów (np. 1000+)",
             }),

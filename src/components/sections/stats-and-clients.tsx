@@ -34,22 +34,29 @@ export function StatsAndClients() {
               wyrównane do logów, dosunięte do linii podziału (lg:pr-4). */}
           <div className="min-w-0 lg:col-span-5 lg:flex lg:flex-col lg:items-center lg:border-r lg:pr-4">
             <Label>— Fakty i liczby</Label>
-            <dl className="mt-6 flex items-center justify-center">
+            <dl className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:flex sm:items-center sm:justify-center sm:gap-0 lg:mt-5">
               {stats.map((s, i) => (
                 <Fragment key={s.label}>
                   {i > 0 ? (
                     <div
                       aria-hidden="true"
-                      className="bg-border mx-3 h-16 w-px self-center sm:mx-4"
+                      className="bg-border hidden h-16 w-px self-center sm:mx-4 sm:block lg:mx-[0.8rem] lg:h-[3.2rem]"
                     />
                   ) : null}
                   <div className="flex flex-col items-center text-center">
-                    <dd className="font-display text-lime text-[clamp(2.25rem,5vw,3.5rem)] leading-none font-semibold tabular-nums">
+                    {/* Opcjonalny prefix (np. „Ponad") — mniejszy tekst nad liczbą. */}
+                    {s.prefix ? (
+                      <span className="text-muted mb-1 text-[0.65rem] font-semibold tracking-[0.16em] uppercase lg:mb-0.5 lg:text-[0.52rem]">
+                        {s.prefix}
+                      </span>
+                    ) : null}
+                    {/* Desktop −20%: font liczby clamp max 3.5rem → 2.8rem. */}
+                    <dd className="font-display text-lime text-[clamp(2.25rem,4vw,2.8rem)] leading-none font-semibold tabular-nums">
                       <CountUp value={s.value} />
                     </dd>
                     {/* Mobile: mniejszy font + zawijanie (np. „Lat doświadczenia"),
-                        by uniknąć ucięcia etykiet. Desktop: text-label, bez zawijania. */}
-                    <dt className="text-muted mt-3 text-xs uppercase sm:text-label lg:whitespace-nowrap">
+                        by uniknąć ucięcia etykiet. Desktop: text-label −20% (0.6rem). */}
+                    <dt className="text-muted mt-3 text-xs uppercase sm:text-label lg:mt-[0.6rem] lg:text-[0.6rem] lg:whitespace-nowrap">
                       {s.label}
                     </dt>
                   </div>
