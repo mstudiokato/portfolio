@@ -1,15 +1,88 @@
 {
   "items": [
-    { "name": "International Biathlon Union", "shortName": "IBU", "logo": "/klienci/ibu_logo.svg", "featured": true },
-    { "name": "SPORTFIVE Polska", "shortName": "SPORTFIVE", "logo": null, "featured": true },
-    { "name": "Stadion Śląski", "shortName": "Stadion Śląski", "logo": "/klienci/stadion_logo.svg", "featured": true },
-    { "name": "GKS Katowice", "shortName": "GKS Katowice", "logo": "/klienci/gks_logo.svg", "featured": true },
-    { "name": "Polski Związek Biathlonu", "shortName": "Polski Związek Biathlonu", "logo": "/klienci/logo_pzbiath.svg", "featured": true },
-    { "name": "Węglokoks", "shortName": "Węglokoks", "logo": "/klienci/weglokoks_logo.png", "featured": true },
-    { "name": "Shark Entertainment", "shortName": "", "logo": null, "featured": false },
-    { "name": "SportValue", "shortName": "", "logo": "/klienci/sportvalue_logo.svg", "featured": true },
-    { "name": "Coerver Coaching Poland", "shortName": "Coerver", "logo": "/klienci/coerver.svg", "featured": false },
-    { "name": "Football Code", "shortName": "", "logo": null, "featured": false },
-    { "name": "Kancelaria Jara Drapała", "shortName": "", "logo": null, "featured": false }
+    {
+      "name": "International Biathlon Union",
+      "shortName": "IBU",
+      "logo": "/klienci/ibu_logo.svg",
+      "featured": true
+    },
+    {
+      "name": "SPORTFIVE Polska",
+      "shortName": "SPORTFIVE",
+      "logo": "/klienci/sportfive_logo.svg",
+      "featured": true
+    },
+    {
+      "name": "Stadion Śląski",
+      "shortName": "Stadion Śląski",
+      "logo": "/klienci/stadion_logo.svg",
+      "featured": true
+    },
+    {
+      "name": "GKS Katowice",
+      "shortName": "GKS Katowice",
+      "logo": "/klienci/gks_logo.svg",
+      "featured": true
+    },
+    {
+      "name": "Polski Związek Biathlonu",
+      "shortName": "Polski Związek Biathlonu",
+      "logo": "/klienci/logo_pzbiath.svg",
+      "featured": true
+    },
+    {
+      "name": "Węglokoks",
+      "shortName": "Węglokoks",
+      "logo": "/klienci/weglokoks_logo.png",
+      "featured": true
+    },
+    {
+      "name": "Shark Entertainment",
+      "shortName": "",
+      "logo": null,
+      "featured": false
+    },
+    {
+      "name": "SportValue",
+      "shortName": "",
+      "logo": "/klienci/sportvalue_logo.svg",
+      "featured": true
+    },
+    {
+      "name": "Coerver Coaching Poland",
+      "shortName": "Coerver",
+      "logo": "/klienci/coerver.svg",
+      "featured": false
+    },
+    {
+      "name": "ROW Rybnik",
+      "shortName": "ROW Rybnik",
+      "logo": "/klienci/row_logo.svg",
+      "featured": true
+    },
+    {
+      "name": "NSCA Global Chapter Poland",
+      "shortName": "NSCA",
+      "logo": "/klienci/NSCA_Global_Chapter_Poland_1CR_White.png",
+      "featured": true
+    },
+    {
+      "name": "Lombards",
+      "shortName": "Lombards",
+      "logo": "/klienci/lombards_logo.svg",
+      "featured": true
+    },
+    {
+      "name": "Football Code",
+      "shortName": "",
+      "logo": null,
+      "featured": false
+    },
+    {
+      "name": "Kancelaria Jara Drapała",
+      "shortName": "",
+      "logo": null,
+      "featured": false
+    }
   ]
 }

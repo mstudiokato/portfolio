@@ -1,0 +1,32 @@
+{
+  "title": "Coerver Coaching Poland",
+  "category": "social-media",
+  "description": "Grafiki social media dla Coerver Coaching Poland.",
+  "order": 7,
+  "images": [
+    {
+      "src": "/projekty/social-media/coerver/1.png",
+      "alt": "Coerver Coaching Poland — 1"
+    },
+    {
+      "src": "/projekty/social-media/coerver/2.png",
+      "alt": "Coerver Coaching Poland — 2"
+    },
+    {
+      "src": "/projekty/social-media/coerver/3.jpg",
+      "alt": "Coerver Coaching Poland — 3"
+    },
+    {
+      "src": "/projekty/social-media/coerver/4.jpg",
+      "alt": "Coerver Coaching Poland — 4"
+    },
+    {
+      "src": "/projekty/social-media/coerver/5.jpg",
+      "alt": "Coerver Coaching Poland — 5"
+    },
+    {
+      "src": "/projekty/social-media/coerver/6.png",
+      "alt": "Coerver Coaching Poland — 6"
+    }
+  ]
+}

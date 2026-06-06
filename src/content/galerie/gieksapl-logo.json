@@ -1,0 +1,24 @@
+{
+  "title": "Gieksa.pl",
+  "category": "logo",
+  "description": "Projekt logo dla serwisu Gieksa.pl.",
+  "order": 3,
+  "images": [
+    {
+      "src": "/projekty/logo/gieksapl/1.jpg",
+      "alt": "Gieksa.pl — 1"
+    },
+    {
+      "src": "/projekty/logo/gieksapl/2.jpg",
+      "alt": "Gieksa.pl — 2"
+    },
+    {
+      "src": "/projekty/logo/gieksapl/3.jpg",
+      "alt": "Gieksa.pl — 3"
+    },
+    {
+      "src": "/projekty/logo/gieksapl/4.jpg",
+      "alt": "Gieksa.pl — 4"
+    }
+  ]
+}

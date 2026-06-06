@@ -1,0 +1,24 @@
+{
+  "title": "Oklejenie autokaru",
+  "category": "branding",
+  "description": "Projekt oklejenia autokaru klubowego.",
+  "order": 4,
+  "images": [
+    {
+      "src": "/projekty/branding/autokar/1.jpg",
+      "alt": "Oklejenie autokaru — 1"
+    },
+    {
+      "src": "/projekty/branding/autokar/2.jpg",
+      "alt": "Oklejenie autokaru — 2"
+    },
+    {
+      "src": "/projekty/branding/autokar/3.jpg",
+      "alt": "Oklejenie autokaru — 3"
+    },
+    {
+      "src": "/projekty/branding/autokar/4.jpg",
+      "alt": "Oklejenie autokaru — 4"
+    }
+  ]
+}

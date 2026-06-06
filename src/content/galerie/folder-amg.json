@@ -1,0 +1,20 @@
+{
+  "title": "Folder AMG",
+  "category": "pozostale",
+  "description": "Folder reklamowy AMG.",
+  "order": 4,
+  "images": [
+    {
+      "src": "/projekty/inne/folderAMG/1.jpg",
+      "alt": "Folder AMG — 1"
+    },
+    {
+      "src": "/projekty/inne/folderAMG/2.jpg",
+      "alt": "Folder AMG — 2"
+    },
+    {
+      "src": "/projekty/inne/folderAMG/3.jpg",
+      "alt": "Folder AMG — 3"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "title": "Shark Entertainment",
+  "category": "social-media",
+  "description": "Grafiki social media dla Shark Entertainment.",
+  "order": 4,
+  "images": [
+    {
+      "src": "/projekty/social-media/shark/1.png",
+      "alt": "Shark Entertainment — 1"
+    },
+    {
+      "src": "/projekty/social-media/shark/2.png",
+      "alt": "Shark Entertainment — 2"
+    },
+    {
+      "src": "/projekty/social-media/shark/3.png",
+      "alt": "Shark Entertainment — 3"
+    },
+    {
+      "src": "/projekty/social-media/shark/4.png",
+      "alt": "Shark Entertainment — 4"
+    },
+    {
+      "src": "/projekty/social-media/shark/5.png",
+      "alt": "Shark Entertainment — 5"
+    },
+    {
+      "src": "/projekty/social-media/shark/6.png",
+      "alt": "Shark Entertainment — 6"
+    },
+    {
+      "src": "/projekty/social-media/shark/7.jpg",
+      "alt": "Shark Entertainment — 7"
+    },
+    {
+      "src": "/projekty/social-media/shark/8.png",
+      "alt": "Shark Entertainment — 8"
+    },
+    {
+      "src": "/projekty/social-media/shark/9.jpg",
+      "alt": "Shark Entertainment — 9"
+    },
+    {
+      "src": "/projekty/social-media/shark/10.png",
+      "alt": "Shark Entertainment — 10"
+    }
+  ]
+}

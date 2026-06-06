@@ -1,0 +1,24 @@
+{
+  "title": "Barbórka",
+  "category": "social-media",
+  "description": "Grafiki social media z okazji Barbórki.",
+  "order": 10,
+  "images": [
+    {
+      "src": "/projekty/social-media/barborka/1.jpeg",
+      "alt": "Barbórka — 1"
+    },
+    {
+      "src": "/projekty/social-media/barborka/2.jpeg",
+      "alt": "Barbórka — 2"
+    },
+    {
+      "src": "/projekty/social-media/barborka/3.jpeg",
+      "alt": "Barbórka — 3"
+    },
+    {
+      "src": "/projekty/social-media/barborka/4.jpeg",
+      "alt": "Barbórka — 4"
+    }
+  ]
+}

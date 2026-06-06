@@ -1,0 +1,28 @@
+{
+  "title": "Węglokoks",
+  "category": "social-media",
+  "description": "Grafiki social media dla Węglokoksu.",
+  "order": 6,
+  "images": [
+    {
+      "src": "/projekty/social-media/weglokoks/1.png",
+      "alt": "Węglokoks — 1"
+    },
+    {
+      "src": "/projekty/social-media/weglokoks/2.png",
+      "alt": "Węglokoks — 2"
+    },
+    {
+      "src": "/projekty/social-media/weglokoks/3.png",
+      "alt": "Węglokoks — 3"
+    },
+    {
+      "src": "/projekty/social-media/weglokoks/4.png",
+      "alt": "Węglokoks — 4"
+    },
+    {
+      "src": "/projekty/social-media/weglokoks/5.png",
+      "alt": "Węglokoks — 5"
+    }
+  ]
+}

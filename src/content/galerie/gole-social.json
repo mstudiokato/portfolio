@@ -1,0 +1,24 @@
+{
+  "title": "Gole.pl",
+  "category": "social-media",
+  "description": "Grafiki social media dla Gole.pl.",
+  "order": 9,
+  "images": [
+    {
+      "src": "/projekty/social-media/gole1/1.jpeg",
+      "alt": "Gole.pl — 1"
+    },
+    {
+      "src": "/projekty/social-media/gole1/2.jpeg",
+      "alt": "Gole.pl — 2"
+    },
+    {
+      "src": "/projekty/social-media/gole1/3.jpeg",
+      "alt": "Gole.pl — 3"
+    },
+    {
+      "src": "/projekty/social-media/gole1/4.jpeg",
+      "alt": "Gole.pl — 4"
+    }
+  ]
+}

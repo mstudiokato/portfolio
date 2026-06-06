@@ -1,0 +1,48 @@
+{
+  "title": "Kolekcja GKS Katowice",
+  "category": "branding",
+  "description": "Projekt kolekcji odzieżowej GKS Katowice.",
+  "order": 2,
+  "images": [
+    {
+      "src": "/projekty/branding/gks_kolekcja/1.jpg",
+      "alt": "Kolekcja GKS Katowice — 1"
+    },
+    {
+      "src": "/projekty/branding/gks_kolekcja/2.jpg",
+      "alt": "Kolekcja GKS Katowice — 2"
+    },
+    {
+      "src": "/projekty/branding/gks_kolekcja/3.jpg",
+      "alt": "Kolekcja GKS Katowice — 3"
+    },
+    {
+      "src": "/projekty/branding/gks_kolekcja/4.jpg",
+      "alt": "Kolekcja GKS Katowice — 4"
+    },
+    {
+      "src": "/projekty/branding/gks_kolekcja/5.jpg",
+      "alt": "Kolekcja GKS Katowice — 5"
+    },
+    {
+      "src": "/projekty/branding/gks_kolekcja/6.jpg",
+      "alt": "Kolekcja GKS Katowice — 6"
+    },
+    {
+      "src": "/projekty/branding/kolekcjaGKS/1.jpg",
+      "alt": "Kolekcja GKS Katowice — 7"
+    },
+    {
+      "src": "/projekty/branding/kolekcjaGKS/2.jpg",
+      "alt": "Kolekcja GKS Katowice — 8"
+    },
+    {
+      "src": "/projekty/branding/kolekcjaGKS/3.jpg",
+      "alt": "Kolekcja GKS Katowice — 9"
+    },
+    {
+      "src": "/projekty/branding/kolekcjaGKS/4.jpg",
+      "alt": "Kolekcja GKS Katowice — 10"
+    }
+  ]
+}

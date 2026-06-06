@@ -1,0 +1,24 @@
+{
+  "title": "Okładka",
+  "category": "pozostale",
+  "description": "Projekt okładki publikacji.",
+  "order": 6,
+  "images": [
+    {
+      "src": "/projekty/inne/okladka/1.jpeg",
+      "alt": "Okładka — 1"
+    },
+    {
+      "src": "/projekty/inne/okladka/2.jpg",
+      "alt": "Okładka — 2"
+    },
+    {
+      "src": "/projekty/inne/okladka/3.jpg",
+      "alt": "Okładka — 3"
+    },
+    {
+      "src": "/projekty/inne/okladka/4.jpg",
+      "alt": "Okładka — 4"
+    }
+  ]
+}

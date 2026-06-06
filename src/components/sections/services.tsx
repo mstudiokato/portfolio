@@ -11,7 +11,12 @@ import { SERVICES } from "@/lib/site-content";
  */
 export function Services() {
   return (
-    <Section id="specjalizacje" size="tight">
+    <Section
+      id="specjalizacje"
+      size="tight"
+      // Padding górny identyczny jak w sekcji „Rekomendacje" (Testimonials).
+      style={{ paddingTop: "calc(var(--spacing-section-tight) * 0.7)" }}
+    >
       <Container>
         <Label>— CO PROJEKTUJĘ</Label>
         <H2 className="mt-4 max-w-2xl">Specjalizacje</H2>
@@ -22,7 +27,7 @@ export function Services() {
               key={service.title}
               className="group border-border border-t pt-5"
             >
-              <H4 className="transition-colors duration-150 group-hover:font-bold group-hover:text-lime">
+              <H4 className="group-hover:text-lime transition-colors duration-150 group-hover:font-bold">
                 {service.title}
               </H4>
               <Body className="text-muted mt-3">{service.description}</Body>

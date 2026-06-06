@@ -1,0 +1,28 @@
+{
+  "title": "GKS Katowice — branding",
+  "category": "branding",
+  "description": "System wizualny i branding dla GKS Katowice.",
+  "order": 1,
+  "images": [
+    {
+      "src": "/projekty/branding/case_gks/1.jpg",
+      "alt": "GKS Katowice — branding — 1"
+    },
+    {
+      "src": "/projekty/branding/case_gks/2.jpg",
+      "alt": "GKS Katowice — branding — 2"
+    },
+    {
+      "src": "/projekty/branding/case_gks/3.jpg",
+      "alt": "GKS Katowice — branding — 3"
+    },
+    {
+      "src": "/projekty/branding/case_gks/4.jpg",
+      "alt": "GKS Katowice — branding — 4"
+    },
+    {
+      "src": "/projekty/branding/case_gks/5.jpg",
+      "alt": "GKS Katowice — branding — 5"
+    }
+  ]
+}

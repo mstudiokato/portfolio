@@ -1,0 +1,24 @@
+{
+  "title": "Koszulki górnicze",
+  "category": "branding",
+  "description": "Projekt koszulek o tematyce górniczej.",
+  "order": 3,
+  "images": [
+    {
+      "src": "/projekty/branding/koszulkiGornicze/1.jpg",
+      "alt": "Koszulki górnicze — 1"
+    },
+    {
+      "src": "/projekty/branding/koszulkiGornicze/2.jpg",
+      "alt": "Koszulki górnicze — 2"
+    },
+    {
+      "src": "/projekty/branding/koszulkiGornicze/3.jpg",
+      "alt": "Koszulki górnicze — 3"
+    },
+    {
+      "src": "/projekty/branding/koszulkiGornicze/4.jpg",
+      "alt": "Koszulki górnicze — 4"
+    }
+  ]
+}

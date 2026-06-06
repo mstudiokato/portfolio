@@ -1,0 +1,24 @@
+{
+  "title": "ROW Rybnik",
+  "category": "social-media",
+  "description": "Grafiki social media dla klubu ROW Rybnik.",
+  "order": 8,
+  "images": [
+    {
+      "src": "/projekty/social-media/row/1.jpg",
+      "alt": "ROW Rybnik — 1"
+    },
+    {
+      "src": "/projekty/social-media/row/2.jpg",
+      "alt": "ROW Rybnik — 2"
+    },
+    {
+      "src": "/projekty/social-media/row/4.jpg",
+      "alt": "ROW Rybnik — 3"
+    },
+    {
+      "src": "/projekty/social-media/row/37269c88-0585-4108-92d8-237908c11095_rw_1200.jpg",
+      "alt": "ROW Rybnik — 4"
+    }
+  ]
+}

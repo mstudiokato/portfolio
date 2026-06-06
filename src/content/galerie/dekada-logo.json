@@ -1,0 +1,24 @@
+{
+  "title": "Dekada",
+  "category": "logo",
+  "description": "Projekt logo Dekada.",
+  "order": 6,
+  "images": [
+    {
+      "src": "/projekty/logo/dekada/1.png",
+      "alt": "Dekada — 1"
+    },
+    {
+      "src": "/projekty/logo/dekada/2.png",
+      "alt": "Dekada — 2"
+    },
+    {
+      "src": "/projekty/logo/dekada/3.jpg",
+      "alt": "Dekada — 3"
+    },
+    {
+      "src": "/projekty/logo/dekada/4.png",
+      "alt": "Dekada — 4"
+    }
+  ]
+}

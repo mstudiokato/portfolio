@@ -1,0 +1,24 @@
+{
+  "title": "Sportowy Biznes",
+  "category": "logo",
+  "description": "Projekt logo Sportowy Biznes.",
+  "order": 4,
+  "images": [
+    {
+      "src": "/projekty/logo/sportowybiznes/1.png",
+      "alt": "Sportowy Biznes — 1"
+    },
+    {
+      "src": "/projekty/logo/sportowybiznes/2.png",
+      "alt": "Sportowy Biznes — 2"
+    },
+    {
+      "src": "/projekty/logo/sportowybiznes/3.png",
+      "alt": "Sportowy Biznes — 3"
+    },
+    {
+      "src": "/projekty/logo/sportowybiznes/4.png",
+      "alt": "Sportowy Biznes — 4"
+    }
+  ]
+}

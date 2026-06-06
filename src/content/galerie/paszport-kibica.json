@@ -1,0 +1,16 @@
+{
+  "title": "Paszport kibica",
+  "category": "pozostale",
+  "description": "Projekt paszportu kibica.",
+  "order": 7,
+  "images": [
+    {
+      "src": "/projekty/inne/paszport/1.jpg",
+      "alt": "Paszport kibica — 1"
+    },
+    {
+      "src": "/projekty/inne/paszport/2.jpg",
+      "alt": "Paszport kibica — 2"
+    }
+  ]
+}

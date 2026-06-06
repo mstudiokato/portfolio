@@ -56,8 +56,13 @@ export function StatsAndClients() {
                     </dd>
                     {/* Mobile: mniejszy font + zawijanie (np. „Lat doświadczenia"),
                         by uniknąć ucięcia etykiet. Desktop: text-label −20% (0.6rem). */}
-                    <dt className="text-muted mt-3 text-xs uppercase sm:text-label lg:mt-[0.6rem] lg:text-[0.6rem] lg:whitespace-nowrap">
-                      {s.label}
+                    <dt className="text-muted sm:text-label mt-3 text-xs uppercase lg:mt-[0.6rem] lg:text-[0.6rem] lg:whitespace-nowrap">
+                      {s.label.split("\n").map((line, li) => (
+                        <Fragment key={li}>
+                          {li > 0 ? <br /> : null}
+                          {line}
+                        </Fragment>
+                      ))}
                     </dt>
                   </div>
                 </Fragment>

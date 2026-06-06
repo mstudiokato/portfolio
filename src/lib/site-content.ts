@@ -97,12 +97,12 @@ export const TESTIMONIALS = testimonials.items.map((t) => ({
 export const STATS: Array<{ value: string; label: string; prefix?: string }> = [
   {
     value: site.numbers.experience,
-    label: "lat doświadczenia projektowego",
+    // \n wymusza łamanie na dwie linie: „lat doświadczenia" / „projektowego".
+    label: "lat doświadczenia\nprojektowego",
     prefix: "Ponad",
   },
   { value: site.numbers.projects, label: "Zrealizowanych projektów" },
   { value: site.numbers.clients, label: "Zadowolonych klientów" },
-  { value: site.numbers.brands, label: "Organizacji" },
 ];
 
 /** Credibility strip — wyróżnieni klienci: nazwa + logo (SVG) z flagą istnienia.

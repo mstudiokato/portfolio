@@ -1,0 +1,24 @@
+{
+  "title": "Klub Biznesu",
+  "category": "logo",
+  "description": "Projekt logo Klubu Biznesu.",
+  "order": 5,
+  "images": [
+    {
+      "src": "/projekty/logo/klubbiznesu/1.png",
+      "alt": "Klub Biznesu — 1"
+    },
+    {
+      "src": "/projekty/logo/klubbiznesu/2.png",
+      "alt": "Klub Biznesu — 2"
+    },
+    {
+      "src": "/projekty/logo/klubbiznesu/3.png",
+      "alt": "Klub Biznesu — 3"
+    },
+    {
+      "src": "/projekty/logo/klubbiznesu/4.png",
+      "alt": "Klub Biznesu — 4"
+    }
+  ]
+}

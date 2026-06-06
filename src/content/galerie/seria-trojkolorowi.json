@@ -1,0 +1,32 @@
+{
+  "title": "Seria Trójkolorowi",
+  "category": "pozostale",
+  "description": "Seria graficzna „Trójkolorowi”.",
+  "order": 5,
+  "images": [
+    {
+      "src": "/projekty/inne/seriaTrójkolorowi/1.jpeg",
+      "alt": "Seria Trójkolorowi — 1"
+    },
+    {
+      "src": "/projekty/inne/seriaTrójkolorowi/2.jpeg",
+      "alt": "Seria Trójkolorowi — 2"
+    },
+    {
+      "src": "/projekty/inne/seriaTrójkolorowi/3.jpeg",
+      "alt": "Seria Trójkolorowi — 3"
+    },
+    {
+      "src": "/projekty/inne/seriaTrójkolorowi/4.jpeg",
+      "alt": "Seria Trójkolorowi — 4"
+    },
+    {
+      "src": "/projekty/inne/seriaTrójkolorowi/5.jpeg",
+      "alt": "Seria Trójkolorowi — 5"
+    },
+    {
+      "src": "/projekty/inne/seriaTrójkolorowi/6.jpeg",
+      "alt": "Seria Trójkolorowi — 6"
+    }
+  ]
+}
