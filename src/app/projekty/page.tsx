@@ -26,7 +26,7 @@ export default function ProjektyPage() {
           <Label>— Wybrane realizacje</Label>
           <H1 className="text-h2 mt-4">Case Studies</H1>
 
-          <div className="gap-x-grid mt-10 grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-grid sm:gap-y-12 lg:grid-cols-3">
             {featured.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}

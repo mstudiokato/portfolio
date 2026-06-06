@@ -43,14 +43,16 @@ export function StatsAndClients() {
                   {i > 0 ? (
                     <div
                       aria-hidden="true"
-                      className="bg-border mx-4 h-16 w-px self-center"
+                      className="bg-border mx-3 h-16 w-px self-center sm:mx-4"
                     />
                   ) : null}
                   <div className="flex flex-col items-center text-center">
                     <dd className="font-display text-lime text-[clamp(2.25rem,5vw,3.5rem)] leading-none font-semibold">
                       {s.value}
                     </dd>
-                    <dt className="text-label text-muted mt-3 whitespace-nowrap uppercase">
+                    {/* Mobile: mniejszy font + zawijanie (np. „Lat doświadczenia"),
+                        by uniknąć ucięcia etykiet. Desktop: text-label, bez zawijania. */}
+                    <dt className="text-muted mt-3 text-xs uppercase sm:text-label lg:whitespace-nowrap">
                       {s.label}
                     </dt>
                   </div>

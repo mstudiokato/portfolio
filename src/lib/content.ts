@@ -53,6 +53,8 @@ export type Project = {
   description: string;
   /** Cover (ratio 3:2 — [ZABLOKOWANE]) ze ścieżką i altem. */
   cover: ImageRef;
+  /** Czy plik coveru istnieje w /public (build-time) — brak → placeholder. */
+  coverExists: boolean;
   /** Galeria — obrazy ze ścieżką i altem. */
   gallery: ImageRef[];
   /** Tag do „powiązanych projektów". */
@@ -157,6 +159,7 @@ function parseProject(fileName: string): Project {
     context: str(data.context),
     description: str(data.description),
     cover,
+    coverExists: publicAssetExists(cover.src),
     gallery: toImageRefArray(data.gallery),
     tag: str(data.tag),
     featured: data.featured === true,
