@@ -1,20 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * Kanonizacja hosta dla panelu Keystatic.
+ * Kanonizacja hosta dla UI panelu Keystatic (strona /keystatic).
  *
- * Keystatic (github mode) buduje OAuth `redirect_uri` z origin/hosta requestu,
- * a NIE z konfiguracji — w tej wersji nie ma opcji baseURL/storage.url. Na
- * deploy-preview z hashem w subdomenie (np. portfolio-abc123.vercel.app)
- * powoduje to redirect_uri z hashem zamiast głównej domeny → redirect_uri_mismatch.
+ * Cel: gdy panel otwarto pod innym hostem niż kanoniczny (np. deploy-preview
+ * portfolio-abc123.vercel.app), przekierowujemy na host kanoniczny, żeby
+ * window.location.origin był stabilny. Domyślny host = michal-stezaly.vercel.app.
  *
- * Rozwiązanie: jeśli panel/API Keystatic otwarto pod innym hostem niż kanoniczny
- * (NEXT_PUBLIC_URL), przekierowujemy na host kanoniczny — wtedy window.location
- * .origin i host żądań są stabilne, a OAuth zgadza się z Callback URL w GitHub App.
- * Domyślny kanoniczny host = michal-stezaly.vercel.app (panel produkcyjny).
- *
- * Zakres: TYLKO /keystatic i /api/keystatic. Publiczna strona (i jej deploy
- * preview) działa bez zmian.
+ * WAŻNE — zakres NIE obejmuje /api/keystatic (matcher poniżej). Endpoints OAuth
+ * (/api/keystatic/github/login i /github/oauth/callback) MUSZĄ być serwowane
+ * bezpośrednio na hoście zarejestrowanym w GitHub OAuth App. Przepuszczanie ich
+ * przez 308 redirect na inny host psuło logowanie (404 / redirect_uri_mismatch
+ * / utrata jednorazowego `code` i cookie `ks-<state>`). Dlatego API zostaje
+ * nietknięte — login działa na tym samym origin, który zna GitHub.
  */
 
 const CANONICAL_URL =
@@ -42,5 +40,6 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/keystatic/:path*", "/api/keystatic/:path*"],
+  // Tylko UI panelu. /api/keystatic celowo POMINIĘTE — patrz komentarz wyżej.
+  matcher: ["/keystatic/:path*"],
 };

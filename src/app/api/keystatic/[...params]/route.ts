@@ -49,8 +49,17 @@ function envErrorResponse(problems: string[]): Response {
 // TODO(debug): TYMCZASOWE logowanie diagnostyczne 500 na Vercel. Usunąć po
 // rozwiązaniu. Wypisuje TYLKO obecność zmiennych (boolean) + długość sekretu
 // (nie wartości!) oraz pełny stack trace błędu z handlera Keystatic.
-function logEnvDiagnostics(method: string): void {
-  console.error("[keystatic-debug] ===== request:", method, "=====");
+function logEnvDiagnostics(method: string, req: Request): void {
+  // Loguj ścieżkę żądania → w logach Vercel widać, czy /github/login i
+  // /github/oauth/callback w ogóle docierają do funkcji (czy nie gubią się
+  // wcześniej na routingu/middleware/rewrite).
+  let pathname = "(unparsable)";
+  try {
+    pathname = new URL(req.url).pathname;
+  } catch {
+    /* ignore */
+  }
+  console.error("[keystatic-debug] ===== request:", method, pathname, "=====");
   console.error("[keystatic-debug] NODE_ENV:", process.env.NODE_ENV);
   console.error(
     "[keystatic-debug] KEYSTATIC_SECRET exists:",
@@ -73,7 +82,7 @@ function logEnvDiagnostics(method: string): void {
 }
 
 export async function GET(req: Request): Promise<Response> {
-  logEnvDiagnostics("GET");
+  logEnvDiagnostics("GET", req);
   const problems = envProblems();
   if (problems.length) {
     console.error("[keystatic-debug] envProblems:", problems);
@@ -88,7 +97,7 @@ export async function GET(req: Request): Promise<Response> {
 }
 
 export async function POST(req: Request): Promise<Response> {
-  logEnvDiagnostics("POST");
+  logEnvDiagnostics("POST", req);
   const problems = envProblems();
   if (problems.length) {
     console.error("[keystatic-debug] envProblems:", problems);
