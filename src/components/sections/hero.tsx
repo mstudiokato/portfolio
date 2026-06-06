@@ -77,6 +77,13 @@ export function Hero() {
         aria-hidden="true"
       />
 
+      {/* Mobile-only: dodatkowe ciemne overlay dla czytelności tekstu (desktop bez). */}
+      <div
+        className="absolute inset-0 z-[1] lg:hidden"
+        style={{ backgroundColor: "rgba(11,18,32,0.45)" }}
+        aria-hidden="true"
+      />
+
       <Container className="relative z-[2] w-full pt-8 pb-16 lg:pt-14">
         <div className="max-w-2xl">
           <Label>{HERO.eyebrow}</Label>
@@ -88,7 +95,8 @@ export function Hero() {
           </h1>
 
           <p className="font-display text-ink text-h3 mt-6">
-            Senior Graphic Designer{" "}
+            Senior Graphic Designer
+            <br />
             <span className="text-lime">for Sport &amp; Business</span>
           </p>
 

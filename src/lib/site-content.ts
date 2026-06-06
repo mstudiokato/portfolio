@@ -28,7 +28,7 @@ type SiteJson = {
     positionY?: number;
     scale?: number;
   };
-  numbers: { projects: string; brands: string };
+  numbers: { projects: string; clients: string; brands: string };
   aiWorkflow: string;
   contact: {
     email: string;
@@ -88,9 +88,10 @@ export const TESTIMONIALS = testimonials.items.map((t) => ({
   imageExists: publicAssetExists(t.image),
 }));
 
-/** Liczby (sek. 8.6) — lata liczone osobno z experience.ts. */
+/** Liczby (sek. 8.6). */
 export const STATS: Array<{ value: string; label: string }> = [
-  { value: site.numbers.projects, label: "Projektów" },
+  { value: site.numbers.projects, label: "Zrealizowanych projektów" },
+  { value: site.numbers.clients, label: "Zadowolonych klientów" },
   { value: site.numbers.brands, label: "Organizacji" },
 ];
 

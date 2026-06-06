@@ -212,8 +212,13 @@ export default config({
         ),
         numbers: fields.object(
           {
-            projects: fields.text({ label: "Liczba projektów (np. 100+)" }),
-            brands: fields.text({ label: "Liczba marek (np. 20+)" }),
+            projects: fields.text({
+              label: "Zrealizowanych projektów (np. 1000+)",
+            }),
+            clients: fields.text({
+              label: "Zadowolonych klientów (np. 30+)",
+            }),
+            brands: fields.text({ label: "Organizacji (np. 20+)" }),
           },
           { label: "Liczby" },
         ),

@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import Image from "next/image";
 import { Section } from "@/components/ui/layout";
 import { Label } from "@/components/ui/typography";
-import { yearsOfExperience } from "@/lib/experience";
+import { CountUp } from "@/components/count-up";
 import { STATS, CREDIBILITY } from "@/lib/site-content";
 
 /**
@@ -13,10 +13,7 @@ import { STATS, CREDIBILITY } from "@/lib/site-content";
  * Padding sekcji góra i dół −15% (FIX 4).
  */
 export function StatsAndClients() {
-  const stats = [
-    { value: `${yearsOfExperience()}+`, label: "Lat doświadczenia" },
-    ...STATS,
-  ];
+  const stats = STATS;
 
   // Track marquee = zduplikowana lista (płynna pętla przy translateX(-50%)).
   const marqueeClients = [...CREDIBILITY, ...CREDIBILITY];
@@ -47,8 +44,8 @@ export function StatsAndClients() {
                     />
                   ) : null}
                   <div className="flex flex-col items-center text-center">
-                    <dd className="font-display text-lime text-[clamp(2.25rem,5vw,3.5rem)] leading-none font-semibold">
-                      {s.value}
+                    <dd className="font-display text-lime text-[clamp(2.25rem,5vw,3.5rem)] leading-none font-semibold tabular-nums">
+                      <CountUp value={s.value} />
                     </dd>
                     {/* Mobile: mniejszy font + zawijanie (np. „Lat doświadczenia"),
                         by uniknąć ucięcia etykiet. Desktop: text-label, bez zawijania. */}
