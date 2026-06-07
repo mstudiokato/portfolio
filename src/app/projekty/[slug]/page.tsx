@@ -199,9 +199,30 @@ function ProjectGallery({ images }: { images: ImageRef[] }) {
   );
 }
 
+/** Pierwsze zdanie tekstu — krótki lead-in pod tytułem (bez powtarzania sekcji). */
+function firstSentence(text: string): string {
+  const t = text.trim().replace(/\s+/g, " ");
+  if (t === "") return "";
+  const m = t.match(/^.*?[.!?](\s|$)/);
+  return (m ? m[0] : t).trim();
+}
+
 /**
- * Sekcja tekstowa case study: limonkowa etykieta (mały tekst) nad białym
- * akapitem, duże odstępy (breathing room). Ukrywana gdy brak treści.
+ * Eyebrow nagłówka sekcji case study — limonkowy, UPPERCASE, bold, letter-spacing.
+ * Większy niż zwykły Label (0.75rem), mniejszy niż tytuł projektu. Spójny stylem
+ * z eyebrow sekcji na stronie głównej („— CO PROJEKTUJĘ").
+ */
+function SectionHeader({ children }: { children: string }) {
+  return (
+    <p className="text-lime text-base font-bold tracking-[0.18em] uppercase">
+      {children}
+    </p>
+  );
+}
+
+/**
+ * Sekcja tekstowa case study: cienki separator (#1F2D44) na górze + eyebrow
+ * nagłówka + biały akapit. Ukrywana gdy brak treści.
  */
 function TextSection({
   label,
@@ -212,8 +233,8 @@ function TextSection({
 }) {
   if (!children || children.trim() === "") return null;
   return (
-    <section className="mt-16">
-      <Label>{label}</Label>
+    <section className="border-border mt-12 border-t pt-6">
+      <SectionHeader>{label}</SectionHeader>
       <Body className="text-ink mt-4 max-w-2xl leading-relaxed whitespace-pre-line">
         {children}
       </Body>
@@ -223,13 +244,16 @@ function TextSection({
 
 /* ── SZABLON: case-study ──────────────────────────────────────────────── */
 function CaseStudyView({ project }: { project: Project }) {
-  // META — jedna linia: Klient · Rok · Zakres · Rola (puste pomijamy).
-  const metaParts = [
-    project.client,
-    project.year ? String(project.year) : "",
-    project.scope,
-    project.role,
-  ].filter((v) => v && v.trim() !== "");
+  // META — premium grid: KLIENT / ROK / ZAKRES / ROLA (puste pomijamy).
+  const metaItems = [
+    { label: "Klient", value: project.client },
+    { label: "Rok", value: project.year ? String(project.year) : "" },
+    { label: "Zakres", value: project.scope },
+    { label: "Rola", value: project.role },
+  ].filter((m) => m.value && m.value.trim() !== "");
+
+  // Intro = TYLKO pierwsze zdanie opisu (lead-in) — bez powtarzania Wyzwania/Koncepcji.
+  const leadIn = firstSentence(project.description);
 
   return (
     <>
@@ -237,9 +261,7 @@ function CaseStudyView({ project }: { project: Project }) {
       <header className="mt-8">
         <Label className="text-muted">{categoryLabel(project.category)}</Label>
         <H1 className="text-h2 mt-3">{project.client}</H1>
-        {project.description ? (
-          <Lead className="mt-5">{project.description}</Lead>
-        ) : null}
+        {leadIn ? <Lead className="mt-5 max-w-2xl">{leadIn}</Lead> : null}
       </header>
 
       {project.cover.src ? (
@@ -254,29 +276,37 @@ function CaseStudyView({ project }: { project: Project }) {
         </div>
       ) : null}
 
-      {/* META — Klient · Rok · Zakres · Rola. */}
-      {metaParts.length > 0 ? (
-        <p className="border-border text-muted mt-8 border-t pt-6 text-sm">
-          {metaParts.join("  ·  ")}
-        </p>
+      {/* META — grid premium: mała limonkowa etykieta nad białą wartością.
+          Cienka linia (#1F2D44) na górze; dolną granicę domyka rule następnej sekcji. */}
+      {metaItems.length > 0 ? (
+        <dl className="border-border mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t pt-8 sm:grid-cols-4">
+          {metaItems.map((m) => (
+            <div key={m.label}>
+              <dt>
+                <Label>{m.label}</Label>
+              </dt>
+              <dd className="text-ink mt-1.5">{m.value}</dd>
+            </div>
+          ))}
+        </dl>
       ) : null}
 
-      {/* WYZWANIE / KONCEPCJA / PROCES. */}
+      {/* WYZWANIE → KONCEPCJA → PROCES. */}
       <TextSection label="Wyzwanie">{project.challenge}</TextSection>
       <TextSection label="Koncepcja">{project.concept}</TextSection>
       <TextSection label="Proces projektowy">{project.process}</TextSection>
 
-      {/* GALERIA ZDJĘĆ. */}
+      {/* GALERIA ZDJĘĆ — przed Efektem. */}
       {project.gallery.length > 0 ? (
-        <section className="mt-16">
-          <Label>Galeria</Label>
+        <section className="border-border mt-12 border-t pt-6">
+          <SectionHeader>Galeria</SectionHeader>
           <div className="mt-6">
             <ProjectGallery images={project.gallery} />
           </div>
         </section>
       ) : null}
 
-      {/* EFEKT. */}
+      {/* EFEKT — domknięcie po pokazaniu zdjęć. */}
       <TextSection label="Efekt">{project.effect}</TextSection>
     </>
   );
