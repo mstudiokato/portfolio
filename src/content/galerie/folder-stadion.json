@@ -1,7 +1,9 @@
 {
+  "category": "print-dtp",
   "title": "Folder — Stadion Śląski",
-  "category": "inne",
   "description": "Materiały drukowane dla Stadionu Śląskiego.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 2,
   "images": [
     {
