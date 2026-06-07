@@ -208,36 +208,33 @@ function firstSentence(text: string): string {
 }
 
 /**
- * JEDEN spójny system etykiet na całej podstronie (META + nagłówki sekcji):
- * limonkowy (#D4FF00), UPPERCASE, text-xs, tracking-widest, bold.
+ * JEDEN spójny system etykiet na całej podstronie (META + nagłówki sekcji) —
+ * punkty nawigacyjne strony: limonkowy (#D4FF00), UPPERCASE, text-sm,
+ * tracking-[0.2em], bold.
  */
 function SectionLabel({ children }: { children: string }) {
   return (
-    <span className="text-lime text-xs font-bold tracking-widest uppercase">
+    <span className="text-lime text-sm font-bold tracking-[0.2em] uppercase">
       {children}
     </span>
   );
 }
 
+const hasText = (s?: string): boolean => !!s && s.trim() !== "";
+
 /**
- * Sekcja tekstowa case study: cienki separator (#1F2D44) na górze + etykieta +
- * biały akapit (max-w-3xl ≈ 70 znaków/linię). Ukrywana gdy brak treści.
+ * Komórka tekstowa w gridzie 2-kolumnowym: etykieta + biały akapit wypełniający
+ * całą szerokość kolumny. Ukrywana gdy brak treści.
  */
-function TextSection({
-  label,
-  children,
-}: {
-  label: string;
-  children?: string;
-}) {
-  if (!children || children.trim() === "") return null;
+function TextCell({ label, text }: { label: string; text?: string }) {
+  if (!hasText(text)) return null;
   return (
-    <section className="border-border mt-12 border-t pt-6">
+    <div>
       <SectionLabel>{label}</SectionLabel>
-      <Body className="text-ink mt-4 max-w-3xl leading-relaxed whitespace-pre-line">
-        {children}
+      <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line">
+        {text}
       </Body>
-    </section>
+    </div>
   );
 }
 
@@ -294,21 +291,29 @@ function CaseStudyView({ project }: { project: Project }) {
         </div>
       ) : null}
 
-      {/* e) Lead-in — pierwsze zdanie opisu (hook): biały, większy, normal weight. */}
-      {leadIn ? (
-        <p className="text-ink mt-8 max-w-3xl text-left text-xl leading-relaxed font-normal">
-          {leadIn}
-        </p>
+      {/* e) Rząd 1: Lead-in (lewa) | Wyzwanie (prawa) — grid 2 kolumny na desktop. */}
+      {leadIn || hasText(project.challenge) ? (
+        <div className="border-border mt-12 grid grid-cols-1 gap-12 border-t pt-8 md:grid-cols-2 lg:gap-16">
+          <div>
+            {leadIn ? (
+              <Body className="text-ink leading-relaxed">{leadIn}</Body>
+            ) : null}
+          </div>
+          <TextCell label="Wyzwanie" text={project.challenge} />
+        </div>
       ) : null}
 
-      {/* f) WYZWANIE → KONCEPCJA → PROCES. */}
-      <TextSection label="Wyzwanie">{project.challenge}</TextSection>
-      <TextSection label="Koncepcja">{project.concept}</TextSection>
-      <TextSection label="Proces projektowy">{project.process}</TextSection>
+      {/* f) Rząd 2: Koncepcja (lewa) | Proces projektowy (prawa). */}
+      {hasText(project.concept) || hasText(project.process) ? (
+        <div className="border-border mt-12 grid grid-cols-1 gap-12 border-t pt-8 md:grid-cols-2 lg:gap-16">
+          <TextCell label="Koncepcja" text={project.concept} />
+          <TextCell label="Proces projektowy" text={project.process} />
+        </div>
+      ) : null}
 
-      {/* g) GALERIA ZDJĘĆ. */}
+      {/* g) GALERIA — pełna szerokość. */}
       {project.gallery.length > 0 ? (
-        <section className="border-border mt-12 border-t pt-6">
+        <section className="border-border mt-12 border-t pt-8">
           <SectionLabel>Galeria</SectionLabel>
           <div className="mt-6">
             <ProjectGallery images={project.gallery} />
@@ -316,15 +321,13 @@ function CaseStudyView({ project }: { project: Project }) {
         </section>
       ) : null}
 
-      {/* h) EFEKT — domknięcie w subtelnej limonkowej ramce (transparent tło). */}
-      {project.effect && project.effect.trim() !== "" ? (
-        <section className="mt-12">
-          <div className="max-w-3xl rounded-sm border border-[#D4FF00]/40 p-8">
-            <SectionLabel>Efekt</SectionLabel>
-            <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line">
-              {project.effect}
-            </Body>
-          </div>
+      {/* h) EFEKT — pełna szerokość, subtelne ciemniejsze tło sekcji (#0F1A2E). */}
+      {hasText(project.effect) ? (
+        <section className="bg-section mt-12 px-8 py-8">
+          <SectionLabel>Efekt</SectionLabel>
+          <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line">
+            {project.effect}
+          </Body>
         </section>
       ) : null}
     </>
