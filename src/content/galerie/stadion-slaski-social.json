@@ -1,7 +1,9 @@
 {
-  "title": "Stadion Śląski",
   "category": "social-media",
+  "title": "Stadion Śląski",
   "description": "Grafiki social media dla Stadionu Śląskiego.",
+  "showDescription": false,
+  "descriptionColor": "white",
   "order": 3,
   "images": [
     {
