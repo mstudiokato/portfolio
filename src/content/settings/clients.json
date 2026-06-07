@@ -11,7 +11,7 @@
       "name": "SPORTFIVE Polska",
       "shortName": "SPORTFIVE",
       "logo": "/klienci/items/1/logo.svg",
-      "logoSize": 70,
+      "logoSize": 63,
       "featured": true
     },
     {
@@ -32,7 +32,7 @@
       "name": "Polski Związek Biathlonu",
       "shortName": "Polski Związek Biathlonu",
       "logo": "/klienci/items/4/logo.svg",
-      "logoSize": 100,
+      "logoSize": 120,
       "featured": true
     },
     {
@@ -52,7 +52,7 @@
     {
       "name": "SportValue",
       "logo": "/klienci/items/7/logo.svg",
-      "logoSize": 34,
+      "logoSize": 61,
       "featured": true
     },
     {
@@ -87,14 +87,14 @@
       "name": "EmocjeTV",
       "shortName": "EmocjeTV",
       "logo": "/klienci/items/12/logo.svg",
-      "logoSize": 70,
+      "logoSize": 65,
       "featured": true
     },
     {
       "name": "Zdrowycatering.pl",
       "shortName": "Zdrowycatering.pl",
       "logo": "/klienci/items/13/logo.svg",
-      "logoSize": 60,
+      "logoSize": 54,
       "featured": true
     }
   ]
