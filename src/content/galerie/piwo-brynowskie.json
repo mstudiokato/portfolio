@@ -1,31 +1,33 @@
 {
-  "title": "Piwo Brynowskie",
   "category": "branding",
-  "description": "Projekt etykiet i opakowań piwa Brynowskie, w tym edycja stadionowa.",
+  "title": "Brynowska GieKSa",
+  "description": "Projekt etykiety piwa kibicowskiego \"Brynowskie\" - wyprodukowanego przez Browar Haksna z Ostravy.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 5,
   "images": [
     {
-      "src": "/galerie/piwo-brynowskie/01.jpg",
+      "src": "/galerie/piwo-brynowskie/images/0/src.jpg",
       "alt": "Piwo Brynowskie — 1"
     },
     {
-      "src": "/galerie/piwo-brynowskie/02.jpg",
+      "src": "/galerie/piwo-brynowskie/images/1/src.jpg",
       "alt": "Piwo Brynowskie — 2"
     },
     {
-      "src": "/galerie/piwo-brynowskie/03.jpg",
+      "src": "/galerie/piwo-brynowskie/images/2/src.jpg",
       "alt": "Piwo Brynowskie — 3"
     },
     {
-      "src": "/galerie/piwo-brynowskie/04.jpeg",
+      "src": "/galerie/piwo-brynowskie/images/3/src.jpeg",
       "alt": "Piwo Brynowskie — 4"
     },
     {
-      "src": "/galerie/piwo-brynowskie/05.jpeg",
+      "src": "/galerie/piwo-brynowskie/images/4/src.jpeg",
       "alt": "Piwo Brynowskie — 5"
     },
     {
-      "src": "/galerie/piwo-brynowskie/06.jpeg",
+      "src": "/galerie/piwo-brynowskie/images/5/src.jpeg",
       "alt": "Piwo Brynowskie — 6"
     }
   ]
