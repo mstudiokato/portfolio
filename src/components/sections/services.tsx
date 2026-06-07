@@ -60,7 +60,7 @@ export function Services() {
                 >
                   {service.title}
                 </H4>
-                <Body className="mt-3 hyphens-auto" style={{ color }}>
+                <Body className="mt-3" style={{ color }}>
                   {replaceWidows(service.description)}
                 </Body>
               </div>

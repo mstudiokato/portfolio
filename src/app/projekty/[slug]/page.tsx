@@ -231,7 +231,7 @@ function TextCell({
   return (
     <div className={className}>
       <SectionLabel>{label}</SectionLabel>
-      <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line hyphens-auto">
+      <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line">
         {replaceWidows(text)}
       </Body>
     </div>
@@ -338,7 +338,7 @@ function CaseStudyView({ project }: { project: Project }) {
       {hasText(project.effect) ? (
         <section className="mt-12 rounded-sm border-2 border-[#D4FF00] px-8 py-8">
           <SectionLabel>Rezultat</SectionLabel>
-          <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line hyphens-auto">
+          <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line">
             {replaceWidows(project.effect)}
           </Body>
         </section>
@@ -356,7 +356,7 @@ function GalleryView({ project }: { project: Project }) {
         <H1 className="text-h2 mt-3">{project.client}</H1>
         <Caption className="mt-3">{project.year}</Caption>
         {project.context ? (
-          <Lead className="mt-5 max-w-2xl hyphens-auto">
+          <Lead className="mt-5 max-w-2xl">
             {replaceWidows(project.context)}
           </Lead>
         ) : null}
