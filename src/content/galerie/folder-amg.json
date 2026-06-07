@@ -1,7 +1,9 @@
 {
+  "category": "print-dtp",
   "title": "Folder AMG",
-  "category": "inne",
   "description": "Folder reklamowy AMG.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 4,
   "images": [
     {
