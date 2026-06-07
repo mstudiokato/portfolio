@@ -1,7 +1,9 @@
 {
-  "title": "Coerver Coaching Poland",
   "category": "social-media",
+  "title": "Coerver Coaching Poland",
   "description": "Grafiki social media dla Coerver Coaching Poland.",
+  "showDescription": false,
+  "descriptionColor": "white",
   "order": 7,
   "images": [
     {
