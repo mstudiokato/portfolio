@@ -76,6 +76,12 @@
       "shortName": "EmocjeTV",
       "logo": "/klienci/items/12/logo.svg",
       "featured": true
+    },
+    {
+      "name": "Zdrowycatering.pl",
+      "shortName": "Zdrowycatering.pl",
+      "logo": "/klienci/items/13/logo.svg",
+      "featured": true
     }
   ]
 }
