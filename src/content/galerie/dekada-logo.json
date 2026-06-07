@@ -5,19 +5,19 @@
   "order": 6,
   "images": [
     {
-      "src": "/projekty/logo/dekada/1.png",
+      "src": "/galerie/dekada-logo/01.png",
       "alt": "Dekada — 1"
     },
     {
-      "src": "/projekty/logo/dekada/2.png",
+      "src": "/galerie/dekada-logo/02.png",
       "alt": "Dekada — 2"
     },
     {
-      "src": "/projekty/logo/dekada/3.jpg",
+      "src": "/galerie/dekada-logo/03.jpg",
       "alt": "Dekada — 3"
     },
     {
-      "src": "/projekty/logo/dekada/4.png",
+      "src": "/galerie/dekada-logo/04.png",
       "alt": "Dekada — 4"
     }
   ]

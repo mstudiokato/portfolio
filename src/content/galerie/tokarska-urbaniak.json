@@ -6,19 +6,19 @@
   "order": 1,
   "images": [
     {
-      "src": "/projekty/logo/Tokarska/1.jpg",
+      "src": "/galerie/tokarska-urbaniak/01.jpg",
       "alt": "Tokarska vs Urbaniak — logo podcastu, wersja główna"
     },
     {
-      "src": "/projekty/logo/Tokarska/2.jpeg",
+      "src": "/galerie/tokarska-urbaniak/02.jpeg",
       "alt": "Tokarska vs Urbaniak — logo na jasnym tle"
     },
     {
-      "src": "/projekty/logo/Tokarska/3.jpeg",
+      "src": "/galerie/tokarska-urbaniak/03.jpeg",
       "alt": "Tokarska vs Urbaniak — logo na ciemnym tle"
     },
     {
-      "src": "/projekty/logo/Tokarska/4.jpeg",
+      "src": "/galerie/tokarska-urbaniak/04.jpeg",
       "alt": "Tokarska vs Urbaniak — logo, wariant dodatkowy"
     }
   ]

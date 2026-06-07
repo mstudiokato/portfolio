@@ -13,7 +13,7 @@ import { cn } from "@/lib/cn";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Container, Section } from "@/components/ui/layout";
 import { H1, Lead, Body, Label, Caption } from "@/components/ui/typography";
-import { ProjectImage } from "@/components/project-image";
+import { ProjectImage, isWideImage } from "@/components/project-image";
 import { GallerySlider } from "@/components/gallery-slider";
 
 export function generateStaticParams() {
@@ -171,10 +171,11 @@ const GRID_COLS: Record<number, string> = {
 
 /**
  * Galeria zdjęć projektu — logika układu:
- *  - 1–3 zdjęcia → grid-cols-{n}, bez slidera;
- *  - dokładnie 4 zdjęcia → grid-cols-2 (mobile) / grid-cols-4 (desktop), bez
- *    slidera;
- *  - 5+ zdjęć → poziomy slider ze strzałkami.
+ *  - 1 zdjęcie → grid-cols-1; 2 → grid-cols-2;
+ *  - 3 zdjęcia pionowe/kwadratowe (h/w ≥ 0.75) → grid-cols-3;
+ *  - 3 zdjęcia poziome (h/w < 0.75) → slider (w 3 kolumnach byłyby za drobne);
+ *  - 4 zdjęcia → grid-cols-2 (mobile) / grid-cols-4 (desktop);
+ *  - 5+ zdjęć → slider ze strzałkami.
  * W gridzie każde zdjęcie: w-full, NATURALNE proporcje (ratio="original", bez
  * stałej wysokości i bez wymuszania kwadratu — wysokość wynika z proporcji pliku).
  */
@@ -182,8 +183,10 @@ function ProjectGallery({ images }: { images: ImageRef[] }) {
   const count = images.length;
   if (count === 0) return null;
 
-  // 5+ → slider ze strzałkami (kafle o jednolitej wysokości, naturalna szerokość).
-  if (count >= 5) {
+  // Slider: 5+ zdjęć ALBO dokładnie 3 poziome (szerokie) zdjęcia.
+  const threeWide =
+    count === 3 && images.some((img) => isWideImage(img.src));
+  if (count >= 5 || threeWide) {
     return (
       <GallerySlider>
         {images.map((img) => (
@@ -204,7 +207,8 @@ function ProjectGallery({ images }: { images: ImageRef[] }) {
     );
   }
 
-  // 1–3 → grid-cols-{n}; dokładnie 4 → 2 kolumny na mobile, 4 na desktop.
+  // Grid: 1 → 1 kol., 2 → 2 kol., 3 (pionowe/kwadratowe) → 3 kol.,
+  // 4 → 2 kol. mobile / 4 kol. desktop. Naturalne proporcje.
   const gridClass =
     count === 4 ? "grid-cols-2 sm:grid-cols-4" : GRID_COLS[count];
 

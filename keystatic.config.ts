@@ -53,7 +53,8 @@ export default config({
       path: "src/content/projekty/*",
       format: { contentField: "content" },
       entryLayout: "content",
-      columns: ["title", "year"],
+      // Kolumny listy: kategoria → klient → rok, a kolumna slug (title) na końcu.
+      columns: ["category", "client", "year", "title"],
       schema: {
         title: fields.slug({
           name: {
@@ -223,10 +224,10 @@ export default config({
       slugField: "title",
       path: "src/content/galerie/*",
       format: { data: "json" },
-      // Domyślny widok listy: kategoria (pierwsza — pozwala sortować/grupować
-      // klikiem nagłówka) + tytuł. Slug widoczny dopiero we wpisie. Keystatic
-      // 0.5 nie ma osobnego UI filtrowania, więc kolejność kolumn = grupowanie.
-      columns: ["category", "title"],
+      // Kolumny listy: kategoria → rok, a kolumna slug/klient (title) na końcu.
+      // (W tej kolekcji „klient" = pole title.) Keystatic 0.5 nie ma natywnego
+      // UI filtrowania — kolejność kolumn + sort klikiem nagłówka = grupowanie.
+      columns: ["category", "year", "title"],
       // Kolejność pól w formularzu = kolejność kluczy: Kategoria → Tytuł/klient
       // (z adresem URL) → Rok → Opis → Kolejność → Zdjęcia. Kategoria pierwsza
       // (grupowanie), pole adresu URL (slug) wraz z tytułem — nie na samej górze.
@@ -279,15 +280,15 @@ export default config({
         }),
         images: fields.array(
           fields.object({
-            // UWAGA: ścieżka tekstowa, NIE fields.image. Zdjęcia tej kolekcji
-            // żyją w różnych folderach (/projekty/…, /galerie/…), więc pojedynczy
-            // publicPath w fields.image nie potrafiłby ich reprezentować i przy
-            // zapisie wywoływał błąd „path requested for deletion which does not
-            // exist". Plik wgrywasz do public/ i wpisujesz tu jego ścieżkę.
-            src: fields.text({
-              label: "Ścieżka pliku zdjęcia",
+            // Upload z dysku. Wszystkie zdjęcia tej kolekcji żyją teraz w jednym
+            // drzewie public/galerie/, więc publicPath „/galerie" je obejmuje
+            // (po migracji ścieżek). Nowe pliki trafiają do public/galerie/.
+            src: fields.image({
+              label: "Plik zdjęcia",
               description:
-                "Np. /projekty/social-media/<nazwa>/1.jpeg (oryginalne proporcje). Plik umieść w folderze public. Warto skompresować — patrz /admin/compress.",
+                "Wgraj plik z dysku (oryginalne proporcje). Zapis do public/galerie. Warto skompresować — patrz /admin/compress.",
+              directory: "public/galerie",
+              publicPath: "/galerie",
             }),
             alt: fields.text({
               label: "Opis zdjęcia (alt)",

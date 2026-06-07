@@ -8,15 +8,19 @@
   "order": 10,
   "images": [
     {
+      "src": "/galerie/barborka-social/01.jpeg",
       "alt": "Barbórka — 1"
     },
     {
+      "src": "/galerie/barborka-social/02.jpeg",
       "alt": "Barbórka — 2"
     },
     {
+      "src": "/galerie/barborka-social/03.jpeg",
       "alt": "Barbórka — 3"
     },
     {
+      "src": "/galerie/barborka-social/04.jpeg",
       "alt": "Barbórka — 4"
     }
   ]

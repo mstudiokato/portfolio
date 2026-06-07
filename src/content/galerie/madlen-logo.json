@@ -5,19 +5,19 @@
   "order": 8,
   "images": [
     {
-      "src": "/projekty/logo/madlen/1.jpg",
+      "src": "/galerie/madlen-logo/01.jpg",
       "alt": "Madlen — 1"
     },
     {
-      "src": "/projekty/logo/madlen/2.jpg",
+      "src": "/galerie/madlen-logo/02.jpg",
       "alt": "Madlen — 2"
     },
     {
-      "src": "/projekty/logo/madlen/3.jpg",
+      "src": "/galerie/madlen-logo/03.jpg",
       "alt": "Madlen — 3"
     },
     {
-      "src": "/projekty/logo/madlen/4.jpg",
+      "src": "/galerie/madlen-logo/04.jpg",
       "alt": "Madlen — 4"
     }
   ]

@@ -5,19 +5,19 @@
   "order": 6,
   "images": [
     {
-      "src": "/projekty/inne/okladka/1.jpeg",
+      "src": "/galerie/okladka/01.jpeg",
       "alt": "Okładka — 1"
     },
     {
-      "src": "/projekty/inne/okladka/2.jpg",
+      "src": "/galerie/okladka/02.jpg",
       "alt": "Okładka — 2"
     },
     {
-      "src": "/projekty/inne/okladka/3.jpg",
+      "src": "/galerie/okladka/03.jpg",
       "alt": "Okładka — 3"
     },
     {
-      "src": "/projekty/inne/okladka/4.jpg",
+      "src": "/galerie/okladka/04.jpg",
       "alt": "Okładka — 4"
     }
   ]

@@ -7,15 +7,15 @@
   "order": 4,
   "images": [
     {
-      "src": "/projekty/inne/folderAMG/1.jpg",
+      "src": "/galerie/folder-amg/01.jpg",
       "alt": "Folder AMG — 1"
     },
     {
-      "src": "/projekty/inne/folderAMG/2.jpg",
+      "src": "/galerie/folder-amg/02.jpg",
       "alt": "Folder AMG — 2"
     },
     {
-      "src": "/projekty/inne/folderAMG/3.jpg",
+      "src": "/galerie/folder-amg/03.jpg",
       "alt": "Folder AMG — 3"
     }
   ]
