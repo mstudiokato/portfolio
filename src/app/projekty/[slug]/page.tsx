@@ -208,21 +208,20 @@ function firstSentence(text: string): string {
 }
 
 /**
- * Eyebrow nagłówka sekcji case study — limonkowy, UPPERCASE, bold, letter-spacing.
- * Większy niż zwykły Label (0.75rem), mniejszy niż tytuł projektu. Spójny stylem
- * z eyebrow sekcji na stronie głównej („— CO PROJEKTUJĘ").
+ * JEDEN spójny system etykiet na całej podstronie (META + nagłówki sekcji):
+ * limonkowy (#D4FF00), UPPERCASE, text-xs, tracking-widest, bold.
  */
-function SectionHeader({ children }: { children: string }) {
+function SectionLabel({ children }: { children: string }) {
   return (
-    <p className="text-lime text-base font-bold tracking-[0.18em] uppercase">
+    <span className="text-lime text-xs font-bold tracking-widest uppercase">
       {children}
-    </p>
+    </span>
   );
 }
 
 /**
- * Sekcja tekstowa case study: cienki separator (#1F2D44) na górze + eyebrow
- * nagłówka + biały akapit. Ukrywana gdy brak treści.
+ * Sekcja tekstowa case study: cienki separator (#1F2D44) na górze + etykieta +
+ * biały akapit (max-w-3xl ≈ 70 znaków/linię). Ukrywana gdy brak treści.
  */
 function TextSection({
   label,
@@ -234,8 +233,8 @@ function TextSection({
   if (!children || children.trim() === "") return null;
   return (
     <section className="border-border mt-12 border-t pt-6">
-      <SectionHeader>{label}</SectionHeader>
-      <Body className="text-ink mt-4 max-w-2xl leading-relaxed whitespace-pre-line">
+      <SectionLabel>{label}</SectionLabel>
+      <Body className="text-ink mt-4 max-w-3xl leading-relaxed whitespace-pre-line">
         {children}
       </Body>
     </section>
@@ -274,7 +273,7 @@ function CaseStudyView({ project }: { project: Project }) {
               className={m.value.length > 24 ? "sm:col-span-2" : ""}
             >
               <dt>
-                <Label>{m.label}</Label>
+                <SectionLabel>{m.label}</SectionLabel>
               </dt>
               <dd className="text-ink mt-2 text-base leading-snug">{m.value}</dd>
             </div>
@@ -295,9 +294,9 @@ function CaseStudyView({ project }: { project: Project }) {
         </div>
       ) : null}
 
-      {/* e) Lead-in — pierwsze zdanie opisu (opcjonalne). */}
+      {/* e) Lead-in — pierwsze zdanie opisu (hook): biały, większy, normal weight. */}
       {leadIn ? (
-        <p className="text-muted mt-8 max-w-2xl text-left text-lg leading-relaxed">
+        <p className="text-ink mt-8 max-w-3xl text-left text-xl leading-relaxed font-normal">
           {leadIn}
         </p>
       ) : null}
@@ -310,15 +309,24 @@ function CaseStudyView({ project }: { project: Project }) {
       {/* g) GALERIA ZDJĘĆ. */}
       {project.gallery.length > 0 ? (
         <section className="border-border mt-12 border-t pt-6">
-          <SectionHeader>Galeria</SectionHeader>
+          <SectionLabel>Galeria</SectionLabel>
           <div className="mt-6">
             <ProjectGallery images={project.gallery} />
           </div>
         </section>
       ) : null}
 
-      {/* h) EFEKT — domknięcie po pokazaniu zdjęć. */}
-      <TextSection label="Efekt">{project.effect}</TextSection>
+      {/* h) EFEKT — domknięcie w subtelnej limonkowej ramce (transparent tło). */}
+      {project.effect && project.effect.trim() !== "" ? (
+        <section className="mt-12">
+          <div className="max-w-3xl rounded-sm border border-[#D4FF00]/40 p-8">
+            <SectionLabel>Efekt</SectionLabel>
+            <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line">
+              {project.effect}
+            </Body>
+          </div>
+        </section>
+      ) : null}
     </>
   );
 }
