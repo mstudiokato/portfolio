@@ -1,7 +1,9 @@
 {
+  "category": "print-dtp",
   "title": "Paszport kibica",
-  "category": "inne",
   "description": "Projekt paszportu kibica.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 7,
   "images": [
     {
