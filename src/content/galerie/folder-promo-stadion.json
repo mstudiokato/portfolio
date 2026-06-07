@@ -1,7 +1,9 @@
 {
+  "category": "print-dtp",
   "title": "Folder promocyjny — Stadion Śląski",
-  "category": "inne",
   "description": "Folder promocyjny Stadionu Śląskiego.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 1,
   "images": [
     {
