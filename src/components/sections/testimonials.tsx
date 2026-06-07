@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { Container, Section } from "@/components/ui/layout";
 import { H2, Label } from "@/components/ui/typography";
-import { TESTIMONIALS } from "@/lib/site-content";
+import { TESTIMONIALS, EYEBROW_COLOR } from "@/lib/site-content";
+import { textColorHex } from "@/lib/text-color";
 
 /**
  * TESTIMONIALE (FIX 2) — układ lewo/prawo: po lewej pionowe zdjęcie 80×120
@@ -31,7 +32,9 @@ export function Testimonials() {
       style={{ paddingTop: "calc(var(--spacing-section-tight) * 0.7)" }}
     >
       <Container>
-        <Label>— CO MÓWIĄ ZLECENIODAWCY</Label>
+        <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
+          — CO MÓWIĄ ZLECENIODAWCY
+        </Label>
         <H2 className="mt-4 max-w-2xl">Rekomendacje</H2>
 
         <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -75,7 +78,10 @@ export function Testimonials() {
 
               {/* Prawa — cytat + autor. */}
               <div className="flex flex-col">
-                <blockquote className="text-ink text-body italic">
+                <blockquote
+                  className="text-body italic"
+                  style={{ color: textColorHex(t.quoteColor) }}
+                >
                   „{t.quote}”
                 </blockquote>
                 <figcaption className="mt-4">

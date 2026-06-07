@@ -35,7 +35,11 @@ type SiteJson = {
     experience: string;
     projects: string;
     clients: string;
+    // Kolor etykiet pod liczbami (panel: „Kolor tekstu"). Domyślnie biały.
+    labelColor?: string;
   };
+  // Kolor nadtytułów (eyebrow) sekcji. Domyślnie limonkowy.
+  eyebrowColor?: string;
   contact: {
     email: string;
     phone: string;
@@ -45,7 +49,16 @@ type SiteJson = {
   seo: { defaultTitle: string; defaultDescription: string };
 };
 
-type ServicesJson = { items: Array<{ title: string; description: string }> };
+type ServicesJson = {
+  items: Array<{
+    title: string;
+    description: string;
+    // Upload ikony (panel). Puste → fallback /ikonySpec/{index}.png.
+    icon?: string | null;
+    // Kolor tytułu i opisu specjalizacji (panel). Domyślnie biały.
+    color?: string;
+  }>;
+};
 type ClientsJson = {
   items: Array<{
     name: string;
@@ -64,6 +77,8 @@ type TestimonialsJson = {
     roles?: string[];
     role?: string;
     quote: string;
+    // Kolor cytatu (panel: „Kolor tekstu"). Domyślnie biały.
+    quoteColor?: string;
     image?: string | null;
   }>;
 };
@@ -88,8 +103,17 @@ export const LOCATION = "Katowice, PL";
 /** Hero — eyebrow, subline (z tokenem {lata}), etykiety CTA, kadrowanie zdjęcia. */
 export const HERO = site.hero;
 
-/** Services (sek. 8.4) — 6 obszarów. */
-export const SERVICES = services.items;
+/** Services (sek. 8.4) — 6 obszarów. icon: upload z panelu lub null (→ fallback
+ *  /ikonySpec/{index}.png w komponencie). color: kolor tytułu/opisu (panel). */
+export const SERVICES = services.items.map((s) => ({
+  title: s.title,
+  description: s.description,
+  icon: s.icon ?? null,
+  color: s.color ?? "white",
+}));
+
+/** Kolor nadtytułów (eyebrow) sekcji — z panelu, domyślnie limonkowy. */
+export const EYEBROW_COLOR = site.eyebrowColor ?? "lime";
 
 /** Testimoniale (N1) — opinie klientów; treść + popiersie podmieniane w Keystatic.
  *  imageExists liczone w buildzie (fs) → render <Image> albo placeholder „FOTO". */
@@ -100,6 +124,7 @@ export const TESTIMONIALS = testimonials.items.map((t) => ({
     (r) => r && r.trim() !== "",
   ),
   quote: t.quote,
+  quoteColor: t.quoteColor ?? "white",
   image: t.image ?? null,
   imageExists: publicAssetExists(t.image),
 }));
@@ -122,6 +147,9 @@ export const STATS: Array<{
   { value: site.numbers.projects, label: "Zrealizowanych projektów" },
   { value: site.numbers.clients, label: "Zadowolonych klientów" },
 ];
+
+/** Kolor etykiet pod liczbami — z panelu (Liczby → Kolor tekstu), domyślnie biały. */
+export const STATS_LABEL_COLOR = site.numbers.labelColor ?? "white";
 
 /** Credibility strip — wyróżnieni klienci: nazwa + logo (SVG) z flagą istnienia.
  *  logoExists liczone w buildzie (fs) → render <Image> albo fallback tekstowy. */

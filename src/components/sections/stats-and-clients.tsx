@@ -3,7 +3,13 @@ import Image from "next/image";
 import { Section } from "@/components/ui/layout";
 import { Label } from "@/components/ui/typography";
 import { CountUp } from "@/components/count-up";
-import { STATS, CREDIBILITY } from "@/lib/site-content";
+import {
+  STATS,
+  CREDIBILITY,
+  STATS_LABEL_COLOR,
+  EYEBROW_COLOR,
+} from "@/lib/site-content";
+import { textColorHex } from "@/lib/text-color";
 
 /**
  * STATS + CREDIBILITY — banda na pełną szerokość. Eyebrow liczb („— Fakty
@@ -33,7 +39,9 @@ export function StatsAndClients() {
           {/* LICZBY — eyebrow + bloki z separatorami; wycentrowane i wertykalnie
               wyrównane do logów, dosunięte do linii podziału (lg:pr-4). */}
           <div className="min-w-0 lg:col-span-5 lg:flex lg:flex-col lg:items-center lg:border-r lg:pr-4">
-            <Label>— Fakty i liczby</Label>
+            <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
+              — Fakty i liczby
+            </Label>
             <dl className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:flex sm:items-center sm:justify-center sm:gap-0 lg:mt-5">
               {stats.map((s, i) => (
                 <Fragment key={s.label}>
@@ -64,7 +72,10 @@ export function StatsAndClients() {
                     </dd>
                     {/* Mobile: mniejszy font + zawijanie (np. „Lat doświadczenia"),
                         by uniknąć ucięcia etykiet. Desktop: text-label −20% (0.6rem). */}
-                    <dt className="text-muted sm:text-label mt-3 text-xs uppercase lg:mt-[0.6rem] lg:text-[0.6rem] lg:whitespace-nowrap">
+                    <dt
+                      className="text-muted sm:text-label mt-3 text-xs uppercase lg:mt-[0.6rem] lg:text-[0.6rem] lg:whitespace-nowrap"
+                      style={{ color: textColorHex(STATS_LABEL_COLOR) }}
+                    >
                       {s.label.split("\n").map((line, li) => (
                         <Fragment key={li}>
                           {li > 0 ? <br /> : null}

@@ -13,7 +13,7 @@ import { cn } from "@/lib/cn";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Container, Section } from "@/components/ui/layout";
 import { H1, Lead, Body, Label, Caption } from "@/components/ui/typography";
-import { ProjectImage, isWideImage } from "@/components/project-image";
+import { ProjectImage } from "@/components/project-image";
 import { GallerySlider } from "@/components/gallery-slider";
 
 export function generateStaticParams() {
@@ -170,12 +170,13 @@ const GRID_COLS: Record<number, string> = {
 };
 
 /**
- * Galeria zdjęć projektu — pełna logika układu (FIX):
+ * Galeria zdjęć projektu — logika układu:
  *  - 1–3 zdjęcia → grid-cols-{n}, bez slidera;
- *  - dokładnie 4 zdjęcia kwadratowe/pionowe (h/w ≥ 0.75) → grid-cols-4;
- *  - dokładnie 4 zdjęcia szerokie poziome (h/w < 0.75) → grid-cols-2 (2×2);
- *  - 5+ zdjęć → poziomy slider ze strzałkami, niezależnie od proporcji.
- * W gridzie każde zdjęcie: w-full, naturalne proporcje (bez stałej wysokości).
+ *  - dokładnie 4 zdjęcia → grid-cols-2 (mobile) / grid-cols-4 (desktop), bez
+ *    slidera;
+ *  - 5+ zdjęć → poziomy slider ze strzałkami.
+ * W gridzie każde zdjęcie: w-full, NATURALNE proporcje (ratio="original", bez
+ * stałej wysokości i bez wymuszania kwadratu — wysokość wynika z proporcji pliku).
  */
 function ProjectGallery({ images }: { images: ImageRef[] }) {
   const count = images.length;
@@ -203,20 +204,19 @@ function ProjectGallery({ images }: { images: ImageRef[] }) {
     );
   }
 
-  // 1–4 → grid bez slidera. Liczba kolumn: 1–3 = n; dla 4 zależy od proporcji
-  // (szerokie poziome → 2 kolumny, inaczej 4). Zdjęcia w naturalnych proporcjach.
-  const cols =
-    count < 4 ? count : images.some((img) => isWideImage(img.src)) ? 2 : 4;
+  // 1–3 → grid-cols-{n}; dokładnie 4 → 2 kolumny na mobile, 4 na desktop.
+  const gridClass =
+    count === 4 ? "grid-cols-2 sm:grid-cols-4" : GRID_COLS[count];
 
   return (
-    <div className={cn("grid gap-3", GRID_COLS[cols])}>
+    <div className={cn("grid gap-3", gridClass)}>
       {images.map((img) => (
         <ProjectImage
           key={img.src}
           src={img.src}
           alt={img.alt}
           ratio="original"
-          sizes="(min-width: 1024px) 18rem, 50vw"
+          sizes="(min-width: 640px) 18rem, 50vw"
         />
       ))}
     </div>

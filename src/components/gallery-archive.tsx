@@ -11,6 +11,7 @@ import {
 } from "@/lib/gallery-categories";
 import { Tag } from "@/components/ui/tag";
 import { Lightbox } from "@/components/lightbox";
+import { textColorHex } from "@/lib/text-color";
 
 /**
  * „Pozostałe prace" na /projekty: poziome filtry kategorii (chipy design-systemu,
@@ -155,10 +156,15 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
         </div>
       </div>
 
-      {/* Opis pod galerią — biały (#F5F7FA / text-ink), czytelny rozmiar
-          (text-base). Ukrywany, gdy w panelu odznaczono „Pokaż opis pod galerią". */}
+      {/* Opis pod galerią — czytelny rozmiar (text-base), kolor z panelu
+          (domyślnie biały #F5F7FA). Ukrywany, gdy odznaczono „Pokaż opis…". */}
       {item.description && item.showDescription ? (
-        <p className="text-ink mt-5 max-w-2xl text-base">{item.description}</p>
+        <p
+          className="mt-5 max-w-2xl text-base"
+          style={{ color: textColorHex(item.descriptionColor) }}
+        >
+          {item.description}
+        </p>
       ) : null}
 
       <AnimatePresence>

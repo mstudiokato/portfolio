@@ -3,6 +3,26 @@ import { CATEGORIES } from "./src/lib/categories";
 import { GALLERY_CATEGORIES } from "./src/lib/gallery-categories";
 
 /**
+ * Pole wyboru koloru tekstu (Biały / Limonkowy / Szary). Wartości spójne z
+ * src/lib/text-color.ts. Domyślnie biały; eyebrow sekcji ma własny default „lime".
+ */
+function textColorField(
+  defaultValue: "white" | "lime" | "grey" = "white",
+) {
+  return fields.select({
+    label: "Kolor tekstu",
+    description:
+      "Biały = domyślny. Limonkowy = akcent. Szary = drugoplanowy.",
+    options: [
+      { label: "Biały", value: "white" },
+      { label: "Limonkowy", value: "lime" },
+      { label: "Szary", value: "grey" },
+    ],
+    defaultValue,
+  });
+}
+
+/**
  * Keystatic — Git-based CMS. Treść nadal żyje w repo (src/content/projekty/*.mdx
  * + src/content/settings/*.json). Keystatic to TYLKO UI do edycji tych plików;
  * strona renderuje przez własny loader (gray-matter / fs), bez zależności runtime
@@ -249,6 +269,7 @@ export default config({
             "Odznacz, aby ukryć opis pod zdjęciami na stronie. Domyślnie: pokazany.",
           defaultValue: true,
         }),
+        descriptionColor: textColorField("white"),
         order: fields.integer({
           label: "Kolejność w kategorii",
           description:
@@ -258,12 +279,15 @@ export default config({
         }),
         images: fields.array(
           fields.object({
-            src: fields.image({
-              label: "Plik zdjęcia",
+            // UWAGA: ścieżka tekstowa, NIE fields.image. Zdjęcia tej kolekcji
+            // żyją w różnych folderach (/projekty/…, /galerie/…), więc pojedynczy
+            // publicPath w fields.image nie potrafiłby ich reprezentować i przy
+            // zapisie wywoływał błąd „path requested for deletion which does not
+            // exist". Plik wgrywasz do public/ i wpisujesz tu jego ścieżkę.
+            src: fields.text({
+              label: "Ścieżka pliku zdjęcia",
               description:
-                "Wgraj plik z dysku (oryginalne proporcje). Zapis do public/galerie. (Przed uploadem warto skompresować — patrz /admin/compress.)",
-              directory: "public/galerie",
-              publicPath: "/galerie",
+                "Np. /projekty/social-media/<nazwa>/1.jpeg (oryginalne proporcje). Plik umieść w folderze public. Warto skompresować — patrz /admin/compress.",
             }),
             alt: fields.text({
               label: "Opis zdjęcia (alt)",
@@ -355,12 +379,17 @@ export default config({
               label: "Zadowolonych klientów",
               description: "Np. 30+",
             }),
+            labelColor: textColorField("white"),
           },
           {
             label: "Liczby (statystyki)",
-            description: "Liczby pokazywane na stronie głównej.",
+            description:
+              "Liczby pokazywane na stronie głównej. „Kolor tekstu” dotyczy etykiet pod liczbami.",
           },
         ),
+        // Kolor nadtytułów (eyebrow) sekcji na stronie głównej — domyślnie
+        // limonkowy (akcent), żeby zachować obecny wygląd.
+        eyebrowColor: textColorField("lime"),
         contact: fields.object(
           {
             email: fields.text({
@@ -431,6 +460,14 @@ export default config({
               description: "1–2 zdania, co obejmuje.",
               multiline: true,
             }),
+            icon: fields.image({
+              label: "Ikona (PNG)",
+              description:
+                "Wgraj plik PNG 48x48px. Zostaw puste żeby użyć domyślnej ikony.",
+              directory: "public/ikonySpec",
+              publicPath: "/ikonySpec",
+            }),
+            color: textColorField("white"),
           }),
           {
             label: "Lista specjalizacji",
@@ -469,6 +506,7 @@ export default config({
               description: "Cytat klienta.",
               multiline: true,
             }),
+            quoteColor: textColorField("white"),
             image: fields.image({
               label: "Zdjęcie (popiersie)",
               description:

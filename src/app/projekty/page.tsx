@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { getFeaturedProjects, getGalleryItems } from "@/lib/content";
+import { EYEBROW_COLOR } from "@/lib/site-content";
+import { textColorHex } from "@/lib/text-color";
 import { ProjectCard } from "@/components/project-card";
 import { GalleryArchive } from "@/components/gallery-archive";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
@@ -23,7 +25,9 @@ export default function ProjektyPage() {
       {/* SEKCJA 1 — Case studies (featured): grid 3-kol desktop / 1 mobile (P1, P2). */}
       <Section>
         <Container>
-          <Label>— Wybrane realizacje</Label>
+          <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
+            — Wybrane realizacje
+          </Label>
           <H1 className="text-h2 mt-4">Case Studies</H1>
 
           <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-grid sm:gap-y-12 lg:grid-cols-3">
@@ -42,7 +46,9 @@ export default function ProjektyPage() {
         style={{ paddingTop: "calc(var(--spacing-section) * 0.6)" }}
       >
         <Container>
-          <Label>— Pozostałe prace</Label>
+          <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
+            — Pozostałe prace
+          </Label>
           <H2 className="mt-4">Projekty</H2>
 
           <div className="mt-8">

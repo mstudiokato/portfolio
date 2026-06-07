@@ -1,36 +1,20 @@
-import {
-  Megaphone,
-  Zap,
-  TrendingUp,
-  Layers,
-  Printer,
-  Sparkles,
-  Palette,
-  type LucideIcon,
-} from "lucide-react";
 import { Container, Section } from "@/components/ui/layout";
 import { H2, H4, Body, Label } from "@/components/ui/typography";
-import { SERVICES } from "@/lib/site-content";
+import { SERVICES, EYEBROW_COLOR } from "@/lib/site-content";
+import { textColorHex } from "@/lib/text-color";
 
 /**
- * WHAT I DESIGN / SERVICES (sek. 8.4). 6 obszarów: ikona (akcent) + nazwa (H4) +
- * 1–2 zdania. Układ: 3 kolumny desktop / 2 tablet / 1 mobile.
- * Tło sekcji = section i zwarty padding (V5). (Osobny blok AI-Augmented
- * Workflow usunięty — AI jest jedną ze specjalizacji w siatce.)
- * Hover (FIX 8): tytuł specjalizacji → bold + lime, transition 150ms.
+ * WHAT I DESIGN / SERVICES (sek. 8.4). 6 obszarów: ikona PNG (akcent) + nazwa
+ * (H4) + 1–2 zdania. Układ: 3 kolumny desktop / 2 tablet / 1 mobile.
+ * Tło sekcji = section i zwarty padding (V5).
+ *
+ * Ikona: upload z panelu (pole „Ikona (PNG)") albo fallback /ikonySpec/{n}.png
+ * wg pozycji (1-indeks). Kolor tytułu i opisu: pole „Kolor tekstu" z panelu
+ * (inline style, domyślnie biały). Eyebrow: kolor z ustawień strony.
  */
-
-// Ikony Lucide (outline) przypisane po tytule specjalizacji. Akcent — nie
-// dominują nad tekstem. Nieznany tytuł (np. nowa pozycja z panelu) → Palette.
-const SERVICE_ICONS: Record<string, LucideIcon> = {
-  "Social Media Systems": Megaphone,
-  "Event Branding": Zap,
-  "Sponsorship & Pitch Decks": TrendingUp,
-  "Identity & Campaign Design": Layers,
-  "Druk i materiały promocyjne": Printer,
-  "Produkcja wizualna z AI": Sparkles,
-};
 export function Services() {
+  const eyebrowColor = textColorHex(EYEBROW_COLOR, "lime");
+
   return (
     <Section
       id="specjalizacje"
@@ -39,29 +23,41 @@ export function Services() {
       style={{ paddingTop: "calc(var(--spacing-section-tight) * 0.7)" }}
     >
       <Container>
-        <Label>— CO PROJEKTUJĘ</Label>
+        <Label style={{ color: eyebrowColor }}>— CO PROJEKTUJĘ</Label>
         <H2 className="mt-4 max-w-2xl">Od social media do brandingu</H2>
 
         <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((service) => {
-            const Icon = SERVICE_ICONS[service.title] ?? Palette;
+          {SERVICES.map((service, i) => {
+            // Ikona z panelu lub domyślna wg pozycji (1.png … 6.png).
+            const iconSrc =
+              service.icon && service.icon.trim() !== ""
+                ? service.icon
+                : `/ikonySpec/${i + 1}.png`;
+            const color = textColorHex(service.color);
             return (
               <div
                 key={service.title}
                 className="group border-border border-t pt-5"
               >
-                {/* Ikona-akcent nad tytułem: outline, lime (#D4FF00), 20px. */}
-                <Icon
-                  size={20}
-                  strokeWidth={1.75}
-                  color="#D4FF00"
+                {/* Ikona-akcent nad tytułem: PNG 24px, proporcje zachowane. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={iconSrc}
+                  alt=""
                   aria-hidden="true"
-                  className="mb-3"
+                  width={24}
+                  height={24}
+                  className="mb-3 h-6 w-auto object-contain"
                 />
-                <H4 className="group-hover:text-lime transition-colors duration-150 group-hover:font-bold">
+                <H4
+                  className="transition-[font-weight] duration-150 group-hover:font-bold"
+                  style={{ color }}
+                >
                   {service.title}
                 </H4>
-                <Body className="text-muted mt-3">{service.description}</Body>
+                <Body className="mt-3" style={{ color }}>
+                  {service.description}
+                </Body>
               </div>
             );
           })}

@@ -264,6 +264,8 @@ export type GalleryItem = {
   description: string;
   /** Czy pokazać opis pod galerią na stronie (panel: checkbox, domyślnie true). */
   showDescription: boolean;
+  /** Kolor opisu pod galerią (panel: „Kolor tekstu"), domyślnie „white". */
+  descriptionColor: string;
   /** Zdjęcia (1–12), w oryginalnych proporcjach. */
   images: GalleryImage[];
   /** Kolejność w obrębie kategorii (mniejsze = wyżej). */
@@ -306,6 +308,7 @@ function parseGalleryItem(fileName: string): GalleryItem {
     description: str(data.description),
     // Domyślnie true — opis pokazujemy, chyba że w panelu jawnie odznaczono.
     showDescription: data.showDescription !== false,
+    descriptionColor: str(data.descriptionColor) || "white",
     images,
     order: data.order !== undefined ? Number(data.order) : 0,
   };
