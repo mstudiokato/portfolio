@@ -1,23 +1,25 @@
 {
-  "title": "Koszulki górnicze",
   "category": "branding",
-  "description": "Projekt koszulek o tematyce górniczej.",
+  "title": "GKS Katowice",
+  "description": "Projekt koszulek hokejowych, stylizowanych na mundury górnicze. Hokeiści GKS Katowice zagrali w nich podczas finałów Pucharu Polski.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 3,
   "images": [
     {
-      "src": "/galerie/koszulki-gornicze/01.jpg",
+      "src": "/galerie/koszulki-gornicze/images/0/src.jpg",
       "alt": "Koszulki górnicze — 1"
     },
     {
-      "src": "/galerie/koszulki-gornicze/02.jpg",
+      "src": "/galerie/koszulki-gornicze/images/1/src.jpg",
       "alt": "Koszulki górnicze — 2"
     },
     {
-      "src": "/galerie/koszulki-gornicze/03.jpg",
+      "src": "/galerie/koszulki-gornicze/images/2/src.jpg",
       "alt": "Koszulki górnicze — 3"
     },
     {
-      "src": "/galerie/koszulki-gornicze/04.jpg",
+      "src": "/galerie/koszulki-gornicze/images/3/src.jpg",
       "alt": "Koszulki górnicze — 4"
     }
   ]
