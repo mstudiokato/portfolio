@@ -1,24 +1,26 @@
 {
-  "title": "SPM Ranking — 50 Kobiet",
   "category": "logo",
+  "title": "Shark Agency",
   "year": "2023",
-  "description": "Logo rankingu 50 najbardziej wpływowych kobiet w polskim biznesie sportowym.",
+  "description": "Logo rankingu „50 najbardziej wpływowych kobiet w polskim biznesie sportowym” , organizowanego przez portal sportmarketing.pl",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 2,
   "images": [
     {
-      "src": "/galerie/spm-ranking/01.jpg",
+      "src": "/galerie/spm-ranking/images/0/src.jpg",
       "alt": "SPM Ranking 50 Kobiet — logo, wersja główna"
     },
     {
-      "src": "/galerie/spm-ranking/02.png",
+      "src": "/galerie/spm-ranking/images/1/src.png",
       "alt": "SPM Ranking 50 Kobiet — logo na tle redakcyjnym"
     },
     {
-      "src": "/galerie/spm-ranking/03.jpg",
+      "src": "/galerie/spm-ranking/images/2/src.jpg",
       "alt": "SPM Ranking 50 Kobiet — logo w aplikacji"
     },
     {
-      "src": "/galerie/spm-ranking/04.png",
+      "src": "/galerie/spm-ranking/images/3/src.png",
       "alt": "SPM Ranking 50 Kobiet — logo, wariant dodatkowy"
     }
   ]
