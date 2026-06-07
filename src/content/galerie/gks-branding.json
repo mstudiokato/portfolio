@@ -1,27 +1,29 @@
 {
-  "title": "GKS Katowice — branding",
   "category": "branding",
-  "description": "System wizualny i branding dla GKS Katowice.",
+  "title": "GKS Katowice ",
+  "description": "Prrojekty case'ów na telefon dla Oficjalnego Sklepu klubu.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 1,
   "images": [
     {
-      "src": "/galerie/gks-branding/01.jpg",
+      "src": "/galerie/gks-branding/images/0/src.jpg",
       "alt": "GKS Katowice — branding — 1"
     },
     {
-      "src": "/galerie/gks-branding/02.jpg",
+      "src": "/galerie/gks-branding/images/1/src.jpg",
       "alt": "GKS Katowice — branding — 2"
     },
     {
-      "src": "/galerie/gks-branding/03.jpg",
+      "src": "/galerie/gks-branding/images/2/src.jpg",
       "alt": "GKS Katowice — branding — 3"
     },
     {
-      "src": "/galerie/gks-branding/04.jpg",
+      "src": "/galerie/gks-branding/images/3/src.jpg",
       "alt": "GKS Katowice — branding — 4"
     },
     {
-      "src": "/galerie/gks-branding/05.jpg",
+      "src": "/galerie/gks-branding/images/4/src.jpg",
       "alt": "GKS Katowice — branding — 5"
     }
   ]
