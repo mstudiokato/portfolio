@@ -1,7 +1,9 @@
 {
-  "title": "Gole.pl",
   "category": "social-media",
-  "description": "Grafiki social media dla Gole.pl.",
+  "title": "Realizacja własna",
+  "description": "Najważniejsze bramki GKS Katowice - subiektywny ranking w stylu gry Sensible World of Soccer.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 9,
   "images": [
     {
