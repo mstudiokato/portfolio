@@ -224,12 +224,20 @@ const hasText = (s?: string): boolean => !!s && s.trim() !== "";
 
 /**
  * Komórka tekstowa w gridzie 2-kolumnowym: etykieta + biały akapit wypełniający
- * całą szerokość kolumny. Ukrywana gdy brak treści.
+ * całą szerokość kolumny. Ukrywana gdy brak treści. className → padding/separator.
  */
-function TextCell({ label, text }: { label: string; text?: string }) {
+function TextCell({
+  label,
+  text,
+  className,
+}: {
+  label: string;
+  text?: string;
+  className?: string;
+}) {
   if (!hasText(text)) return null;
   return (
-    <div>
+    <div className={className}>
       <SectionLabel>{label}</SectionLabel>
       <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line">
         {text}
@@ -291,23 +299,36 @@ function CaseStudyView({ project }: { project: Project }) {
         </div>
       ) : null}
 
-      {/* e) Rząd 1: Lead-in (lewa) | Wyzwanie (prawa) — grid 2 kolumny na desktop. */}
+      {/* e) Rząd 1: Kontekst (lewa) | Wyzwanie (prawa). Pionowy separator (#1F2D44)
+          między kolumnami na desktop; na mobile (stack) ukryty. */}
       {leadIn || hasText(project.challenge) ? (
-        <div className="border-border mt-12 grid grid-cols-1 gap-12 border-t pt-8 md:grid-cols-2 lg:gap-16">
-          <div>
-            {leadIn ? (
-              <Body className="text-ink leading-relaxed">{leadIn}</Body>
-            ) : null}
-          </div>
-          <TextCell label="Wyzwanie" text={project.challenge} />
+        <div className="border-border mt-12 grid grid-cols-1 gap-y-12 border-t pt-8 md:grid-cols-2 md:gap-y-0">
+          <TextCell
+            label="Kontekst"
+            text={leadIn}
+            className="md:pr-12 lg:pr-16"
+          />
+          <TextCell
+            label="Wyzwanie"
+            text={project.challenge}
+            className="border-border md:border-l md:pl-12 lg:pl-16"
+          />
         </div>
       ) : null}
 
       {/* f) Rząd 2: Koncepcja (lewa) | Proces projektowy (prawa). */}
       {hasText(project.concept) || hasText(project.process) ? (
-        <div className="border-border mt-12 grid grid-cols-1 gap-12 border-t pt-8 md:grid-cols-2 lg:gap-16">
-          <TextCell label="Koncepcja" text={project.concept} />
-          <TextCell label="Proces projektowy" text={project.process} />
+        <div className="border-border mt-12 grid grid-cols-1 gap-y-12 border-t pt-8 md:grid-cols-2 md:gap-y-0">
+          <TextCell
+            label="Koncepcja"
+            text={project.concept}
+            className="md:pr-12 lg:pr-16"
+          />
+          <TextCell
+            label="Proces projektowy"
+            text={project.process}
+            className="border-border md:border-l md:pl-12 lg:pl-16"
+          />
         </div>
       ) : null}
 
@@ -321,10 +342,10 @@ function CaseStudyView({ project }: { project: Project }) {
         </section>
       ) : null}
 
-      {/* h) EFEKT — pełna szerokość, subtelne ciemniejsze tło sekcji (#0F1A2E). */}
+      {/* h) REZULTAT — wyróżnienie grubym limonkowym obrysem, tło transparentne. */}
       {hasText(project.effect) ? (
-        <section className="bg-section mt-12 px-8 py-8">
-          <SectionLabel>Efekt</SectionLabel>
+        <section className="mt-12 rounded-sm border-2 border-[#D4FF00] px-8 py-8">
+          <SectionLabel>Rezultat</SectionLabel>
           <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line">
             {project.effect}
           </Body>

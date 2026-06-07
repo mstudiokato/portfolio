@@ -157,7 +157,7 @@ export default config({
           multiline: true,
         }),
         effect: fields.text({
-          label: "Efekt",
+          label: "Rezultat",
           description: "1-2 zdania o rezultacie projektu",
           multiline: true,
         }),
