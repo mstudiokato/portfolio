@@ -1,23 +1,25 @@
 {
-  "title": "Dekada",
   "category": "logo",
-  "description": "Projekt logo Dekada.",
+  "title": "GKS Katowice",
+  "description": "Projekt logo dla filmu dokumentalnego \"Dekada GieKSy\" - opowiadającego okresie sukcesów klubu GKS Katowice na przestrzeni lat 80/90.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 6,
   "images": [
     {
-      "src": "/galerie/dekada-logo/01.png",
+      "src": "/galerie/dekada-logo/images/0/src.png",
       "alt": "Dekada — 1"
     },
     {
-      "src": "/galerie/dekada-logo/02.png",
+      "src": "/galerie/dekada-logo/images/1/src.png",
       "alt": "Dekada — 2"
     },
     {
-      "src": "/galerie/dekada-logo/03.jpg",
+      "src": "/galerie/dekada-logo/images/2/src.jpg",
       "alt": "Dekada — 3"
     },
     {
-      "src": "/galerie/dekada-logo/04.png",
+      "src": "/galerie/dekada-logo/images/3/src.png",
       "alt": "Dekada — 4"
     }
   ]
