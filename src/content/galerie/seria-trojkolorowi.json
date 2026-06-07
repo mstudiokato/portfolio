@@ -1,31 +1,33 @@
 {
-  "title": "Seria Trójkolorowi",
   "category": "inne",
-  "description": "Seria graficzna „Trójkolorowi”.",
+  "title": "Realizacja własna",
+  "description": "Seria \"Trójkolorowi\" - legendarne postacie klubu gks katowice jako cyfrowe avatary\n",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 5,
   "images": [
     {
-      "src": "/galerie/seria-trojkolorowi/01.jpeg",
+      "src": "/galerie/seria-trojkolorowi/images/0/src.jpeg",
       "alt": "Seria Trójkolorowi — 1"
     },
     {
-      "src": "/galerie/seria-trojkolorowi/02.jpeg",
+      "src": "/galerie/seria-trojkolorowi/images/1/src.jpeg",
       "alt": "Seria Trójkolorowi — 2"
     },
     {
-      "src": "/galerie/seria-trojkolorowi/03.jpeg",
+      "src": "/galerie/seria-trojkolorowi/images/2/src.jpeg",
       "alt": "Seria Trójkolorowi — 3"
     },
     {
-      "src": "/galerie/seria-trojkolorowi/04.jpeg",
+      "src": "/galerie/seria-trojkolorowi/images/3/src.jpeg",
       "alt": "Seria Trójkolorowi — 4"
     },
     {
-      "src": "/galerie/seria-trojkolorowi/05.jpeg",
+      "src": "/galerie/seria-trojkolorowi/images/4/src.jpeg",
       "alt": "Seria Trójkolorowi — 5"
     },
     {
-      "src": "/galerie/seria-trojkolorowi/06.jpeg",
+      "src": "/galerie/seria-trojkolorowi/images/5/src.jpeg",
       "alt": "Seria Trójkolorowi — 6"
     }
   ]
