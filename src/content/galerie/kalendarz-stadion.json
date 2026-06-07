@@ -1,7 +1,8 @@
 {
   "category": "print-dtp",
-  "title": "Kalendarz — Stadion Śląski",
-  "description": "Projekt kalendarza Stadionu Śląskiego.",
+  "title": "Stadion Śląski",
+  "year": "2020",
+  "description": "Projekt kalendarza 13-stronicowego z lekkoatletami.",
   "showDescription": true,
   "descriptionColor": "white",
   "order": 3,
