@@ -1,7 +1,9 @@
 {
-  "title": "Shark Entertainment",
   "category": "social-media",
+  "title": "Shark Entertainment",
   "description": "Grafiki social media dla Shark Entertainment.",
+  "showDescription": false,
+  "descriptionColor": "white",
   "order": 4,
   "images": [
     {
