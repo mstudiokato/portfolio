@@ -113,22 +113,12 @@ export default config({
           label: "Zakres prac (scope)",
           description:
             "Krótko, czego dotyczył projekt. Np. „Identyfikacja wizualna, social media”.",
+          multiline: true,
         }),
-        deliverables: fields.array(
-          fields.text({
-            label: "Pozycja",
-            description: "Jedna oddana rzecz, np. „Księga znaku”.",
-          }),
-          {
-            label: "Lista deliverables (co oddano)",
-            description:
-              "Konkretne rzeczy oddane klientowi. Dodawaj po jednej pozycji. Przeciągnij, żeby zmienić kolejność.",
-            itemLabel: (p) => p.value || "pozycja",
-          },
-        ),
         role: fields.text({
           label: "Twoja rola",
           description: "Np. „Senior Graphic Designer”, „Art Director”.",
+          multiline: true,
         }),
         context: fields.text({
           label: "Kontekst (1 zdanie)",
@@ -160,11 +150,6 @@ export default config({
           label: "Rezultat",
           description: "1-2 zdania o rezultacie projektu",
           multiline: true,
-        }),
-        tag: fields.text({
-          label: "Tag (powiązane projekty)",
-          description:
-            "Wspólne słowo-klucz łączące powiązane projekty (np. „gks-katowice”). Projekty z tym samym tagiem linkują się wzajemnie.",
         }),
         cover: fields.object(
           {
@@ -208,6 +193,12 @@ export default config({
             itemLabel: (p) => p.fields.alt.value || "zdjęcie",
           },
         ),
+        content: fields.mdx({
+          label: "Treść podstrony",
+          description:
+            "Główna treść case study: nagłówki, akapity, zdjęcia. Pole puste dla typu „Galeria”.",
+        }),
+        // SEO na samym dole — rzadko edytowane, nie powinno przerywać formularza.
         seo: fields.object(
           {
             title: fields.text({
@@ -231,11 +222,6 @@ export default config({
               "Ustawienia dla Google i social media. Możesz zostawić puste — użyte zostaną dane projektu.",
           },
         ),
-        content: fields.mdx({
-          label: "Treść podstrony",
-          description:
-            "Główna treść case study: nagłówki, akapity, zdjęcia. Pole puste dla typu „Galeria”.",
-        }),
       },
     }),
 

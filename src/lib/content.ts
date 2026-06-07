@@ -45,7 +45,6 @@ export type Project = {
   /** Dokładnie jedna z sześciu kategorii — pole WYMAGANE. */
   category: CategorySlug;
   scope: string;
-  deliverables: string[];
   role: string;
   /** Jedno zdanie kontekstu. */
   context: string;
@@ -62,8 +61,6 @@ export type Project = {
   coverExists: boolean;
   /** Galeria — obrazy ze ścieżką i altem. */
   gallery: ImageRef[];
-  /** Tag do „powiązanych projektów". */
-  tag: string;
   /** featured:true → kafel na stronie głównej (8–10 top). */
   featured: boolean;
   /** Ręczna kolejność (mniejsze = wyżej); brak → sort po roku malejąco. */
@@ -73,14 +70,6 @@ export type Project = {
   /** Surowa treść MDX (body) — render na podstronie projektu. */
   body: string;
 };
-
-function toStringArray(value: unknown): string[] {
-  if (Array.isArray(value)) return value.map(String);
-  if (typeof value === "string" && value.trim() !== "") {
-    return value.split(",").map((s) => s.trim());
-  }
-  return [];
-}
 
 function str(value: unknown): string {
   return value === undefined || value === null ? "" : String(value);
@@ -158,7 +147,6 @@ function parseProject(fileName: string): Project {
     year,
     category,
     scope: str(data.scope),
-    deliverables: toStringArray(data.deliverables),
     role: str(data.role),
     context: str(data.context),
     description: str(data.description),
@@ -169,7 +157,6 @@ function parseProject(fileName: string): Project {
     cover,
     coverExists: publicAssetExists(cover.src),
     gallery: toImageRefArray(data.gallery),
-    tag: str(data.tag),
     featured: data.featured === true,
     order: data.order !== undefined ? Number(data.order) : undefined,
     seo: {
