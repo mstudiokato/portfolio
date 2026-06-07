@@ -1,7 +1,7 @@
 {
   "hero": {
     "eyebrow": "— Projektuję dla sportu i biznesu",
-    "subline": "Projektuję komunikację wizualną dla klubów, federacji, eventów i marek B2B — łącząc {lata} lat doświadczenia z nowoczesnym AI-augmented workflow.",
+    "subline": "14 lat zamieniam pomysły w projekty, które działają — na ekranie, na trybunach i na papierze. Dla marek, które nie chcą wyglądać jak wszyscy.",
     "ctaPrimary": "Porozmawiajmy ↗",
     "ctaSecondary": "Zobacz projekty",
     "positionX": 18,
@@ -11,8 +11,10 @@
   "numbers": {
     "experience": "14",
     "projects": "1000+",
-    "clients": "30"
+    "clients": "30",
+    "labelColor": "white"
   },
+  "eyebrowColor": "lime",
   "contact": {
     "email": "kontakt@michal-stezaly.pl",
     "phone": "668 01 02 62",
