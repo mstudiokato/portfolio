@@ -1,23 +1,25 @@
 {
-  "title": "Natura",
   "category": "logo",
-  "description": "Projekt logo Natura.",
+  "title": "Zdrowycatering.pl",
+  "description": "Projekt logo cateringu dietetycznego premium \"Co dała Natura\"",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 9,
   "images": [
     {
-      "src": "/galerie/natura-logo/01.jpg",
+      "src": "/galerie/natura-logo/images/0/src.jpg",
       "alt": "Natura — 1"
     },
     {
-      "src": "/galerie/natura-logo/02.jpg",
+      "src": "/galerie/natura-logo/images/1/src.jpg",
       "alt": "Natura — 2"
     },
     {
-      "src": "/galerie/natura-logo/03.jpg",
+      "src": "/galerie/natura-logo/images/2/src.jpg",
       "alt": "Natura — 3"
     },
     {
-      "src": "/galerie/natura-logo/04.jpg",
+      "src": "/galerie/natura-logo/images/3/src.jpg",
       "alt": "Natura — 4"
     }
   ]
