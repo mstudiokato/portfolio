@@ -1,7 +1,7 @@
 {
   "hero": {
     "eyebrow": "— Projektuję dla sportu i biznesu",
-    "subline": "{lata} lat zamieniam pomysły w projekty, które działają na ekranie, na trybunach i na papierze. \nDla marek, które nie chcą wyglądać jak wszyscy.",
+    "subline": "Projektuję dla klubów, federacji, eventów i marek — łącząc {lata} lat doświadczenia z nowoczesnym ",
     "ctaPrimary": "Porozmawiajmy ↗",
     "ctaSecondary": "Zobacz projekty",
     "positionX": 18,
@@ -11,7 +11,7 @@
   "numbers": {
     "experience": "14",
     "projects": "1000+",
-    "clients": "30",
+    "clients": "30+",
     "labelColor": "white"
   },
   "eyebrowColor": "lime",
