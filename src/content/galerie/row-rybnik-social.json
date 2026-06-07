@@ -1,7 +1,9 @@
 {
-  "title": "ROW Rybnik",
   "category": "social-media",
+  "title": "ROW Rybnik",
   "description": "Grafiki social media dla klubu ROW Rybnik.",
+  "showDescription": false,
+  "descriptionColor": "white",
   "order": 8,
   "images": [
     {
