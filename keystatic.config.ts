@@ -125,12 +125,6 @@ export default config({
           description: "Jedno zdanie tła: kim jest klient i jaka była sytuacja.",
           multiline: true,
         }),
-        description: fields.text({
-          label: "Krótki opis (2–4 zdania)",
-          description:
-            "Zwięzły opis projektu pokazywany na podstronie i w podglądach.",
-          multiline: true,
-        }),
         challenge: fields.text({
           label: "Wyzwanie",
           description: "1-2 zdania o problemie który rozwiązywał projekt",

@@ -31,8 +31,7 @@ export async function generateMetadata({
   if (!project) return {};
 
   const title = project.seo.title || project.client;
-  const description =
-    project.seo.description || project.context || project.description;
+  const description = project.seo.description || project.context;
   const ogImage = project.seo.ogImage || project.cover.src;
   return {
     title,
@@ -251,8 +250,8 @@ function CaseStudyView({ project }: { project: Project }) {
     { label: "Rola", value: project.role },
   ].filter((m) => m.value && m.value.trim() !== "");
 
-  // Intro = TYLKO pierwsze zdanie opisu (lead-in) — bez powtarzania Wyzwania/Koncepcji.
-  const leadIn = firstSentence(project.description);
+  // Intro = pierwsze zdanie pola „Kontekst" (lead-in) — bez powtarzania Wyzwania/Koncepcji.
+  const leadIn = firstSentence(project.context);
 
   return (
     <>

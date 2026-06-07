@@ -46,10 +46,8 @@ export type Project = {
   category: CategorySlug;
   scope: string;
   role: string;
-  /** Jedno zdanie kontekstu. */
+  /** Jedno zdanie kontekstu — zasila też lead-in „Kontekst" i fallback SEO. */
   context: string;
-  /** Krótki opis biznesowy (2–4 zdania). */
-  description: string;
   /** Case study (szablon): wyzwanie / koncepcja / proces / efekt (pola tekstowe). */
   challenge: string;
   concept: string;
@@ -149,7 +147,6 @@ function parseProject(fileName: string): Project {
     scope: str(data.scope),
     role: str(data.role),
     context: str(data.context),
-    description: str(data.description),
     challenge: str(data.challenge),
     concept: str(data.concept),
     process: str(data.process),
