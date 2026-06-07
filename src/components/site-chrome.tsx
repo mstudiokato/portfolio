@@ -41,7 +41,7 @@ export function SiteFooter() {
           href={CONTACT.cvHref}
           className="text-caption text-muted hover:text-ink w-fit underline-offset-4 transition-colors hover:underline"
         >
-          CV (PDF)
+          CV do pobrania ↗
         </a>
       </Container>
     </footer>

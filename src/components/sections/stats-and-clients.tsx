@@ -91,7 +91,9 @@ export function StatsAndClients() {
 
           {/* LOGOTYPY — eyebrow + marquee 56px bez ramek, separatory pionowe. */}
           <div className="border-border mt-2 min-w-0 border-t pt-8 lg:col-span-7 lg:mt-0 lg:border-t-0 lg:pt-0">
-            <p className="text-label text-muted uppercase">Pracowałem dla</p>
+            <p className="text-label text-muted uppercase">
+              Współpracowałem min. z
+            </p>
             <div className="marquee-mask relative mt-6 w-full max-w-full overflow-hidden">
               <ul className="marquee-track flex w-max items-center">
                 {marqueeClients.map((c, i) => (
