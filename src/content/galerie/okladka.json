@@ -1,23 +1,25 @@
 {
+  "category": "print-dtp",
   "title": "Okładka",
-  "category": "inne",
   "description": "Projekt okładki publikacji.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 6,
   "images": [
     {
-      "src": "/galerie/okladka/01.jpeg",
+      "src": "/galerie/okladka/images/0/src.jpeg",
       "alt": "Okładka — 1"
     },
     {
-      "src": "/galerie/okladka/02.jpg",
+      "src": "/galerie/okladka/images/1/src.jpg",
       "alt": "Okładka — 2"
     },
     {
-      "src": "/galerie/okladka/03.jpg",
+      "src": "/galerie/okladka/images/2/src.jpg",
       "alt": "Okładka — 3"
     },
     {
-      "src": "/galerie/okladka/04.jpg",
+      "src": "/galerie/okladka/images/3/src.jpg",
       "alt": "Okładka — 4"
     }
   ]
