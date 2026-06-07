@@ -1,8 +1,10 @@
 {
-  "title": "Spodek Super Cup",
   "category": "social-media",
+  "title": "Spodek Super Cup",
   "year": "2024",
   "description": "Grafiki social media dla turnieju Spodek Super Cup.",
+  "showDescription": false,
+  "descriptionColor": "white",
   "order": 1,
   "images": [
     {
