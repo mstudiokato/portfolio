@@ -1,7 +1,9 @@
 {
-  "title": "GKS Katowice",
   "category": "social-media",
+  "title": "GKS Katowice",
   "description": "Grafiki social media i matchday dla GKS Katowice.",
+  "showDescription": false,
+  "descriptionColor": "white",
   "order": 2,
   "images": [
     {
