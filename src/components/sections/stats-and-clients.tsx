@@ -50,9 +50,20 @@ export function StatsAndClients() {
                         {s.prefix}
                       </span>
                     ) : null}
-                    {/* Desktop −20%: font liczby clamp max 3.5rem → 2.8rem. */}
-                    <dd className="font-display text-lime text-[clamp(2.25rem,4vw,2.8rem)] leading-none font-semibold tabular-nums">
+                    {/* Liczba (limonkowa). Stat z jednostką (np. „14 LAT") jest
+                        wyeksponowany jako główny akcent — większy font, jednostka
+                        w tym samym kolorze obok liczby. */}
+                    <dd
+                      className={`font-display text-lime leading-none font-semibold tabular-nums ${
+                        s.unit
+                          ? "text-[clamp(2.75rem,5vw,3.4rem)]"
+                          : "text-[clamp(2.25rem,4vw,2.8rem)]"
+                      }`}
+                    >
                       <CountUp value={s.value} />
+                      {s.unit ? (
+                        <span className="ml-1.5 tracking-tight">{s.unit}</span>
+                      ) : null}
                     </dd>
                     {/* Mobile: mniejszy font + zawijanie (np. „Lat doświadczenia"),
                         by uniknąć ucięcia etykiet. Desktop: text-label −20% (0.6rem). */}
@@ -86,11 +97,11 @@ export function StatsAndClients() {
                           width={200}
                           height={56}
                           unoptimized
-                          // Indywidualne wysokości: SportValue −30% (39px→27px),
-                          // Lombards −20% (56px→45px); pozostałe 56px (h-14).
+                          // Indywidualne wysokości: SportValue dodatkowe −30%
+                          // (27px→19px), Lombards −20% (56px→45px); reszta 56px.
                           className={`${
                             c.name === "SportValue"
-                              ? "h-[27px]"
+                              ? "h-[19px]"
                               : c.name === "Lombards"
                                 ? "h-[45px]"
                                 : "h-14"

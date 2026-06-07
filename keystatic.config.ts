@@ -197,7 +197,10 @@ export default config({
       slugField: "title",
       path: "src/content/galerie/*",
       format: { data: "json" },
-      columns: ["title", "order"],
+      // Domyślny widok listy: kategoria (pierwsza — pozwala sortować/grupować
+      // klikiem nagłówka) + tytuł. Slug widoczny dopiero we wpisie. Keystatic
+      // 0.5 nie ma osobnego UI filtrowania, więc kolejność kolumn = grupowanie.
+      columns: ["category", "title"],
       schema: {
         title: fields.slug({
           name: {
@@ -332,10 +335,6 @@ export default config({
             clients: fields.text({
               label: "Zadowolonych klientów",
               description: "Np. 30+",
-            }),
-            brands: fields.text({
-              label: "Organizacji / marek",
-              description: "Np. 20+",
             }),
           },
           {
