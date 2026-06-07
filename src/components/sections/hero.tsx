@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/typography";
 import { yearsOfExperience } from "@/lib/experience";
 import { HERO } from "@/lib/site-content";
 import { HERO_OVERLAY, heroTransform } from "@/lib/hero-style";
+import { replaceWidows } from "@/lib/text";
 
 /**
  * HERO (masterprompt sek. 8.1). Zdjęcie projektanta jako pełne tło sekcji
@@ -93,8 +94,8 @@ export function Hero() {
             <span className="text-lime">for Sport &amp; Business</span>
           </p>
 
-          <p className="text-body-lg text-ink/85 mt-6 max-w-xl leading-relaxed lg:text-[1.25rem]">
-            {HERO.subline.replace("{lata}", String(years))}
+          <p className="text-body-lg text-ink/85 mt-6 max-w-xl leading-relaxed text-balance lg:text-[1.25rem]">
+            {replaceWidows(HERO.subline.replace("{lata}", String(years)))}
           </p>
 
           <div className="mt-9">
