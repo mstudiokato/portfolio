@@ -9,6 +9,9 @@ import { GALLERY_CATEGORIES } from "./src/lib/gallery-categories";
  * od Keystatic.
  *
  * Tryb: local w dev (panel bez logowania), github na produkcji (OAuth).
+ *
+ * Etykiety (label) i opisy (description) pól pisane są po polsku i zrozumiale dla
+ * osoby nietechnicznej — opis mówi WPROST co wpisać w dane pole.
  */
 export default config({
   storage:
@@ -33,30 +36,43 @@ export default config({
       columns: ["title", "year"],
       schema: {
         title: fields.slug({
-          name: { label: "Tytuł", validation: { isRequired: true } },
+          name: {
+            label: "Tytuł projektu",
+            description: "Nazwa projektu wyświetlana na stronie i liście prac.",
+            validation: { isRequired: true },
+          },
           slug: {
-            label: "Slug (adres URL)",
-            description: "Część adresu /projekty/[slug]. URL-safe.",
+            label: "Adres URL projektu",
+            description:
+              "Np. gks-katowice-social-media (małe litery, myślniki). To część adresu /projekty/[adres].",
           },
         }),
         client: fields.text({
           label: "Klient",
+          description: "Nazwa klienta lub organizacji.",
           validation: { isRequired: true },
         }),
         year: fields.integer({
-          label: "Rok",
+          label: "Rok realizacji",
+          description: "Np. 2024",
           validation: { isRequired: true },
         }),
         order: fields.integer({
-          label: "Kolejność (sortowanie)",
+          label: "Kolejność na liście",
+          description:
+            "Liczba sortująca — im mniejsza, tym wyżej projekt na liście. Np. 1, 2, 3…",
           validation: { isRequired: true },
         }),
         featured: fields.checkbox({
-          label: "Wyróżniony (strona główna)",
+          label: "Wyróżniony na stronie głównej",
+          description:
+            "Zaznacz, aby projekt pojawił się w sekcji wyróżnionych na stronie głównej.",
           defaultValue: false,
         }),
         displayType: fields.select({
           label: "Typ podstrony",
+          description:
+            "Case study = pełna podstrona z opisem i treścią. Galeria = lekka strona głównie ze zdjęciami.",
           options: [
             { label: "Case study (pełny)", value: "case-study" },
             { label: "Galeria (lekki)", value: "gallery" },
@@ -65,56 +81,114 @@ export default config({
         }),
         category: fields.select({
           label: "Kategoria",
+          description:
+            "Branża / typ projektu — używana do filtrowania na liście projektów.",
           options: CATEGORIES.map((c) => ({ label: c.label, value: c.slug })),
           defaultValue: "inne",
         }),
-        scope: fields.text({ label: "Scope" }),
-        deliverables: fields.array(fields.text({ label: "Deliverable" }), {
-          label: "Deliverables",
-          itemLabel: (p) => p.value,
+        scope: fields.text({
+          label: "Zakres prac (scope)",
+          description:
+            "Krótko, czego dotyczył projekt. Np. „Identyfikacja wizualna, social media”.",
         }),
-        role: fields.text({ label: "Rola" }),
-        context: fields.text({ label: "Kontekst (1 zdanie)", multiline: true }),
-        description: fields.text({
-          label: "Opis (2–4 zdania)",
+        deliverables: fields.array(
+          fields.text({
+            label: "Pozycja",
+            description: "Jedna oddana rzecz, np. „Księga znaku”.",
+          }),
+          {
+            label: "Lista deliverables (co oddano)",
+            description:
+              "Konkretne rzeczy oddane klientowi. Dodawaj po jednej pozycji. Przeciągnij, żeby zmienić kolejność.",
+            itemLabel: (p) => p.value || "pozycja",
+          },
+        ),
+        role: fields.text({
+          label: "Twoja rola",
+          description: "Np. „Senior Graphic Designer”, „Art Director”.",
+        }),
+        context: fields.text({
+          label: "Kontekst (1 zdanie)",
+          description: "Jedno zdanie tła: kim jest klient i jaka była sytuacja.",
           multiline: true,
         }),
-        tag: fields.text({ label: "Tag (powiązane projekty)" }),
+        description: fields.text({
+          label: "Krótki opis (2–4 zdania)",
+          description:
+            "Zwięzły opis projektu pokazywany na podstronie i w podglądach.",
+          multiline: true,
+        }),
+        tag: fields.text({
+          label: "Tag (powiązane projekty)",
+          description:
+            "Wspólne słowo-klucz łączące powiązane projekty (np. „gks-katowice”). Projekty z tym samym tagiem linkują się wzajemnie.",
+        }),
         cover: fields.object(
           {
             src: fields.text({
-              label: "Ścieżka pliku",
-              description: "np. /projekty/<slug>/cover.jpg",
+              label: "Ścieżka pliku zdjęcia",
+              description: "Np. /projekty/<adres>/cover.jpg",
             }),
             alt: fields.text({
-              label: "Alt (opis obrazu)",
+              label: "Opis zdjęcia (alt)",
+              description:
+                "Krótki opis co jest na zdjęciu — dla dostępności i Google.",
               validation: { isRequired: true },
             }),
           },
-          { label: "Cover (3:2)" },
+          {
+            label: "Zdjęcie okładkowe (3:2)",
+            description:
+              "Główne zdjęcie projektu widoczne na liście. Format 3:2.",
+          },
         ),
         gallery: fields.array(
           fields.object({
-            src: fields.text({ label: "Ścieżka pliku" }),
-            alt: fields.text({ label: "Alt (opis obrazu)" }),
+            src: fields.text({
+              label: "Ścieżka pliku zdjęcia",
+              description: "Np. /projekty/<adres>/01.jpg",
+            }),
+            alt: fields.text({
+              label: "Opis zdjęcia (alt)",
+              description: "Krótki opis co jest na zdjęciu.",
+            }),
           }),
           {
-            label: "Galeria",
-            itemLabel: (p) => p.fields.src.value || "zdjęcie",
+            label: "Galeria zdjęć",
+            description:
+              "Przeciągnij, żeby zmienić kolejność. Pierwsze zdjęcie = okładka.",
+            itemLabel: (p) =>
+              p.fields.alt.value || p.fields.src.value || "zdjęcie",
           },
         ),
         seo: fields.object(
           {
-            title: fields.text({ label: "SEO title (puste = tytuł)" }),
+            title: fields.text({
+              label: "Tytuł SEO",
+              description: "Puste = tytuł projektu.",
+            }),
             description: fields.text({
-              label: "SEO description (puste = kontekst)",
+              label: "Opis SEO",
+              description: "Puste = kontekst projektu. Ok. 150 znaków.",
               multiline: true,
             }),
-            ogImage: fields.text({ label: "OG image (ścieżka)" }),
+            ogImage: fields.text({
+              label: "Obrazek do social media (OG)",
+              description:
+                "Ścieżka do obrazka pokazywanego przy udostępnianiu linku. Puste = okładka.",
+            }),
           },
-          { label: "SEO" },
+          {
+            label: "SEO (opcjonalne)",
+            description:
+              "Ustawienia dla Google i social media. Możesz zostawić puste — użyte zostaną dane projektu.",
+          },
         ),
-        content: fields.mdx({ label: "Treść podstrony (body)" }),
+        content: fields.mdx({
+          label: "Treść podstrony",
+          description:
+            "Główna treść case study: nagłówki, akapity, zdjęcia. Pole puste dla typu „Galeria”.",
+        }),
       },
     }),
 
@@ -128,15 +202,18 @@ export default config({
         title: fields.slug({
           name: {
             label: "Tytuł / klient",
+            description: "Nazwa wpisu — najczęściej nazwa klienta.",
             validation: { isRequired: true },
           },
           slug: {
-            label: "Slug (nazwa pliku)",
-            description: "Identyfikator wpisu. URL-safe.",
+            label: "Adres URL / nazwa pliku",
+            description:
+              "Np. gks-katowice (małe litery, myślniki). Identyfikator wpisu.",
           },
         }),
         category: fields.select({
           label: "Kategoria",
+          description: "Grupa, w której pojawi się ten zestaw prac na stronie.",
           options: GALLERY_CATEGORIES.map((c) => ({
             label: c.label,
             value: c.slug,
@@ -144,31 +221,39 @@ export default config({
           defaultValue: "social-media",
         }),
         year: fields.integer({
-          label: "Rok (opcjonalnie) — nagłówek bloku",
+          label: "Rok (opcjonalnie)",
+          description: "Np. 2024. Pokazywany w nagłówku bloku.",
         }),
         description: fields.text({
           label: "Opis (1–2 zdania)",
+          description: "Krótki opis zestawu prac.",
           multiline: true,
         }),
         order: fields.integer({
-          label: "Kolejność (w kategorii)",
+          label: "Kolejność w kategorii",
+          description:
+            "Liczba sortująca — im mniejsza, tym wyżej w swojej kategorii.",
           validation: { isRequired: true },
           defaultValue: 1,
         }),
         images: fields.array(
           fields.object({
             src: fields.text({
-              label: "Ścieżka pliku",
-              description: "np. /galerie/<slug>/01.jpg (oryginalne proporcje)",
+              label: "Ścieżka pliku zdjęcia",
+              description: "Np. /galerie/<adres>/01.jpg (oryginalne proporcje).",
             }),
             alt: fields.text({
-              label: "Alt (opis obrazu)",
+              label: "Opis zdjęcia (alt)",
+              description: "Krótki opis co jest na zdjęciu.",
               validation: { isRequired: true },
             }),
           }),
           {
             label: "Zdjęcia (1–12)",
-            itemLabel: (p) => p.fields.alt.value || p.fields.src.value || "zdjęcie",
+            description:
+              "Przeciągnij, żeby zmienić kolejność. Pierwsze zdjęcie = okładka.",
+            itemLabel: (p) =>
+              p.fields.alt.value || p.fields.src.value || "zdjęcie",
           },
         ),
       },
@@ -183,73 +268,136 @@ export default config({
       schema: {
         hero: fields.object(
           {
-            eyebrow: fields.text({ label: "Eyebrow" }),
+            eyebrow: fields.text({
+              label: "Nadtytuł (eyebrow)",
+              description:
+                "Mały tekst nad nagłówkiem. Np. „— Projektuję dla sportu i biznesu”.",
+            }),
             subline: fields.text({
-              label: "Subline (użyj {lata} dla lat doświadczenia)",
+              label: "Podtytuł (subline)",
+              description:
+                "Zdanie pod nagłówkiem. Wpisz {lata}, aby wstawić liczbę lat doświadczenia.",
               multiline: true,
             }),
-            ctaPrimary: fields.text({ label: "CTA primary" }),
-            ctaSecondary: fields.text({ label: "CTA secondary" }),
+            ctaPrimary: fields.text({
+              label: "Przycisk główny — tekst",
+              description: "Np. „Porozmawiajmy ↗”.",
+            }),
+            ctaSecondary: fields.text({
+              label: "Przycisk drugi — tekst",
+              description: "Np. „Zobacz projekty”.",
+            }),
             image: fields.image({
               label: "Zdjęcie hero (tło sekcji)",
+              description:
+                "Najwygodniej ustawić i wykadrować w wizualnym edytorze: /admin/hero-editor. Tutaj możesz też wgrać plik ręcznie.",
               directory: "public",
               publicPath: "/",
             }),
             positionX: fields.integer({
-              label: "Kadr — pozycja X (0–100%, domyślnie 50)",
+              label: "Kadr — pozycja pozioma (X)",
+              description:
+                "0–100%. 50 = środek. Najłatwiej ustawić suwakiem w /admin/hero-editor.",
               defaultValue: 50,
             }),
             positionY: fields.integer({
-              label: "Kadr — pozycja Y (0–100%, domyślnie 50)",
+              label: "Kadr — pozycja pionowa (Y)",
+              description:
+                "0–100%. 50 = środek. Najłatwiej ustawić suwakiem w /admin/hero-editor.",
               defaultValue: 50,
             }),
             scale: fields.integer({
-              label: "Zoom (100–200%, domyślnie 100)",
+              label: "Zoom zdjęcia",
+              description:
+                "100–200%. 100 = bez powiększenia. Najłatwiej ustawić w /admin/hero-editor.",
               defaultValue: 100,
             }),
           },
-          { label: "Hero" },
+          {
+            label: "Hero (sekcja powitalna)",
+            description:
+              "Górna sekcja strony głównej. Zdjęcie i kadrowanie najwygodniej ustawić w wizualnym edytorze: /admin/hero-editor.",
+          },
         ),
         numbers: fields.object(
           {
             experience: fields.text({
-              label: "Lat doświadczenia (np. 14)",
+              label: "Lata doświadczenia",
+              description: "Np. 14",
             }),
             projects: fields.text({
-              label: "Zrealizowanych projektów (np. 1000+)",
+              label: "Zrealizowanych projektów",
+              description: "Np. 1000+",
             }),
             clients: fields.text({
-              label: "Zadowolonych klientów (np. 30+)",
+              label: "Zadowolonych klientów",
+              description: "Np. 30+",
             }),
-            brands: fields.text({ label: "Organizacji (np. 20+)" }),
+            brands: fields.text({
+              label: "Organizacji / marek",
+              description: "Np. 20+",
+            }),
           },
-          { label: "Liczby" },
+          {
+            label: "Liczby (statystyki)",
+            description: "Liczby pokazywane na stronie głównej.",
+          },
         ),
         aiWorkflow: fields.text({
-          label: "AI-Augmented Workflow — akapit",
+          label: "Akapit „AI-Augmented Workflow”",
+          description: "Tekst o wykorzystaniu AI w Twojej pracy.",
           multiline: true,
         }),
         contact: fields.object(
           {
-            email: fields.text({ label: "E-mail" }),
-            phone: fields.text({ label: "Telefon" }),
-            availability: fields.array(fields.text({ label: "Pozycja" }), {
-              label: "Dostępność",
-              itemLabel: (p) => p.value,
+            email: fields.text({
+              label: "E-mail",
+              description: "Np. kontakt@twojadomena.pl",
             }),
-            cvHref: fields.text({ label: "CV (ścieżka pliku)" }),
+            phone: fields.text({
+              label: "Telefon",
+              description: "Np. 668 01 02 62",
+            }),
+            availability: fields.array(
+              fields.text({
+                label: "Pozycja",
+                description: "Np. „zdalnie” lub „B2B”.",
+              }),
+              {
+                label: "Formy współpracy",
+                description:
+                  "Dodawaj po jednej pozycji. Przeciągnij, żeby zmienić kolejność.",
+                itemLabel: (p) => p.value || "pozycja",
+              },
+            ),
+            cvHref: fields.text({
+              label: "Plik CV (ścieżka)",
+              description: "Np. /cv.pdf (plik znajduje się w folderze public).",
+            }),
           },
-          { label: "Kontakt" },
+          {
+            label: "Kontakt",
+            description: "Dane kontaktowe pokazywane na stronie.",
+          },
         ),
         seo: fields.object(
           {
-            defaultTitle: fields.text({ label: "Domyślny title" }),
+            defaultTitle: fields.text({
+              label: "Domyślny tytuł",
+              description:
+                "Tytuł strony w wynikach Google i na karcie przeglądarki.",
+            }),
             defaultDescription: fields.text({
-              label: "Domyślny description",
+              label: "Domyślny opis",
+              description: "Ok. 150 znaków. Opis w wynikach wyszukiwania.",
               multiline: true,
             }),
           },
-          { label: "SEO domyślne" },
+          {
+            label: "SEO domyślne",
+            description:
+              "Tytuł i opis strony dla Google, gdy podstrona nie ma własnych.",
+          },
         ),
       },
     }),
@@ -261,10 +409,21 @@ export default config({
       schema: {
         items: fields.array(
           fields.object({
-            title: fields.text({ label: "Tytuł" }),
-            description: fields.text({ label: "Opis", multiline: true }),
+            title: fields.text({
+              label: "Tytuł usługi",
+              description: "Np. „Identyfikacja wizualna”.",
+            }),
+            description: fields.text({
+              label: "Opis usługi",
+              description: "1–2 zdania, co obejmuje.",
+              multiline: true,
+            }),
           }),
-          { label: "Usługi", itemLabel: (p) => p.fields.title.value },
+          {
+            label: "Lista usług",
+            description: "Przeciągnij, żeby zmienić kolejność.",
+            itemLabel: (p) => p.fields.title.value || "usługa",
+          },
         ),
       },
     }),
@@ -276,16 +435,32 @@ export default config({
       schema: {
         items: fields.array(
           fields.object({
-            name: fields.text({ label: "Imię i nazwisko" }),
-            role: fields.text({ label: "Stanowisko / organizacja" }),
-            quote: fields.text({ label: "Opinia (cytat)", multiline: true }),
+            name: fields.text({
+              label: "Imię i nazwisko",
+              description: "Osoba wystawiająca opinię.",
+            }),
+            role: fields.text({
+              label: "Stanowisko / organizacja",
+              description: "Np. „Prezes, GKS Katowice”.",
+            }),
+            quote: fields.text({
+              label: "Treść opinii",
+              description: "Cytat klienta.",
+              multiline: true,
+            }),
             image: fields.image({
-              label: "Popiersie (zdjęcie)",
+              label: "Zdjęcie (popiersie)",
+              description:
+                "Zdjęcie osoby. Najlepiej kwadrat lub portret, twarz wyśrodkowana.",
               directory: "public/opinie",
               publicPath: "/opinie",
             }),
           }),
-          { label: "Opinie", itemLabel: (p) => p.fields.name.value },
+          {
+            label: "Opinie",
+            description: "Przeciągnij, żeby zmienić kolejność.",
+            itemLabel: (p) => p.fields.name.value || "opinia",
+          },
         ),
       },
     }),
@@ -297,21 +472,33 @@ export default config({
       schema: {
         items: fields.array(
           fields.object({
-            name: fields.text({ label: "Nazwa (pełna)" }),
+            name: fields.text({
+              label: "Pełna nazwa",
+              description: "Oficjalna nazwa klienta / organizacji.",
+            }),
             shortName: fields.text({
-              label: "Krótka nazwa (pasek credibility)",
+              label: "Krótka nazwa",
+              description: "Skrócona nazwa do paska zaufania na górze strony.",
             }),
             logo: fields.image({
-              label: "Logo (SVG/PNG)",
+              label: "Logo (SVG / PNG)",
+              description:
+                "Plik logo. Najlepiej SVG lub PNG z przezroczystym tłem.",
               directory: "public/klienci",
               publicPath: "/klienci",
             }),
             featured: fields.checkbox({
               label: "Wyróżniony (pasek na górze)",
+              description:
+                "Zaznacz, aby logo pojawiło się w pasku zaufania na górze strony.",
               defaultValue: false,
             }),
           }),
-          { label: "Klienci", itemLabel: (p) => p.fields.name.value },
+          {
+            label: "Klienci",
+            description: "Przeciągnij, żeby zmienić kolejność.",
+            itemLabel: (p) => p.fields.name.value || "klient",
+          },
         ),
       },
     }),

@@ -6,9 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/typography";
 import { yearsOfExperience } from "@/lib/experience";
 import { HERO } from "@/lib/site-content";
-import { HeroCropTool } from "@/components/dev/hero-crop-tool";
-
-const isDev = process.env.NODE_ENV === "development";
+import { HERO_OVERLAY, heroTransform } from "@/lib/hero-style";
 
 /**
  * HERO (masterprompt sek. 8.1). Zdjęcie projektanta jako pełne tło sekcji
@@ -30,12 +28,6 @@ function resolveHeroImage(): string | null {
 }
 const heroImage = resolveHeroImage();
 
-// Overlay: pełne krycie navy aż za lewą krawędź zdjęcia (translate przesuwa je
-// w prawo, krawędź wypada ~20% szer. sekcji), potem płynne wygaszanie → prawa
-// strona prześwituje. Dzięki temu krawędzi zdjęcia nie widać.
-const HERO_OVERLAY =
-  "linear-gradient(to right, rgba(11,18,32,1) 0%, rgba(11,18,32,1) 32%, rgba(11,18,32,0.55) 60%, rgba(11,18,32,0) 88%)";
-
 export function Hero() {
   const years = yearsOfExperience();
 
@@ -53,9 +45,7 @@ export function Hero() {
           <div
             id="hero-photo-scale"
             className="relative h-full w-full"
-            style={{
-              transform: `translate(${50 - posX}%, ${50 - posY}%) scale(${scale / 100})`,
-            }}
+            style={{ transform: heroTransform(posX, posY, scale) }}
           >
             <Image
               id="hero-photo"
@@ -115,11 +105,6 @@ export function Hero() {
           </div>
         </div>
       </Container>
-
-      {/* Narzędzie kadrowania — TYLKO w dev (w produkcji nie renderowane). */}
-      {isDev && heroImage ? (
-        <HeroCropTool initialX={posX} initialY={posY} initialScale={scale} />
-      ) : null}
     </section>
   );
 }
