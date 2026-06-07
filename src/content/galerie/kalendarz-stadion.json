@@ -1,23 +1,25 @@
 {
+  "category": "print-dtp",
   "title": "Kalendarz — Stadion Śląski",
-  "category": "inne",
   "description": "Projekt kalendarza Stadionu Śląskiego.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 3,
   "images": [
     {
-      "src": "/galerie/kalendarz-stadion/01.jpg",
+      "src": "/galerie/kalendarz-stadion/images/0/src.jpg",
       "alt": "Kalendarz — Stadion Śląski — 1"
     },
     {
-      "src": "/galerie/kalendarz-stadion/02.jpg",
+      "src": "/galerie/kalendarz-stadion/images/1/src.jpg",
       "alt": "Kalendarz — Stadion Śląski — 2"
     },
     {
-      "src": "/galerie/kalendarz-stadion/03.jpg",
+      "src": "/galerie/kalendarz-stadion/images/2/src.jpg",
       "alt": "Kalendarz — Stadion Śląski — 3"
     },
     {
-      "src": "/galerie/kalendarz-stadion/04.jpg",
+      "src": "/galerie/kalendarz-stadion/images/3/src.jpg",
       "alt": "Kalendarz — Stadion Śląski — 4"
     }
   ]
