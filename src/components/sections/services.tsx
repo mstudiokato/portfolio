@@ -39,7 +39,10 @@ export function Services() {
                 key={service.title}
                 className="group border-border border-t pt-5"
               >
-                {/* Ikona-akcent nad tytułem: PNG 48px, proporcje zachowane. */}
+                {/* Ikona-akcent nad tytułem: stały kwadrat 48×48 (h-12 w-12)
+                    z object-contain — każdy PNG wpisuje się w ten sam kwadrat
+                    niezależnie od oryginalnych wymiarów, więc ikony są wizualnie
+                    równe. */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={iconSrc}
@@ -47,7 +50,7 @@ export function Services() {
                   aria-hidden="true"
                   width={48}
                   height={48}
-                  className="mb-4 h-12 w-auto object-contain"
+                  className="mb-4 h-12 w-12 object-contain"
                 />
                 <H4
                   className="transition-[font-weight] duration-150 group-hover:font-bold"

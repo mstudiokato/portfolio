@@ -16,7 +16,7 @@ import { cn } from "@/lib/cn";
 type NavItem = { label: string; href: string; sectionId?: string };
 
 const NAV: NavItem[] = [
-  { label: "Projekty", href: "/projekty" },
+  { label: "Portfolio", href: "/projekty" },
   { label: "Co projektuję", href: "/#specjalizacje", sectionId: "specjalizacje" },
   {
     label: "Rekomendacje",
