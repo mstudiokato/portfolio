@@ -38,7 +38,9 @@
     },
     {
       "name": "Shark Entertainment",
-      "featured": false
+      "shortName": "Shark Entertainment",
+      "logo": "/klienci/items/6/logo.png",
+      "featured": true
     },
     {
       "name": "SportValue",
@@ -67,6 +69,12 @@
       "name": "Lombards",
       "shortName": "Lombards",
       "logo": "/klienci/items/11/logo.svg",
+      "featured": true
+    },
+    {
+      "name": "EmocjeTV",
+      "shortName": "EmocjeTV",
+      "logo": "/klienci/items/12/logo.svg",
       "featured": true
     }
   ]
