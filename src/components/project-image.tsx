@@ -22,33 +22,20 @@ function readDims(src: string): { width: number; height: number } | null {
   }
 }
 
-/**
- * Czy zdjęcie jest „szerokie poziome" — proporcja wysokość/szerokość < 0.75
- * (czyli szerokość > 1,33× wysokości). Liczone build-time przez image-size.
- * Brak pliku/wymiarów → false (traktujemy jak nie-szerokie). Używane do decyzji
- * o liczbie kolumn w gridzie galerii projektu: 4 szerokie → grid-cols-2 (2×2)
- * zamiast grid-cols-4 (w 4 kolumnach poziome zdjęcia byłyby zbyt drobne).
- */
-export function isWideImage(src: string): boolean {
-  const dims = src ? readDims(src) : null;
-  if (!dims) return false;
-  return dims.height / dims.width < 0.75;
-}
-
 type Props = {
   src: string;
   alt: string;
-  /** "3/2" = kadr cover · "original" = proporcje pliku · "strip" = jednolita
-   *  wysokość + naturalna szerokość (do poziomych galerii ze scrollem) ·
-   *  "square" = kwadrat 1:1 wypełniający komórkę (grid kwadratów). */
-  ratio?: "3/2" | "original" | "strip" | "square";
+  /** "3/2" = kadr cover · "original" = proporcje pliku · "strip" = stała
+   *  wysokość + naturalna szerokość (slider) · "fixed" = stała wysokość +
+   *  pełna szerokość komórki (grid), object-cover. */
+  ratio?: "3/2" | "original" | "strip" | "fixed";
   sizes?: string;
   priority?: boolean;
   className?: string;
 };
 
-/** Jednolita wysokość zdjęć w galeriach (spójnie: slider / masonry / grid). */
-const STRIP_H = "h-56 lg:h-72";
+/** Jednolita, STAŁA wysokość galerii na całej stronie: 280px mobile / 420px desktop. */
+const GALLERY_H = "h-[280px] lg:h-[420px]";
 
 export function ProjectImage({
   src,
@@ -67,7 +54,20 @@ export function ProjectImage({
         <div
           className={cn(
             "bg-section rounded-card flex w-72 shrink-0 items-center justify-center p-3 text-center",
-            STRIP_H,
+            GALLERY_H,
+            className,
+          )}
+        >
+          <span className="text-caption text-muted">{alt}</span>
+        </div>
+      );
+    }
+    if (ratio === "fixed") {
+      return (
+        <div
+          className={cn(
+            "bg-section rounded-card flex w-full items-center justify-center p-3 text-center",
+            GALLERY_H,
             className,
           )}
         >
@@ -79,11 +79,7 @@ export function ProjectImage({
       <div
         className={cn(
           "bg-section rounded-card flex items-center justify-center p-3 text-center",
-          ratio === "original"
-            ? "aspect-[3/4]"
-            : ratio === "square"
-              ? "aspect-square"
-              : "aspect-[3/2]",
+          ratio === "original" ? "aspect-[3/4]" : "aspect-[3/2]",
           className,
         )}
       >
@@ -92,8 +88,8 @@ export function ProjectImage({
     );
   }
 
-  // Strip: stała wysokość, szerokość z proporcji pliku (w-auto) → bez przycięcia,
-  // szersze zdjęcia po prostu zajmują więcej miejsca i scrollują się w rzędzie.
+  // Strip: STAŁA wysokość, szerokość z proporcji pliku (w-auto), object-cover —
+  // do slidera (poziomy scroll). Wszystkie kafle tej samej wysokości.
   if (ratio === "strip") {
     return (
       <Image
@@ -103,8 +99,31 @@ export function ProjectImage({
         height={dims.height}
         sizes={sizes}
         priority={priority}
-        className={cn("rounded-card w-auto object-cover", STRIP_H, className)}
+        className={cn("rounded-card w-auto object-cover", GALLERY_H, className)}
       />
+    );
+  }
+
+  // Fixed: STAŁA wysokość + pełna szerokość komórki, object-cover (kadruje) —
+  // do gridów 1–3 kolumn. Spójna wysokość z trybem strip.
+  if (ratio === "fixed") {
+    return (
+      <div
+        className={cn(
+          "rounded-card relative w-full overflow-hidden",
+          GALLERY_H,
+          className,
+        )}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className="object-cover"
+        />
+      </div>
     );
   }
 
@@ -119,27 +138,6 @@ export function ProjectImage({
         priority={priority}
         className={cn("rounded-card h-auto w-full", className)}
       />
-    );
-  }
-
-  // Square: kwadrat 1:1 wypełniający całą komórkę (object-cover) — do grid-cols-4.
-  if (ratio === "square") {
-    return (
-      <div
-        className={cn(
-          "rounded-card relative aspect-square overflow-hidden",
-          className,
-        )}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes}
-          priority={priority}
-          className="object-cover"
-        />
-      </div>
     );
   }
 

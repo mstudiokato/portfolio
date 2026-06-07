@@ -81,15 +81,15 @@ export default config({
           validation: { isRequired: true, length: { min: 4, max: 4 } },
         }),
         order: fields.integer({
-          label: "Kolejność na liście",
+          label: "Kolejność",
           description:
-            "Liczba sortująca — im mniejsza, tym wyżej projekt na liście. Np. 1, 2, 3…",
-          validation: { isRequired: true },
+            "Liczba określa kolejność na liście. 1 = pierwszy, 2 = drugi itd.",
+          defaultValue: 99,
         }),
         featured: fields.checkbox({
           label: "Wyróżniony na stronie głównej",
           description:
-            "Zaznacz, aby projekt pojawił się w sekcji wyróżnionych na stronie głównej.",
+            "Zaznacz żeby projekt pokazał się w sekcji „Wybrane realizacje” na stronie głównej.",
           defaultValue: false,
         }),
         displayType: fields.select({

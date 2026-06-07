@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { imageSize } from "image-size";
 import {
   type CategorySlug,
   CATEGORIES,
@@ -248,27 +247,8 @@ export function countByCategory(): Record<CategorySlug, number> {
 
 const GALLERY_DIR = path.join(process.cwd(), "src/content/galerie");
 
-/** Obraz galerii: ścieżka + alt + flaga istnienia + wymiary pliku (build-time).
- *  width/height = 0 gdy plik nie istnieje; służą do decyzji układu grid/slider. */
-export type GalleryImage = {
-  src: string;
-  alt: string;
-  exists: boolean;
-  width: number;
-  height: number;
-};
-
-/** Wymiary pliku obrazu z /public (image-size, build-time). null gdy brak/odczyt. */
-function readImageDims(src: string): { width: number; height: number } | null {
-  try {
-    const fp = path.join(process.cwd(), "public", src.replace(/^\//, ""));
-    if (!fs.existsSync(fp)) return null;
-    const { width, height } = imageSize(fs.readFileSync(fp));
-    return width && height ? { width, height } : null;
-  } catch {
-    return null;
-  }
-}
+/** Obraz galerii: ścieżka + alt + flaga istnienia pliku w /public (build-time). */
+export type GalleryImage = { src: string; alt: string; exists: boolean };
 
 export type GalleryItem = {
   /** slug = nazwa pliku bez rozszerzenia. */
@@ -315,15 +295,7 @@ function parseGalleryItem(fileName: string): GalleryItem {
   const images: GalleryImage[] = rawImages
     .map(toImageRef)
     .filter((x): x is ImageRef => x !== null)
-    .map((img) => {
-      const dims = readImageDims(img.src);
-      return {
-        ...img,
-        exists: publicAssetExists(img.src),
-        width: dims?.width ?? 0,
-        height: dims?.height ?? 0,
-      };
-    });
+    .map((img) => ({ ...img, exists: publicAssetExists(img.src) }));
 
   const yearNum = Number(data.year);
 

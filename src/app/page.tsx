@@ -8,7 +8,9 @@ import { Services } from "@/components/sections/services";
 import { Contact } from "@/components/sections/contact";
 
 export default function Home() {
-  const featured = getFeaturedProjects();
+  // Tylko wyróżnione (featured), posortowane rosnąco po „order" (tak sortuje
+  // getFeaturedProjects), maksymalnie 6 kafli na stronie głównej.
+  const featured = getFeaturedProjects().slice(0, 6);
 
   return (
     <>

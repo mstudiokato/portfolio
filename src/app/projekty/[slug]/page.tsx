@@ -13,7 +13,7 @@ import { cn } from "@/lib/cn";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Container, Section } from "@/components/ui/layout";
 import { H1, Lead, Body, Label, Caption } from "@/components/ui/typography";
-import { ProjectImage, isWideImage } from "@/components/project-image";
+import { ProjectImage } from "@/components/project-image";
 import { GallerySlider } from "@/components/gallery-slider";
 
 export function generateStaticParams() {
@@ -166,27 +166,21 @@ const GRID_COLS: Record<number, string> = {
   1: "grid-cols-1",
   2: "grid-cols-2",
   3: "grid-cols-3",
-  4: "grid-cols-4",
 };
 
 /**
- * Galeria zdjęć projektu — logika układu:
- *  - 1 zdjęcie → grid-cols-1; 2 → grid-cols-2;
- *  - 3 zdjęcia pionowe/kwadratowe (h/w ≥ 0.75) → grid-cols-3;
- *  - 3 zdjęcia poziome (h/w < 0.75) → slider (w 3 kolumnach byłyby za drobne);
- *  - 4 zdjęcia → grid-cols-2 (mobile) / grid-cols-4 (desktop);
- *  - 5+ zdjęć → slider ze strzałkami.
- * W gridzie każde zdjęcie: w-full, NATURALNE proporcje (ratio="original", bez
- * stałej wysokości i bez wymuszania kwadratu — wysokość wynika z proporcji pliku).
+ * Galeria zdjęć projektu — STAŁA wysokość (280px mobile / 420px desktop),
+ * object-cover. Logika układu (spójna z GalleryBlock):
+ *  - 1 zdjęcie → pełna szerokość (grid-cols-1);
+ *  - 2–3 zdjęcia → grid-cols-{n};
+ *  - 4+ zdjęć → slider ze strzałkami.
  */
 function ProjectGallery({ images }: { images: ImageRef[] }) {
   const count = images.length;
   if (count === 0) return null;
 
-  // Slider: 5+ zdjęć ALBO dokładnie 3 poziome (szerokie) zdjęcia.
-  const threeWide =
-    count === 3 && images.some((img) => isWideImage(img.src));
-  if (count >= 5 || threeWide) {
+  // Slider: 4 lub więcej zdjęć (stała wysokość, naturalna szerokość kafli).
+  if (count >= 4) {
     return (
       <GallerySlider>
         {images.map((img) => (
@@ -199,7 +193,7 @@ function ProjectGallery({ images }: { images: ImageRef[] }) {
               src={img.src}
               alt={img.alt}
               ratio="strip"
-              sizes="(min-width: 1024px) 18rem, 50vw"
+              sizes="(min-width: 1024px) 28rem, 80vw"
             />
           </div>
         ))}
@@ -207,20 +201,16 @@ function ProjectGallery({ images }: { images: ImageRef[] }) {
     );
   }
 
-  // Grid: 1 → 1 kol., 2 → 2 kol., 3 (pionowe/kwadratowe) → 3 kol.,
-  // 4 → 2 kol. mobile / 4 kol. desktop. Naturalne proporcje.
-  const gridClass =
-    count === 4 ? "grid-cols-2 sm:grid-cols-4" : GRID_COLS[count];
-
+  // Grid 1–3 kolumn: stała wysokość, pełna szerokość komórki, object-cover.
   return (
-    <div className={cn("grid gap-3", gridClass)}>
+    <div className={cn("grid gap-3", GRID_COLS[count])}>
       {images.map((img) => (
         <ProjectImage
           key={img.src}
           src={img.src}
           alt={img.alt}
-          ratio="original"
-          sizes="(min-width: 640px) 18rem, 50vw"
+          ratio="fixed"
+          sizes="(min-width: 640px) 33vw, 100vw"
         />
       ))}
     </div>

@@ -29,12 +29,10 @@ const FILTER_ORDER: GalleryCategorySlug[] = GALLERY_CATEGORY_SLUGS;
 const labelOf = (slug: GalleryCategorySlug) =>
   GALLERY_CATEGORIES.find((c) => c.slug === slug)?.label ?? slug;
 
-// Jednolita wysokość zdjęć (h-56 / h-72) — spójnie z ProjectImage „strip" na
-// podstronach projektów. Szerokość naturalna (w-auto) → szersze zdjęcia zajmują
-// więcej miejsca i scrollują się poziomo, zamiast rozjeżdżać układ.
-const GALLERY_H = "h-56 lg:h-72";
+// STAŁA wysokość galerii na całej stronie: 280px mobile / 420px desktop.
+const GALLERY_H = "h-[280px] lg:h-[420px]";
 
-// Strip: jednolita wysokość, naturalna szerokość — do slidera (poziomy scroll).
+// Strip: stała wysokość, naturalna szerokość — do slidera (poziomy scroll).
 function GalleryImg({ image }: { image: GalleryImage }) {
   if (image.exists) {
     return (
@@ -59,53 +57,48 @@ function GalleryImg({ image }: { image: GalleryImage }) {
   );
 }
 
-// Grid: pełna szerokość komórki, NATURALNE proporcje (bez stałej wysokości).
+// Grid: stała wysokość + pełna szerokość komórki, object-cover (kadruje).
 function GalleryImgGrid({ image }: { image: GalleryImage }) {
-  if (image.exists && image.width > 0 && image.height > 0) {
+  if (image.exists) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={image.src}
         alt={image.alt}
-        width={image.width}
-        height={image.height}
         loading="lazy"
-        className="h-auto w-full object-contain"
+        className={cn(GALLERY_H, "w-full object-cover")}
       />
     );
   }
   return (
-    <div className="bg-section flex aspect-[3/2] items-center justify-center p-3 text-center">
+    <div
+      className={cn(
+        GALLERY_H,
+        "bg-section flex w-full items-center justify-center p-3 text-center",
+      )}
+    >
       <span className="text-caption text-muted">{image.alt || "zdjęcie"}</span>
     </div>
   );
 }
 
-// Liczba kolumn → klasa Tailwind (statyczna, by JIT jej nie zgubił).
+// Liczba kolumn → klasa Tailwind (statyczna, by JIT jej nie zgubił). 1–3 kolumny.
 const GRID_COLS: Record<number, string> = {
   1: "grid-cols-1",
   2: "grid-cols-2",
   3: "grid-cols-3",
 };
 
-// Czy zdjęcie poziome (szerokie): h/w < 0.75 (czyli szerokość > 1,33× wysokości).
-function isWide(image: GalleryImage): boolean {
-  return image.width > 0 && image.height / image.width < 0.75;
-}
-
 function GalleryBlock({ item }: { item: GalleryItem }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
 
-  // Logika układu (spójna z galerią na podstronach projektów):
-  //  - 1 → 1 kol., 2 → 2 kol., 3 pionowe/kwadratowe → 3 kol., 4 → 2/4 kol.;
-  //  - 3 poziome (h/w < 0.75) ALBO 5+ → slider ze strzałkami.
+  // Logika układu (spójna z galerią na podstronach projektów), STAŁA wysokość:
+  //  - 1 → pełna szerokość, 2–3 → grid-cols-{n}; 4+ → slider ze strzałkami.
   const count = item.images.length;
-  const anyWide = item.images.some(isWide);
-  const useSlider = count >= 5 || (count === 3 && anyWide);
-  const gridClass =
-    count === 4 ? "grid-cols-2 sm:grid-cols-4" : GRID_COLS[count] ?? "grid-cols-3";
+  const useSlider = count >= 4;
+  const gridClass = GRID_COLS[count] ?? "grid-cols-3";
   // Strzałki tylko w trybie slidera.
   const showNav = useSlider;
 
@@ -219,7 +212,9 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
           (domyślnie biały #F5F7FA). Ukrywany, gdy odznaczono „Pokaż opis…". */}
       {item.description && item.showDescription ? (
         <p
-          className="mt-5 max-w-2xl text-base"
+          // Szerszy kontener (max-w-4xl) + mniejszy font na mobile (text-sm),
+          // by pojedyncze zdanie mieściło się w jednej linii tam gdzie to możliwe.
+          className="mt-5 max-w-4xl text-sm sm:text-base"
           style={{ color: textColorHex(item.descriptionColor) }}
         >
           {item.description}
