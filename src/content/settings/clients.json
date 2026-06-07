@@ -11,7 +11,7 @@
       "name": "SPORTFIVE Polska",
       "shortName": "SPORTFIVE",
       "logo": "/klienci/items/1/logo.svg",
-      "logoSize": 100,
+      "logoSize": 70,
       "featured": true
     },
     {
@@ -87,14 +87,14 @@
       "name": "EmocjeTV",
       "shortName": "EmocjeTV",
       "logo": "/klienci/items/12/logo.svg",
-      "logoSize": 100,
+      "logoSize": 70,
       "featured": true
     },
     {
       "name": "Zdrowycatering.pl",
       "shortName": "Zdrowycatering.pl",
       "logo": "/klienci/items/13/logo.svg",
-      "logoSize": 100,
+      "logoSize": 60,
       "featured": true
     }
   ]
