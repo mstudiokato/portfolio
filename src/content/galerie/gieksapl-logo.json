@@ -1,23 +1,25 @@
 {
-  "title": "Gieksa.pl",
   "category": "logo",
-  "description": "Projekt logo dla serwisu Gieksa.pl.",
+  "title": "GieKSa.pl",
+  "description": "Projekt logo dla serwisu newsowego kibiców klubu GKS Katowice.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 3,
   "images": [
     {
-      "src": "/galerie/gieksapl-logo/01.jpg",
+      "src": "/galerie/gieksapl-logo/images/0/src.jpg",
       "alt": "Gieksa.pl — 1"
     },
     {
-      "src": "/galerie/gieksapl-logo/02.jpg",
+      "src": "/galerie/gieksapl-logo/images/1/src.jpg",
       "alt": "Gieksa.pl — 2"
     },
     {
-      "src": "/galerie/gieksapl-logo/03.jpg",
+      "src": "/galerie/gieksapl-logo/images/2/src.jpg",
       "alt": "Gieksa.pl — 3"
     },
     {
-      "src": "/galerie/gieksapl-logo/04.jpg",
+      "src": "/galerie/gieksapl-logo/images/3/src.jpg",
       "alt": "Gieksa.pl — 4"
     }
   ]
