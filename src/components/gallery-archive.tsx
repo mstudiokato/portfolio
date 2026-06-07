@@ -34,6 +34,7 @@ const labelOf = (slug: GalleryCategorySlug) =>
 // więcej miejsca i scrollują się poziomo, zamiast rozjeżdżać układ.
 const GALLERY_H = "h-56 lg:h-72";
 
+// Strip: jednolita wysokość, naturalna szerokość — do slidera (poziomy scroll).
 function GalleryImg({ image }: { image: GalleryImage }) {
   if (image.exists) {
     return (
@@ -58,14 +59,55 @@ function GalleryImg({ image }: { image: GalleryImage }) {
   );
 }
 
+// Grid: pełna szerokość komórki, NATURALNE proporcje (bez stałej wysokości).
+function GalleryImgGrid({ image }: { image: GalleryImage }) {
+  if (image.exists && image.width > 0 && image.height > 0) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={image.src}
+        alt={image.alt}
+        width={image.width}
+        height={image.height}
+        loading="lazy"
+        className="h-auto w-full object-contain"
+      />
+    );
+  }
+  return (
+    <div className="bg-section flex aspect-[3/2] items-center justify-center p-3 text-center">
+      <span className="text-caption text-muted">{image.alt || "zdjęcie"}</span>
+    </div>
+  );
+}
+
+// Liczba kolumn → klasa Tailwind (statyczna, by JIT jej nie zgubił).
+const GRID_COLS: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2",
+  3: "grid-cols-3",
+};
+
+// Czy zdjęcie poziome (szerokie): h/w < 0.75 (czyli szerokość > 1,33× wysokości).
+function isWide(image: GalleryImage): boolean {
+  return image.width > 0 && image.height / image.width < 0.75;
+}
+
 function GalleryBlock({ item }: { item: GalleryItem }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
 
-  // Rząd zawsze poziomo scrollowalny (zdjęcia o naturalnej szerokości); strzałki
-  // pokazujemy, gdy rząd prawdopodobnie wykracza poza kontener (heurystyka >3).
-  const showNav = item.images.length > 3;
+  // Logika układu (spójna z galerią na podstronach projektów):
+  //  - 1 → 1 kol., 2 → 2 kol., 3 pionowe/kwadratowe → 3 kol., 4 → 2/4 kol.;
+  //  - 3 poziome (h/w < 0.75) ALBO 5+ → slider ze strzałkami.
+  const count = item.images.length;
+  const anyWide = item.images.some(isWide);
+  const useSlider = count >= 5 || (count === 3 && anyWide);
+  const gridClass =
+    count === 4 ? "grid-cols-2 sm:grid-cols-4" : GRID_COLS[count] ?? "grid-cols-3";
+  // Strzałki tylko w trybie slidera.
+  const showNav = useSlider;
 
   // Strzałka przewija dokładnie o jedno zdjęcie (do następnej/poprzedniej kafli).
   function scrollOne(dir: number) {
@@ -113,48 +155,65 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
         ) : null}
       </div>
 
-      {/* Rząd zdjęć — jednolita wysokość, poziomy scroll, scroll-snap (P5/G1). */}
-      <div className="relative mt-6">
-        {showNav ? (
-          <>
-            <button
-              type="button"
-              onClick={() => scrollOne(-1)}
-              aria-label="Przewiń w lewo"
-              className={`${NAV} left-1`}
-            >
-              ‹
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollOne(1)}
-              aria-label="Przewiń w prawo"
-              className={`${NAV} right-1`}
-            >
-              ›
-            </button>
-          </>
-        ) : null}
+      {useSlider ? (
+        /* SLIDER — jednolita wysokość, poziomy scroll, scroll-snap, strzałki.
+           Dla 3 poziomych lub 5+ zdjęć. */
+        <div className="relative mt-6">
+          {showNav ? (
+            <>
+              <button
+                type="button"
+                onClick={() => scrollOne(-1)}
+                aria-label="Przewiń w lewo"
+                className={`${NAV} left-1`}
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollOne(1)}
+                aria-label="Przewiń w prawo"
+                className={`${NAV} right-1`}
+              >
+                ›
+              </button>
+            </>
+          ) : null}
 
-        <div
-          ref={scrollRef}
-          className="no-scrollbar relative flex snap-x snap-mandatory gap-3 overflow-x-auto"
-        >
+          <div
+            ref={scrollRef}
+            className="no-scrollbar relative flex snap-x snap-mandatory gap-3 overflow-x-auto"
+          >
+            {item.images.map((img, i) => (
+              <button
+                key={img.src || i}
+                type="button"
+                data-gallery-item
+                onClick={() => setOpenIndex(i)}
+                aria-label={`Powiększ: ${img.alt || item.title}`}
+                className="block shrink-0 snap-start overflow-hidden rounded-none transition-opacity hover:opacity-90"
+              >
+                <GalleryImg image={img} />
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        /* GRID — naturalne proporcje, bez slidera. 1/2/3 kolumny (4 → 2/4). */
+        <div className={cn("mt-6 grid gap-3", gridClass)}>
           {item.images.map((img, i) => (
             <button
               key={img.src || i}
               type="button"
-              data-gallery-item
               onClick={() => setOpenIndex(i)}
               aria-label={`Powiększ: ${img.alt || item.title}`}
-              // Ostre kanty (rounded-none); naturalna szerokość przy stałej wysokości.
-              className="block shrink-0 snap-start overflow-hidden rounded-none transition-opacity hover:opacity-90"
+              className="block overflow-hidden rounded-none transition-opacity hover:opacity-90"
             >
-              <GalleryImg image={img} />
+              <GalleryImgGrid image={img} />
             </button>
           ))}
         </div>
-      </div>
+      )}
 
       {/* Opis pod galerią — czytelny rozmiar (text-base), kolor z panelu
           (domyślnie biały #F5F7FA). Ukrywany, gdy odznaczono „Pokaż opis…". */}

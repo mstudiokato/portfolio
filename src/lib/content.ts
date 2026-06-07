@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { imageSize } from "image-size";
 import {
   type CategorySlug,
   CATEGORIES,
@@ -133,16 +134,15 @@ function parseProject(fileName: string): Project {
   const displayType: DisplayType =
     data.displayType === "gallery" ? "gallery" : "case-study";
 
-  // cover.alt jest wymagany (a11y/SEO) — błąd buildu, jeśli brak.
-  const cover = toImageRef(data.cover);
-  if (!cover) {
-    throw new Error(
-      `Projekt "${fileName}": pole "cover" musi mieć { src, alt }.`,
-    );
-  }
-  if (cover.alt.trim() === "") {
-    throw new Error(`Projekt "${fileName}": "cover.alt" jest wymagany.`);
-  }
+  // cover: obiekt { src, alt }. src MOŻE być pusty (zdjęcie jeszcze nie wgrane
+  // przez panel) — wtedy render pokazuje placeholder, a Keystatic nie próbuje
+  // usuwać nieistniejącego pliku (to powodowało błąd GraphQL przy zapisie).
+  // alt walidowany w panelu (isRequired); tu nie wymuszamy, by build nie padał.
+  const coverData = (data.cover ?? {}) as { src?: unknown; alt?: unknown };
+  const cover: ImageRef = {
+    src: str(coverData.src),
+    alt: str(coverData.alt),
+  };
 
   const seoData = (data.seo ?? {}) as Record<string, unknown>;
 
@@ -248,8 +248,27 @@ export function countByCategory(): Record<CategorySlug, number> {
 
 const GALLERY_DIR = path.join(process.cwd(), "src/content/galerie");
 
-/** Obraz galerii: ścieżka + alt + flaga istnienia pliku w /public (liczona w buildzie). */
-export type GalleryImage = { src: string; alt: string; exists: boolean };
+/** Obraz galerii: ścieżka + alt + flaga istnienia + wymiary pliku (build-time).
+ *  width/height = 0 gdy plik nie istnieje; służą do decyzji układu grid/slider. */
+export type GalleryImage = {
+  src: string;
+  alt: string;
+  exists: boolean;
+  width: number;
+  height: number;
+};
+
+/** Wymiary pliku obrazu z /public (image-size, build-time). null gdy brak/odczyt. */
+function readImageDims(src: string): { width: number; height: number } | null {
+  try {
+    const fp = path.join(process.cwd(), "public", src.replace(/^\//, ""));
+    if (!fs.existsSync(fp)) return null;
+    const { width, height } = imageSize(fs.readFileSync(fp));
+    return width && height ? { width, height } : null;
+  } catch {
+    return null;
+  }
+}
 
 export type GalleryItem = {
   /** slug = nazwa pliku bez rozszerzenia. */
@@ -296,7 +315,15 @@ function parseGalleryItem(fileName: string): GalleryItem {
   const images: GalleryImage[] = rawImages
     .map(toImageRef)
     .filter((x): x is ImageRef => x !== null)
-    .map((img) => ({ ...img, exists: publicAssetExists(img.src) }));
+    .map((img) => {
+      const dims = readImageDims(img.src);
+      return {
+        ...img,
+        exists: publicAssetExists(img.src),
+        width: dims?.width ?? 0,
+        height: dims?.height ?? 0,
+      };
+    });
 
   const yearNum = Number(data.year);
 
