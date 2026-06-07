@@ -1,8 +1,9 @@
 {
-  "title": "Jubileusz 65 lat",
+  "title": "65 lat Stadionu Śląskiego",
   "category": "logo",
-  "description": "Projekt logo jubileuszowego — 65 lat.",
-  "order": 7,
+  "year": 2021,
+  "description": "Projekt logo jubileuszowego z okazji  65 lat powstania Stadionu Śląskiego",
+  "order": 1,
   "images": [
     {
       "src": "/projekty/logo/65lat/1.jpg",
