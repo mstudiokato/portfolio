@@ -40,9 +40,10 @@ export function Services() {
                 className="group border-border border-t pt-5"
               >
                 {/* Ikona-akcent nad tytułem: stały kwadrat 48×48 (h-12 w-12)
-                    z object-contain — każdy PNG wpisuje się w ten sam kwadrat
-                    niezależnie od oryginalnych wymiarów, więc ikony są wizualnie
-                    równe. */}
+                    z object-contain — każdy PNG wpisuje się w ten sam kwadrat,
+                    więc ikony są wizualnie równe. Glify wypełniają canvas niemal
+                    do krawędzi (96–99%), więc p-1 daje jednolity margines, by
+                    nie były stłoczone (zostają równe między sobą). */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={iconSrc}
@@ -50,7 +51,7 @@ export function Services() {
                   aria-hidden="true"
                   width={48}
                   height={48}
-                  className="mb-4 h-12 w-12 object-contain"
+                  className="mb-4 h-12 w-12 object-contain p-1"
                 />
                 <H4
                   className="transition-[font-weight] duration-150 group-hover:font-bold"

@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import Image from "next/image";
-import { Container } from "@/components/ui/layout";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/typography";
 import { yearsOfExperience } from "@/lib/experience";
@@ -74,7 +73,11 @@ export function Hero() {
         aria-hidden="true"
       />
 
-      <Container className="relative z-[2] w-full pt-8 pb-16 lg:pt-14">
+      {/* Blok tekstowy: pełna szerokość z paddingiem px-6 / md:px-12 / lg:px-16 —
+          DOKŁADNIE takim samym jak kontener sekcji „Fakty i liczby"
+          (stats-and-clients.tsx), więc lewa krawędź tekstu pokrywa się z lewą
+          krawędzią liczb poniżej. Zdjęcie full-bleed (absolute) bez zmian. */}
+      <div className="relative z-[2] w-full px-6 pt-8 pb-16 md:px-12 lg:px-16 lg:pt-14">
         <div className="max-w-2xl">
           <Label>{HERO.eyebrow}</Label>
 
@@ -104,7 +107,7 @@ export function Hero() {
             </Button>
           </div>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }
