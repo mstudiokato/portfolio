@@ -49,18 +49,33 @@ export function H4({ className, style, children }: Props) {
   );
 }
 
-/** Lead / akapit wprowadzający (większy body). */
+/**
+ * Lead / akapit wprowadzający (większy body). Tekst ciągły rośnie na desktop:
+ * 18px mobile → 20px (lg+), proporcjonalnie do Body (16→18), zachowując
+ * hierarchię. lg:text-[…] zmienia tylko font-size; line-height zostaje z tokenu.
+ */
 export function Lead({ className, style, children }: Props) {
   return (
-    <p className={cn("text-body-lg text-muted", className)} style={style}>
+    <p
+      className={cn("text-body-lg text-muted lg:text-[1.25rem]", className)}
+      style={style}
+    >
       {children}
     </p>
   );
 }
 
+/**
+ * Body — akapit tekstu ciągłego. Rośnie na desktop: 16px mobile → 18px (lg+).
+ * lg:text-[…] zmienia tylko font-size; line-height (1.6) zostaje z tokenu
+ * text-body. Centralne miejsce skali tekstu ciągłego (case study, opisy itd.).
+ */
 export function Body({ className, style, children }: Props) {
   return (
-    <p className={cn("text-body text-ink", className)} style={style}>
+    <p
+      className={cn("text-body text-ink lg:text-[1.125rem]", className)}
+      style={style}
+    >
       {children}
     </p>
   );

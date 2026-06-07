@@ -215,7 +215,7 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
         <p
           // Szerszy kontener (max-w-4xl) + mniejszy font na mobile (text-sm),
           // by pojedyncze zdanie mieściło się w jednej linii tam gdzie to możliwe.
-          className="mt-5 max-w-4xl text-sm sm:text-base"
+          className="mt-5 max-w-4xl text-base lg:text-[1.125rem]"
           style={{ color: textColorHex(item.descriptionColor) }}
         >
           {replaceWidows(item.description)}

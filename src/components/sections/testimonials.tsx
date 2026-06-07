@@ -80,7 +80,7 @@ export function Testimonials() {
               {/* Prawa — cytat + autor. */}
               <div className="flex flex-col">
                 <blockquote
-                  className="text-body italic"
+                  className="text-body italic lg:text-[1.125rem]"
                   style={{ color: textColorHex(t.quoteColor) }}
                 >
                   „{replaceWidows(t.quote)}”

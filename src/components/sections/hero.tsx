@@ -93,7 +93,7 @@ export function Hero() {
             <span className="text-lime">for Sport &amp; Business</span>
           </p>
 
-          <p className="text-body-lg text-ink/85 mt-6 max-w-xl leading-relaxed">
+          <p className="text-body-lg text-ink/85 mt-6 max-w-xl leading-relaxed lg:text-[1.25rem]">
             {HERO.subline.replace("{lata}", String(years))}
           </p>
 
