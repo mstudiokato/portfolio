@@ -33,12 +33,24 @@ export function isLandscapeImage(src: string): boolean {
   return dims ? dims.width > dims.height * 1.1 : false;
 }
 
+/**
+ * Czy zdjęcie jest (w przybliżeniu) kwadratowe — proporcja 0.9–1.1. Build-time.
+ * Używane do układu „4 kwadraty w grid-cols-4" bez slidera i pustego miejsca.
+ */
+export function isSquareImage(src: string): boolean {
+  const dims = src ? readDims(src) : null;
+  if (!dims) return false;
+  const ratio = dims.width / dims.height;
+  return ratio >= 0.9 && ratio <= 1.1;
+}
+
 type Props = {
   src: string;
   alt: string;
   /** "3/2" = kadr cover · "original" = proporcje pliku · "strip" = jednolita
-   *  wysokość + naturalna szerokość (do poziomych galerii ze scrollem). */
-  ratio?: "3/2" | "original" | "strip";
+   *  wysokość + naturalna szerokość (do poziomych galerii ze scrollem) ·
+   *  "square" = kwadrat 1:1 wypełniający komórkę (grid kwadratów). */
+  ratio?: "3/2" | "original" | "strip" | "square";
   sizes?: string;
   priority?: boolean;
   className?: string;
@@ -76,7 +88,11 @@ export function ProjectImage({
       <div
         className={cn(
           "bg-section rounded-card flex items-center justify-center p-3 text-center",
-          ratio === "original" ? "aspect-[3/4]" : "aspect-[3/2]",
+          ratio === "original"
+            ? "aspect-[3/4]"
+            : ratio === "square"
+              ? "aspect-square"
+              : "aspect-[3/2]",
           className,
         )}
       >
@@ -112,6 +128,27 @@ export function ProjectImage({
         priority={priority}
         className={cn("rounded-card h-auto w-full", className)}
       />
+    );
+  }
+
+  // Square: kwadrat 1:1 wypełniający całą komórkę (object-cover) — do grid-cols-4.
+  if (ratio === "square") {
+    return (
+      <div
+        className={cn(
+          "rounded-card relative aspect-square overflow-hidden",
+          className,
+        )}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className="object-cover"
+        />
+      </div>
     );
   }
 

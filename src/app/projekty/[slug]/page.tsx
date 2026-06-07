@@ -12,7 +12,11 @@ import { categoryLabel } from "@/lib/categories";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Container, Section } from "@/components/ui/layout";
 import { H1, Lead, Body, Label, Caption } from "@/components/ui/typography";
-import { ProjectImage, isLandscapeImage } from "@/components/project-image";
+import {
+  ProjectImage,
+  isLandscapeImage,
+  isSquareImage,
+} from "@/components/project-image";
 
 export function generateStaticParams() {
   return getAllProjects().map((p) => ({ slug: p.slug }));
@@ -160,14 +164,35 @@ export default async function ProjectPage({
 }
 
 /**
- * Galeria zdjęć projektu z progiem slidera (FIX 9):
- *  - 4 lub mniej zdjęć i żadne nie jest poziome → układ bez slidera (rząd/grid,
- *    zawijany), wszystkie widoczne od razu;
+ * Galeria zdjęć projektu z progiem slidera (FIX 9 + grid kwadratów):
+ *  - dokładnie 4 zdjęcia kwadratowe → grid-cols-4 na pełną szerokość, bez
+ *    slidera i bez pustego miejsca po prawej;
+ *  - 4 lub mniej zdjęć i żadne nie jest poziome → układ bez slidera (zawijany
+ *    rząd), wszystkie widoczne od razu;
  *  - 5+ zdjęć ALBO którekolwiek poziome (szerokie, nie mieści się na ekranie) →
  *    poziomy slider ze scroll-snapem (jak dotychczas).
  */
 function ProjectGallery({ images }: { images: ImageRef[] }) {
   if (images.length === 0) return null;
+
+  // Dokładnie 4 zdjęcia kwadratowe → grid-cols-4 na pełną szerokość, bez slidera
+  // i bez pustego miejsca po prawej (każde wypełnia komórkę 1:1).
+  const allSquare = images.every((img) => isSquareImage(img.src));
+  if (images.length === 4 && allSquare) {
+    return (
+      <div className="grid grid-cols-4 gap-3">
+        {images.map((img) => (
+          <ProjectImage
+            key={img.src}
+            src={img.src}
+            alt={img.alt}
+            ratio="square"
+            sizes="(min-width: 1024px) 13rem, 25vw"
+          />
+        ))}
+      </div>
+    );
+  }
 
   const hasLandscape = images.some((img) => isLandscapeImage(img.src));
   const useSlider = images.length >= 5 || hasLandscape;

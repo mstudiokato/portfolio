@@ -355,11 +355,6 @@ export default config({
             description: "Liczby pokazywane na stronie głównej.",
           },
         ),
-        aiWorkflow: fields.text({
-          label: "Akapit „AI-Augmented Workflow”",
-          description: "Tekst o wykorzystaniu AI w Twojej pracy.",
-          multiline: true,
-        }),
         contact: fields.object(
           {
             email: fields.text({
@@ -415,33 +410,33 @@ export default config({
     }),
 
     services: singleton({
-      label: "Usługi (Services)",
+      label: "Specjalizacje",
       path: "src/content/settings/services",
       format: { data: "json" },
       schema: {
         items: fields.array(
           fields.object({
             title: fields.text({
-              label: "Tytuł usługi",
+              label: "Tytuł specjalizacji",
               description: "Np. „Identyfikacja wizualna”.",
             }),
             description: fields.text({
-              label: "Opis usługi",
+              label: "Opis specjalizacji",
               description: "1–2 zdania, co obejmuje.",
               multiline: true,
             }),
           }),
           {
-            label: "Lista usług",
+            label: "Lista specjalizacji",
             description: "Przeciągnij, żeby zmienić kolejność.",
-            itemLabel: (p) => p.fields.title.value || "usługa",
+            itemLabel: (p) => p.fields.title.value || "specjalizacja",
           },
         ),
       },
     }),
 
     testimonials: singleton({
-      label: "Testimoniale (opinie)",
+      label: "Opinie klientów",
       path: "src/content/settings/testimonials",
       format: { data: "json" },
       schema: {
@@ -486,7 +481,7 @@ export default config({
     }),
 
     clients: singleton({
-      label: "Klienci",
+      label: "Loga klientów",
       path: "src/content/settings/clients",
       format: { data: "json" },
       schema: {

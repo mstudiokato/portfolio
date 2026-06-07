@@ -4,13 +4,16 @@
  * Kolejność tablicy = kolejność wyświetlania filtrów na /projekty.
  */
 
+// Jedna, wspólna lista 6 kategorii — identyczna dla Case Studies i Pozostałych
+// projektów (gallery-categories.ts re-eksportuje TĘ tablicę). Kolejność tablicy
+// = kolejność filtrów na /projekty.
 export const CATEGORIES = [
-  { slug: "branding-identity", label: "Branding & Identyfikacja" },
-  { slug: "event-branding", label: "Event Branding" },
   { slug: "social-media", label: "Social Media" },
-  { slug: "print-plakaty", label: "Print & Plakaty" },
-  { slug: "decks-prezentacje", label: "Decki & Prezentacje" },
-  { slug: "inne", label: "Inne" },
+  { slug: "logo", label: "Logo" },
+  { slug: "plakaty", label: "Plakaty" },
+  { slug: "branding", label: "Branding" },
+  { slug: "print-dtp", label: "Print & DTP" },
+  { slug: "inne", label: "Inne projekty" },
 ] as const;
 
 export type CategorySlug = (typeof CATEGORIES)[number]["slug"];

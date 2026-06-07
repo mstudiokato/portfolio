@@ -35,7 +35,6 @@ type SiteJson = {
     projects: string;
     clients: string;
   };
-  aiWorkflow: string;
   contact: {
     email: string;
     phone: string;
@@ -145,6 +144,10 @@ export const SEO_DEFAULT = site.seo;
 export const CONTACT = {
   email: site.contact.email,
   phone: site.contact.phone,
+  // UWAGA: na produkcji link bierze się ze zmiennej NEXT_PUBLIC_CAL_LINK
+  // (panel Vercel → Settings → Environment Variables). Zmiana fallbacku poniżej
+  // NIE wystarczy — zaktualizuj też NEXT_PUBLIC_CAL_LINK na Vercel do
+  // https://cal.com/eu/michal-stezaly (albo usuń zmienną, by zadziałał fallback).
   calUrl:
     process.env.NEXT_PUBLIC_CAL_LINK || "https://cal.com/eu/michal-stezaly",
   cvHref: site.contact.cvHref,

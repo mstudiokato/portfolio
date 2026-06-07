@@ -6,6 +6,7 @@ import { cn } from "@/lib/cn";
 import type { GalleryItem, GalleryImage } from "@/lib/content";
 import {
   GALLERY_CATEGORIES,
+  GALLERY_CATEGORY_SLUGS,
   type GalleryCategorySlug,
 } from "@/lib/gallery-categories";
 import { Tag } from "@/components/ui/tag";
@@ -20,14 +21,10 @@ import { Lightbox } from "@/components/lightbox";
  * zdjęcia otwiera Lightbox (zakres nawigacji = zdjęcia danego bloku).
  */
 
-// Kolejność chipów filtrów (P3) — LOGO pierwszy i domyślnie aktywny.
-const FILTER_ORDER: GalleryCategorySlug[] = [
-  "logo",
-  "social-media",
-  "plakaty",
-  "branding",
-  "pozostale",
-];
+// Kanoniczna kolejność chipów filtrów = kolejność wspólnej listy kategorii
+// (GALLERY_CATEGORIES === CATEGORIES). Na stronie pokazujemy tylko te, w których
+// faktycznie są prace (patrz GalleryArchive) — bez pustych chipów.
+const FILTER_ORDER: GalleryCategorySlug[] = GALLERY_CATEGORY_SLUGS;
 const labelOf = (slug: GalleryCategorySlug) =>
   GALLERY_CATEGORIES.find((c) => c.slug === slug)?.label ?? slug;
 
@@ -179,8 +176,15 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
 }
 
 export function GalleryArchive({ items }: { items: GalleryItem[] }) {
-  const [active, setActive] = useState<GalleryCategorySlug>("logo");
+  // Pokazujemy tylko kategorie, w których są prace (kanoniczna kolejność).
+  const presentCategories = FILTER_ORDER.filter((slug) =>
+    items.some((i) => i.category === slug),
+  );
   const reduce = useReducedMotion();
+
+  const [active, setActive] = useState<GalleryCategorySlug>(
+    presentCategories[0] ?? "social-media",
+  );
 
   const filtered = items.filter((i) => i.category === active);
 
@@ -189,7 +193,7 @@ export function GalleryArchive({ items }: { items: GalleryItem[] }) {
       {/* Filtry — chipy design-systemu (pill, active = lime fill). Bez „Wszystkie". */}
       <nav aria-label="Filtruj pozostałe prace po kategorii">
         <ul className="flex flex-wrap gap-2">
-          {FILTER_ORDER.map((slug) => (
+          {presentCategories.map((slug) => (
             <li key={slug}>
               <Tag
                 onClick={() => setActive(slug)}
