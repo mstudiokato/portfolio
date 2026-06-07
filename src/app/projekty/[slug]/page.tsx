@@ -245,6 +245,8 @@ function TextSection({
 /* ── SZABLON: case-study ──────────────────────────────────────────────── */
 function CaseStudyView({ project }: { project: Project }) {
   // META — premium grid: KLIENT / ROK / ZAKRES / ROLA (puste pomijamy).
+  // Długie wartości (np. rozbudowana rola) zajmują 2 kolumny na desktop, by się
+  // nie zawijały w ciasnej kolumnie.
   const metaItems = [
     { label: "Klient", value: project.client },
     { label: "Rok", value: project.year ? String(project.year) : "" },
@@ -257,13 +259,30 @@ function CaseStudyView({ project }: { project: Project }) {
 
   return (
     <>
-      {/* HERO — nagłówek + duże zdjęcie coveru (3:2, pełna szerokość). */}
+      {/* a) eyebrow (kategoria) + b) H1 = TYTUŁ PROJEKTU (klient jest w META). */}
       <header className="mt-8">
         <Label className="text-muted">{categoryLabel(project.category)}</Label>
-        <H1 className="text-h2 mt-3">{project.client}</H1>
-        {leadIn ? <Lead className="mt-5 max-w-2xl">{leadIn}</Lead> : null}
+        <H1 className="text-h2 mt-3">{project.title}</H1>
       </header>
 
+      {/* c) META grid — przed coverem. Blok wydzielony liniami (#1F2D44) góra/dół. */}
+      {metaItems.length > 0 ? (
+        <dl className="border-border mt-8 grid grid-cols-2 gap-x-10 gap-y-6 border-y py-8 sm:grid-cols-4">
+          {metaItems.map((m) => (
+            <div
+              key={m.label}
+              className={m.value.length > 24 ? "sm:col-span-2" : ""}
+            >
+              <dt>
+                <Label>{m.label}</Label>
+              </dt>
+              <dd className="text-ink mt-2 text-base leading-snug">{m.value}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : null}
+
+      {/* d) HERO foto — duże zdjęcie coveru (3:2, pełna szerokość). */}
       {project.cover.src ? (
         <div className="mt-10">
           <ProjectImage
@@ -276,27 +295,19 @@ function CaseStudyView({ project }: { project: Project }) {
         </div>
       ) : null}
 
-      {/* META — grid premium: mała limonkowa etykieta nad białą wartością.
-          Cienka linia (#1F2D44) na górze; dolną granicę domyka rule następnej sekcji. */}
-      {metaItems.length > 0 ? (
-        <dl className="border-border mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t pt-8 sm:grid-cols-4">
-          {metaItems.map((m) => (
-            <div key={m.label}>
-              <dt>
-                <Label>{m.label}</Label>
-              </dt>
-              <dd className="text-ink mt-1.5">{m.value}</dd>
-            </div>
-          ))}
-        </dl>
+      {/* e) Lead-in — pierwsze zdanie opisu (opcjonalne). */}
+      {leadIn ? (
+        <p className="text-muted mt-8 max-w-2xl text-left text-lg leading-relaxed">
+          {leadIn}
+        </p>
       ) : null}
 
-      {/* WYZWANIE → KONCEPCJA → PROCES. */}
+      {/* f) WYZWANIE → KONCEPCJA → PROCES. */}
       <TextSection label="Wyzwanie">{project.challenge}</TextSection>
       <TextSection label="Koncepcja">{project.concept}</TextSection>
       <TextSection label="Proces projektowy">{project.process}</TextSection>
 
-      {/* GALERIA ZDJĘĆ — przed Efektem. */}
+      {/* g) GALERIA ZDJĘĆ. */}
       {project.gallery.length > 0 ? (
         <section className="border-border mt-12 border-t pt-6">
           <SectionHeader>Galeria</SectionHeader>
@@ -306,7 +317,7 @@ function CaseStudyView({ project }: { project: Project }) {
         </section>
       ) : null}
 
-      {/* EFEKT — domknięcie po pokazaniu zdjęć. */}
+      {/* h) EFEKT — domknięcie po pokazaniu zdjęć. */}
       <TextSection label="Efekt">{project.effect}</TextSection>
     </>
   );
