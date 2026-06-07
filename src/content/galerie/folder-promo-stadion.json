@@ -1,33 +1,33 @@
 {
   "category": "print-dtp",
-  "title": "Folder promocyjny — Stadion Śląski",
-  "description": "Folder promocyjny Stadionu Śląskiego.",
+  "title": "Stadion Śląski",
+  "description": "Projekt folderu sprzedażowego „Centrum konferencyjno-biznesowe” dla Stadionu Śląskiego",
   "showDescription": true,
   "descriptionColor": "white",
   "order": 1,
   "images": [
     {
-      "src": "/galerie/folder-promo-stadion/01.jpg",
+      "src": "/galerie/folder-promo-stadion/images/0/src.jpg",
       "alt": "Folder promocyjny — Stadion Śląski — 1"
     },
     {
-      "src": "/galerie/folder-promo-stadion/02.jpg",
+      "src": "/galerie/folder-promo-stadion/images/1/src.jpg",
       "alt": "Folder promocyjny — Stadion Śląski — 2"
     },
     {
-      "src": "/galerie/folder-promo-stadion/03.jpg",
+      "src": "/galerie/folder-promo-stadion/images/2/src.jpg",
       "alt": "Folder promocyjny — Stadion Śląski — 3"
     },
     {
-      "src": "/galerie/folder-promo-stadion/04.jpg",
+      "src": "/galerie/folder-promo-stadion/images/3/src.jpg",
       "alt": "Folder promocyjny — Stadion Śląski — 4"
     },
     {
-      "src": "/galerie/folder-promo-stadion/05.jpg",
+      "src": "/galerie/folder-promo-stadion/images/4/src.jpg",
       "alt": "Folder promocyjny — Stadion Śląski — 5"
     },
     {
-      "src": "/galerie/folder-promo-stadion/06.jpg",
+      "src": "/galerie/folder-promo-stadion/images/5/src.jpg",
       "alt": "Folder promocyjny — Stadion Śląski — 6"
     }
   ]
