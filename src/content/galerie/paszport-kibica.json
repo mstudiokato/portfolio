@@ -1,17 +1,17 @@
 {
   "category": "print-dtp",
-  "title": "Paszport kibica",
-  "description": "Projekt paszportu kibica.",
+  "title": "GKS Katowice",
+  "description": "Projekt \"Paszportu Młodego GieKSiarza\" - aktywności dla młodych kibiców, która polegała na zbieraniu pieczątek na meczach piłkarskich.",
   "showDescription": true,
   "descriptionColor": "white",
   "order": 7,
   "images": [
     {
-      "src": "/galerie/paszport-kibica/01.jpg",
+      "src": "/galerie/paszport-kibica/images/0/src.jpg",
       "alt": "Paszport kibica — 1"
     },
     {
-      "src": "/galerie/paszport-kibica/02.jpg",
+      "src": "/galerie/paszport-kibica/images/1/src.jpg",
       "alt": "Paszport kibica — 2"
     }
   ]
