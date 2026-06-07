@@ -1,7 +1,9 @@
 {
-  "title": "Węglokoks",
   "category": "social-media",
+  "title": "Węglokoks",
   "description": "Grafiki social media dla Węglokoksu.",
+  "showDescription": false,
+  "descriptionColor": "white",
   "order": 6,
   "images": [
     {
