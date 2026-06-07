@@ -45,7 +45,8 @@ export async function generateMetadata({
   };
 }
 
-/** Breadcrumb: Projekty → Kategoria → Tytuł projektu. */
+/** Breadcrumb (2 poziomy): Projekty → Tytuł projektu. Kategoria pominięta — jest
+ *  już widoczna jako eyebrow pod breadcrumbem. */
 function Breadcrumb({ project }: { project: Project }) {
   return (
     <nav aria-label="Ścieżka nawigacji">
@@ -56,17 +57,8 @@ function Breadcrumb({ project }: { project: Project }) {
           </Link>
         </li>
         <li aria-hidden>/</li>
-        <li>
-          <Link
-            href={`/projekty?kategoria=${project.category}`}
-            className="hover:text-ink"
-          >
-            {categoryLabel(project.category)}
-          </Link>
-        </li>
-        <li aria-hidden>/</li>
         <li className="text-ink" aria-current="page">
-          {project.client}
+          {project.title}
         </li>
       </ol>
     </nav>
