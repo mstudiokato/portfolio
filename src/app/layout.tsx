@@ -67,6 +67,19 @@ export const metadata: Metadata = {
   description: SEO_DEFAULT.defaultDescription,
   applicationName: SITE_NAME,
   authors: [{ name: "Michał Stężały" }],
+  // Favicon (monogram MS) — pliki w /public, generowane z favicon.svg (sharp).
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  manifest: "/site.webmanifest",
   // Strona w budowie na subdomenie *.netlify.app — nie indeksujemy do launchu (masterprompt sek. 12, Etap 10).
   robots: { index: false, follow: false },
 };
