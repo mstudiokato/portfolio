@@ -5,13 +5,14 @@ import {
   getAllProjects,
   getProjectBySlug,
   getProjectNeighbors,
+  type ImageRef,
   type Project,
 } from "@/lib/content";
 import { categoryLabel } from "@/lib/categories";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Container, Section } from "@/components/ui/layout";
 import { H1, Lead, Body, Label, Caption } from "@/components/ui/typography";
-import { ProjectImage } from "@/components/project-image";
+import { ProjectImage, isLandscapeImage } from "@/components/project-image";
 
 export function generateStaticParams() {
   return getAllProjects().map((p) => ({ slug: p.slug }));
@@ -158,6 +159,52 @@ export default async function ProjectPage({
   );
 }
 
+/**
+ * Galeria zdjęć projektu z progiem slidera (FIX 9):
+ *  - 4 lub mniej zdjęć i żadne nie jest poziome → układ bez slidera (rząd/grid,
+ *    zawijany), wszystkie widoczne od razu;
+ *  - 5+ zdjęć ALBO którekolwiek poziome (szerokie, nie mieści się na ekranie) →
+ *    poziomy slider ze scroll-snapem (jak dotychczas).
+ */
+function ProjectGallery({ images }: { images: ImageRef[] }) {
+  if (images.length === 0) return null;
+
+  const hasLandscape = images.some((img) => isLandscapeImage(img.src));
+  const useSlider = images.length >= 5 || hasLandscape;
+
+  if (useSlider) {
+    return (
+      <div className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto">
+        {images.map((img) => (
+          <div key={img.src} className="shrink-0 snap-start">
+            <ProjectImage
+              src={img.src}
+              alt={img.alt}
+              ratio="strip"
+              sizes="(min-width: 1024px) 18rem, 50vw"
+            />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // ≤4 zdjęć, brak poziomych → zawijany rząd (bez scrolla), wszystkie widoczne.
+  return (
+    <div className="flex flex-wrap gap-3">
+      {images.map((img) => (
+        <ProjectImage
+          key={img.src}
+          src={img.src}
+          alt={img.alt}
+          ratio="strip"
+          sizes="(min-width: 1024px) 18rem, 50vw"
+        />
+      ))}
+    </div>
+  );
+}
+
 /* ── SZABLON: case-study ──────────────────────────────────────────────── */
 function CaseStudyView({ project }: { project: Project }) {
   const meta: Array<[string, string]> = [
@@ -208,21 +255,12 @@ function CaseStudyView({ project }: { project: Project }) {
 
       <BodyParagraphs body={project.body} />
 
-      {/* Galeria — jednolita wysokość, poziomy scroll (spójnie z resztą strony). */}
+      {/* Galeria — slider gdy 5+ zdjęć lub zdjęcia poziome; inaczej zawijany rząd. */}
       {project.gallery.length > 0 ? (
         <div className="mt-12">
           <Label className="text-muted">Galeria</Label>
-          <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto">
-            {project.gallery.map((img) => (
-              <div key={img.src} className="shrink-0 snap-start">
-                <ProjectImage
-                  src={img.src}
-                  alt={img.alt}
-                  ratio="strip"
-                  sizes="(min-width: 1024px) 18rem, 50vw"
-                />
-              </div>
-            ))}
+          <div className="mt-6">
+            <ProjectGallery images={project.gallery} />
           </div>
         </div>
       ) : null}
@@ -243,19 +281,10 @@ function GalleryView({ project }: { project: Project }) {
         ) : null}
       </header>
 
-      {/* Galeria — jednolita wysokość, poziomy scroll (spójnie z resztą strony). */}
+      {/* Galeria — slider gdy 5+ zdjęć lub zdjęcia poziome; inaczej zawijany rząd. */}
       {project.gallery.length > 0 ? (
-        <div className="no-scrollbar mt-10 flex snap-x snap-mandatory gap-3 overflow-x-auto">
-          {project.gallery.map((img) => (
-            <div key={img.src} className="shrink-0 snap-start">
-              <ProjectImage
-                src={img.src}
-                alt={img.alt}
-                ratio="strip"
-                sizes="(min-width: 1024px) 18rem, (min-width: 640px) 50vw, 100vw"
-              />
-            </div>
-          ))}
+        <div className="mt-10">
+          <ProjectGallery images={project.gallery} />
         </div>
       ) : (
         <Caption className="mt-10">Galeria w przygotowaniu.</Caption>

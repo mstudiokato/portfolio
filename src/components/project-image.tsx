@@ -22,6 +22,17 @@ function readDims(src: string): { width: number; height: number } | null {
   }
 }
 
+/**
+ * Czy zdjęcie jest poziome (landscape) — szerokość wyraźnie większa od wysokości
+ * (próg 1.1, by kwadraty nie liczyły się jako poziome). Liczone build-time przez
+ * image-size. Brak pliku/wymiarów → false. Używane do decyzji slider vs grid
+ * w galeriach projektów (poziome zdjęcia są szerokie i wymagają scrolla).
+ */
+export function isLandscapeImage(src: string): boolean {
+  const dims = src ? readDims(src) : null;
+  return dims ? dims.width > dims.height * 1.1 : false;
+}
+
 type Props = {
   src: string;
   alt: string;

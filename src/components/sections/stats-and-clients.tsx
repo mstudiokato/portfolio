@@ -53,16 +53,15 @@ export function StatsAndClients() {
                     {/* Liczba (limonkowa). Stat z jednostką (np. „14 LAT") jest
                         wyeksponowany jako główny akcent — większy font, jednostka
                         w tym samym kolorze obok liczby. */}
-                    <dd
-                      className={`font-display text-lime leading-none font-semibold tabular-nums ${
-                        s.unit
-                          ? "text-[clamp(2.75rem,5vw,3.4rem)]"
-                          : "text-[clamp(2.25rem,4vw,2.8rem)]"
-                      }`}
-                    >
+                    <dd className="font-display text-lime text-[clamp(2.25rem,4vw,2.8rem)] leading-none font-semibold tabular-nums">
                       <CountUp value={s.value} />
+                      {/* Jednostka (np. „LAT") jako mniejszy dopisek (0.5em) —
+                          liczba „14" pozostaje wizualnie równoważna z 1000+/30+,
+                          a nie dominuje nad pozostałymi liczbami. */}
                       {s.unit ? (
-                        <span className="ml-1.5 tracking-tight">{s.unit}</span>
+                        <span className="ml-1 align-baseline text-[0.5em] tracking-tight">
+                          {s.unit}
+                        </span>
                       ) : null}
                     </dd>
                     {/* Mobile: mniejszy font + zawijanie (np. „Lat doświadczenia"),
@@ -97,15 +96,10 @@ export function StatsAndClients() {
                           width={200}
                           height={56}
                           unoptimized
-                          // Indywidualne wysokości: SportValue dodatkowe −30%
-                          // (27px→19px), Lombards −20% (56px→45px); reszta 56px.
-                          className={`${
-                            c.name === "SportValue"
-                              ? "h-[19px]"
-                              : c.name === "Lombards"
-                                ? "h-[45px]"
-                                : "h-14"
-                          } w-auto object-contain`}
+                          // Wysokość bazowa 56px skalowana przez logoSize (%) z
+                          // Keystatic (Klienci → Rozmiar logo). 100% = 56px.
+                          style={{ height: `${(56 * c.logoSize) / 100}px` }}
+                          className="w-auto object-contain"
                         />
                       ) : (
                         <span className="text-muted font-mono text-sm whitespace-nowrap">

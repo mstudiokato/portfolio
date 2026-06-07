@@ -28,7 +28,7 @@ export default config({
 
   collections: {
     projects: collection({
-      label: "Projekty",
+      label: "Case Studies",
       slugField: "title",
       path: "src/content/projekty/*",
       format: { contentField: "content" },
@@ -52,10 +52,12 @@ export default config({
           description: "Nazwa klienta lub organizacji.",
           validation: { isRequired: true },
         }),
-        year: fields.integer({
+        year: fields.text({
           label: "Rok realizacji",
-          description: "Np. 2024",
-          validation: { isRequired: true },
+          // Text (nie integer) — integer renderuje się z separatorem tysięcy
+          // („2 026"). Rok to czterocyfrowa liczba bez formatowania.
+          description: "Np. 2024 (czterocyfrowy rok, bez separatorów).",
+          validation: { isRequired: true, length: { min: 4, max: 4 } },
         }),
         order: fields.integer({
           label: "Kolejność na liście",
@@ -125,9 +127,12 @@ export default config({
         }),
         cover: fields.object(
           {
-            src: fields.text({
-              label: "Ścieżka pliku zdjęcia",
-              description: "Np. /projekty/<adres>/cover.jpg",
+            src: fields.image({
+              label: "Plik zdjęcia",
+              description:
+                "Wgraj plik z dysku. Zapis do public/projekty. (Przed uploadem warto skompresować — patrz /admin/compress.)",
+              directory: "public/projekty",
+              publicPath: "/projekty",
             }),
             alt: fields.text({
               label: "Opis zdjęcia (alt)",
@@ -144,9 +149,11 @@ export default config({
         ),
         gallery: fields.array(
           fields.object({
-            src: fields.text({
-              label: "Ścieżka pliku zdjęcia",
-              description: "Np. /projekty/<adres>/01.jpg",
+            src: fields.image({
+              label: "Plik zdjęcia",
+              description: "Wgraj plik z dysku. Zapis do public/projekty.",
+              directory: "public/projekty",
+              publicPath: "/projekty",
             }),
             alt: fields.text({
               label: "Opis zdjęcia (alt)",
@@ -157,8 +164,7 @@ export default config({
             label: "Galeria zdjęć",
             description:
               "Przeciągnij, żeby zmienić kolejność. Pierwsze zdjęcie = okładka.",
-            itemLabel: (p) =>
-              p.fields.alt.value || p.fields.src.value || "zdjęcie",
+            itemLabel: (p) => p.fields.alt.value || "zdjęcie",
           },
         ),
         seo: fields.object(
@@ -193,7 +199,7 @@ export default config({
     }),
 
     galerie: collection({
-      label: "Galerie (pozostałe prace)",
+      label: "Pozostałe projekty",
       slugField: "title",
       path: "src/content/galerie/*",
       format: { data: "json" },
@@ -201,7 +207,19 @@ export default config({
       // klikiem nagłówka) + tytuł. Slug widoczny dopiero we wpisie. Keystatic
       // 0.5 nie ma osobnego UI filtrowania, więc kolejność kolumn = grupowanie.
       columns: ["category", "title"],
+      // Kolejność pól w formularzu = kolejność kluczy: Kategoria → Tytuł/klient
+      // (z adresem URL) → Rok → Opis → Kolejność → Zdjęcia. Kategoria pierwsza
+      // (grupowanie), pole adresu URL (slug) wraz z tytułem — nie na samej górze.
       schema: {
+        category: fields.select({
+          label: "Kategoria",
+          description: "Grupa, w której pojawi się ten zestaw prac na stronie.",
+          options: GALLERY_CATEGORIES.map((c) => ({
+            label: c.label,
+            value: c.slug,
+          })),
+          defaultValue: "social-media",
+        }),
         title: fields.slug({
           name: {
             label: "Tytuł / klient",
@@ -214,18 +232,11 @@ export default config({
               "Np. gks-katowice (małe litery, myślniki). Identyfikator wpisu.",
           },
         }),
-        category: fields.select({
-          label: "Kategoria",
-          description: "Grupa, w której pojawi się ten zestaw prac na stronie.",
-          options: GALLERY_CATEGORIES.map((c) => ({
-            label: c.label,
-            value: c.slug,
-          })),
-          defaultValue: "social-media",
-        }),
-        year: fields.integer({
+        year: fields.text({
           label: "Rok (opcjonalnie)",
-          description: "Np. 2024. Pokazywany w nagłówku bloku.",
+          // Text (nie integer) — integer renderuje rok z separatorem tysięcy
+          // („2 026"). Rok to czterocyfrowa liczba bez formatowania.
+          description: "Np. 2024 (czterocyfrowy rok, bez separatorów).",
         }),
         description: fields.text({
           label: "Opis (1–2 zdania)",
@@ -241,9 +252,12 @@ export default config({
         }),
         images: fields.array(
           fields.object({
-            src: fields.text({
-              label: "Ścieżka pliku zdjęcia",
-              description: "Np. /galerie/<adres>/01.jpg (oryginalne proporcje).",
+            src: fields.image({
+              label: "Plik zdjęcia",
+              description:
+                "Wgraj plik z dysku (oryginalne proporcje). Zapis do public/galerie. (Przed uploadem warto skompresować — patrz /admin/compress.)",
+              directory: "public/galerie",
+              publicPath: "/galerie",
             }),
             alt: fields.text({
               label: "Opis zdjęcia (alt)",
@@ -255,8 +269,7 @@ export default config({
             label: "Zdjęcia (1–12)",
             description:
               "Przeciągnij, żeby zmienić kolejność. Pierwsze zdjęcie = okładka.",
-            itemLabel: (p) =>
-              p.fields.alt.value || p.fields.src.value || "zdjęcie",
+            itemLabel: (p) => p.fields.alt.value || "zdjęcie",
           },
         ),
       },
@@ -438,10 +451,18 @@ export default config({
               label: "Imię i nazwisko",
               description: "Osoba wystawiająca opinię.",
             }),
-            role: fields.text({
-              label: "Stanowisko / organizacja",
-              description: "Np. „Prezes, GKS Katowice”.",
-            }),
+            roles: fields.array(
+              fields.text({
+                label: "Rola / stanowisko",
+                description: "Np. „Prezes Zarządu ŁKS Łódź”.",
+              }),
+              {
+                label: "Role / stanowiska",
+                description:
+                  "Każda rola w osobnej linii. Dodaj kolejną klikając „+”.",
+                itemLabel: (p) => p.value || "rola",
+              },
+            ),
             quote: fields.text({
               label: "Treść opinii",
               description: "Cytat klienta.",
@@ -485,6 +506,13 @@ export default config({
                 "Plik logo. Najlepiej SVG lub PNG z przezroczystym tłem.",
               directory: "public/klienci",
               publicPath: "/klienci",
+            }),
+            logoSize: fields.integer({
+              label: "Rozmiar logo (%)",
+              description:
+                "100 = rozmiar standardowy. Zmniejsz jeśli logo jest za duże (np. 70), zwiększ jeśli za małe (np. 130). Zakres: 20–200.",
+              defaultValue: 100,
+              validation: { isRequired: true, min: 20, max: 200 },
             }),
             featured: fields.checkbox({
               label: "Wyróżniony (pasek na górze)",

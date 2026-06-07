@@ -2,24 +2,27 @@
   "items": [
     {
       "name": "Wojciech Cygan",
-      "role": "Wiceprezes PZPN / Prezes Zarządu - Raków Częstochowa",
+      "roles": ["Wiceprezes PZPN / Prezes Zarządu - Raków Częstochowa"],
       "quote": "Fachowiec. Bez dwóch zdań. Polecam! 👍",
       "image": "/opinie/items/0/image.png"
     },
     {
       "name": "Marcin Janicki",
-      "role": "Prezes Zarządu \"Pierwsza Liga Piłkarska\" / Prezes Zarządu ŁKS Łódź",
+      "roles": [
+        "Prezes Zarządu \"Pierwsza Liga Piłkarska\"",
+        "Prezes Zarządu ŁKS Łódź"
+      ],
       "quote": "Zawsze zaangażowany na 100% Kreatywny i nietuzinkowy. Wszystkie aktywności na czas. Praca z Michałem to czysta przyjemność.",
       "image": "/opinie/items/1/image.png"
     },
     {
       "name": "Dagmara Gerasimuk",
-      "role": "IBU Development Director",
+      "roles": ["IBU Development Director"],
       "quote": "Opinia w trakcie uzupełniania."
     },
     {
       "name": "Monika Płaczkowska",
-      "role": "Superbet",
+      "roles": ["Superbet"],
       "quote": "Opinia w trakcie uzupełniania."
     }
   ]

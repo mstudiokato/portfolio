@@ -4,83 +4,97 @@
       "name": "International Biathlon Union",
       "shortName": "IBU",
       "logo": "/klienci/items/0/logo.svg",
+      "logoSize": 100,
       "featured": true
     },
     {
       "name": "SPORTFIVE Polska",
       "shortName": "SPORTFIVE",
       "logo": "/klienci/items/1/logo.svg",
+      "logoSize": 100,
       "featured": true
     },
     {
       "name": "Stadion Śląski",
       "shortName": "Stadion Śląski",
       "logo": "/klienci/items/2/logo.svg",
+      "logoSize": 100,
       "featured": true
     },
     {
       "name": "GKS Katowice",
       "shortName": "GKS Katowice",
       "logo": "/klienci/items/3/logo.svg",
+      "logoSize": 100,
       "featured": true
     },
     {
       "name": "Polski Związek Biathlonu",
       "shortName": "Polski Związek Biathlonu",
       "logo": "/klienci/items/4/logo.svg",
+      "logoSize": 100,
       "featured": true
     },
     {
       "name": "Węglokoks",
       "shortName": "Węglokoks",
       "logo": "/klienci/items/5/logo.png",
+      "logoSize": 100,
       "featured": true
     },
     {
       "name": "Shark Entertainment",
       "shortName": "Shark Entertainment",
       "logo": "/klienci/items/6/logo.png",
+      "logoSize": 100,
       "featured": true
     },
     {
       "name": "SportValue",
       "logo": "/klienci/items/7/logo.svg",
+      "logoSize": 34,
       "featured": true
     },
     {
       "name": "Coerver Coaching Poland",
       "shortName": "Coerver",
       "logo": "/klienci/items/8/logo.svg",
+      "logoSize": 100,
       "featured": false
     },
     {
       "name": "ROW Rybnik",
       "shortName": "ROW Rybnik",
       "logo": "/klienci/items/9/logo.svg",
+      "logoSize": 100,
       "featured": true
     },
     {
       "name": "NSCA Global Chapter Poland",
       "shortName": "NSCA",
       "logo": "/klienci/items/10/logo.png",
+      "logoSize": 100,
       "featured": true
     },
     {
       "name": "Lombards",
       "shortName": "Lombards",
       "logo": "/klienci/items/11/logo.svg",
+      "logoSize": 80,
       "featured": true
     },
     {
       "name": "EmocjeTV",
       "shortName": "EmocjeTV",
       "logo": "/klienci/items/12/logo.svg",
+      "logoSize": 100,
       "featured": true
     },
     {
       "name": "Zdrowycatering.pl",
       "shortName": "Zdrowycatering.pl",
       "logo": "/klienci/items/13/logo.svg",
+      "logoSize": 100,
       "featured": true
     }
   ]

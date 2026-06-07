@@ -80,7 +80,12 @@ export function Testimonials() {
                 </blockquote>
                 <figcaption className="mt-4">
                   <p className="font-display text-ink font-semibold">{t.name}</p>
-                  <p className="text-caption text-muted mt-0.5">{t.role}</p>
+                  {/* Każda rola/stanowisko w osobnej linii. */}
+                  {t.roles.map((r) => (
+                    <p key={r} className="text-caption text-muted mt-0.5">
+                      {r}
+                    </p>
+                  ))}
                 </figcaption>
               </div>
             </figure>

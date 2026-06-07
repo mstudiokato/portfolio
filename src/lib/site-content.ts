@@ -51,13 +51,18 @@ type ClientsJson = {
     name: string;
     shortName: string;
     logo: string | null;
+    // Rozmiar logo w % (20–200, domyślnie 100). Skaluje wysokość w pasku zaufania.
+    logoSize?: number;
     featured: boolean;
   }>;
 };
 type TestimonialsJson = {
   items: Array<{
     name: string;
-    role: string;
+    // Lista ról/stanowisk (jedna na linię). Starsze wpisy mogą mieć pojedynczy
+    // string `role` — loader normalizuje oba do tablicy.
+    roles?: string[];
+    role?: string;
     quote: string;
     image?: string | null;
   }>;
@@ -90,7 +95,10 @@ export const SERVICES = services.items;
  *  imageExists liczone w buildzie (fs) → render <Image> albo placeholder „FOTO". */
 export const TESTIMONIALS = testimonials.items.map((t) => ({
   name: t.name,
-  role: t.role,
+  // Normalizacja do tablicy: nowy model `roles[]` albo starszy pojedynczy `role`.
+  roles: (t.roles ?? (t.role ? [t.role] : [])).filter(
+    (r) => r && r.trim() !== "",
+  ),
   quote: t.quote,
   image: t.image ?? null,
   imageExists: publicAssetExists(t.image),
@@ -123,6 +131,8 @@ export const CREDIBILITY = clients.items
     name: c.shortName || c.name,
     logo: c.logo ?? null,
     logoExists: publicAssetExists(c.logo),
+    // Rozmiar logo (%) — clamp 20–200, domyślnie 100; skaluje wysokość w pasku.
+    logoSize: Math.min(200, Math.max(20, c.logoSize ?? 100)),
   }));
 
 /** Pełna lista klientów (sek. 8.7) — nazwy formalne. */
@@ -135,7 +145,8 @@ export const SEO_DEFAULT = site.seo;
 export const CONTACT = {
   email: site.contact.email,
   phone: site.contact.phone,
-  calUrl: process.env.NEXT_PUBLIC_CAL_LINK || "https://cal.com/michal-stezaly",
+  calUrl:
+    process.env.NEXT_PUBLIC_CAL_LINK || "https://cal.com/eu/michal-stezaly",
   cvHref: site.contact.cvHref,
   availability: site.contact.availability,
 };
