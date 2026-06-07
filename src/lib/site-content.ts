@@ -15,7 +15,8 @@ import testimonialsJson from "@/content/settings/testimonials.json";
  * /keystatic, które przechodzi przez root layout importujący ten moduł — bo
  * pliki treści nie były trace'owane do bundla funkcji.)
  *
- * Cal link pozostaje z env (NEXT_PUBLIC_CAL_LINK), zgodnie z Etapem 7.
+ * Cal link jest wpisany na sztywno w CONTACT.calUrl (https://cal.eu/michal-stezaly)
+ * — bez zależności od zmiennej środowiskowej NEXT_PUBLIC_CAL_LINK.
  */
 
 type SiteJson = {
@@ -140,16 +141,14 @@ export const ALL_CLIENTS: string[] = clients.items.map((c) => c.name);
 /** Domyślne SEO (fallback metadanych). */
 export const SEO_DEFAULT = site.seo;
 
-/** Kontakt (sek. 8.8). Cal link z env; reszta z CMS. */
+/** Kontakt (sek. 8.8). Cal link na sztywno; reszta z CMS. */
 export const CONTACT = {
   email: site.contact.email,
   phone: site.contact.phone,
-  // UWAGA: na produkcji link bierze się ze zmiennej NEXT_PUBLIC_CAL_LINK
-  // (panel Vercel → Settings → Environment Variables). Zmiana fallbacku poniżej
-  // NIE wystarczy — zaktualizuj też NEXT_PUBLIC_CAL_LINK na Vercel do
-  // https://cal.com/eu/michal-stezaly (albo usuń zmienną, by zadziałał fallback).
-  calUrl:
-    process.env.NEXT_PUBLIC_CAL_LINK || "https://cal.com/eu/michal-stezaly",
+  // Prawidłowy host to cal.eu (NIE cal.com, NIE cal.com/eu). Link wpisany na
+  // sztywno — celowo BEZ process.env.NEXT_PUBLIC_CAL_LINK, żeby nie zależał od
+  // (potencjalnie nieaktualnej) zmiennej środowiskowej na Vercel.
+  calUrl: "https://cal.eu/michal-stezaly",
   cvHref: site.contact.cvHref,
   availability: site.contact.availability,
 };

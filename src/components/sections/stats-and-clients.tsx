@@ -55,13 +55,11 @@ export function StatsAndClients() {
                         w tym samym kolorze obok liczby. */}
                     <dd className="font-display text-lime text-[clamp(2.25rem,4vw,2.8rem)] leading-none font-semibold tabular-nums">
                       <CountUp value={s.value} />
-                      {/* Jednostka (np. „LAT") jako mniejszy dopisek (0.5em) —
-                          liczba „14" pozostaje wizualnie równoważna z 1000+/30+,
-                          a nie dominuje nad pozostałymi liczbami. */}
+                      {/* Jednostka (np. „LAT") w TYM SAMYM rozmiarze co liczba —
+                          wszystkie trzy bloki (14 LAT, 1000+, 30+) mają identyczny
+                          rozmiar fontu. Etykiety pod spodem zostają mniejsze. */}
                       {s.unit ? (
-                        <span className="ml-1 align-baseline text-[0.5em] tracking-tight">
-                          {s.unit}
-                        </span>
+                        <span className="ml-1.5 tracking-tight">{s.unit}</span>
                       ) : null}
                     </dd>
                     {/* Mobile: mniejszy font + zawijanie (np. „Lat doświadczenia"),
@@ -87,8 +85,11 @@ export function StatsAndClients() {
               <ul className="marquee-track flex w-max items-center">
                 {marqueeClients.map((c, i) => (
                   <Fragment key={`${c.name}-${i}`}>
-                    {/* Logo bez ramki, wysokość 56px, object-contain. */}
-                    <li className="flex h-14 shrink-0 items-center">
+                    {/* Logo bez ramki, object-contain. BEZ stałej wysokości li —
+                        rząd rośnie do najwyższego logo, więc maska (overflow-hidden,
+                        potrzebna do poziomego marquee) nie przycina dużych logotypów
+                        niezależnie od logoSize (20–200%). */}
+                    <li className="flex shrink-0 items-center">
                       {c.logoExists && c.logo ? (
                         <Image
                           src={c.logo}

@@ -17,9 +17,9 @@ type NavItem = { label: string; href: string; sectionId?: string };
 
 const NAV: NavItem[] = [
   { label: "Projekty", href: "/projekty" },
-  { label: "Specjalizacje", href: "/#specjalizacje", sectionId: "specjalizacje" },
+  { label: "Co projektuję", href: "/#specjalizacje", sectionId: "specjalizacje" },
   {
-    label: "Opinie klientów",
+    label: "Rekomendacje",
     href: "/#opinie-klientow",
     sectionId: "opinie-klientow",
   },

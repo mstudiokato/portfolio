@@ -40,7 +40,7 @@ export function Services() {
     >
       <Container>
         <Label>— CO PROJEKTUJĘ</Label>
-        <H2 className="mt-4 max-w-2xl">Specjalizacje</H2>
+        <H2 className="mt-4 max-w-2xl">Od social media do brandingu</H2>
 
         <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service) => {
