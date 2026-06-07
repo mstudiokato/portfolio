@@ -1,23 +1,25 @@
 {
-  "title": "Madlen",
   "category": "logo",
-  "description": "Projekt logo Madlen.",
+  "title": "Madlen Studio",
+  "description": "Projekt logo salonu kosmetycznego.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 8,
   "images": [
     {
-      "src": "/galerie/madlen-logo/01.jpg",
+      "src": "/galerie/madlen-logo/images/0/src.jpg",
       "alt": "Madlen — 1"
     },
     {
-      "src": "/galerie/madlen-logo/02.jpg",
+      "src": "/galerie/madlen-logo/images/1/src.jpg",
       "alt": "Madlen — 2"
     },
     {
-      "src": "/galerie/madlen-logo/03.jpg",
+      "src": "/galerie/madlen-logo/images/2/src.jpg",
       "alt": "Madlen — 3"
     },
     {
-      "src": "/galerie/madlen-logo/04.jpg",
+      "src": "/galerie/madlen-logo/images/3/src.jpg",
       "alt": "Madlen — 4"
     }
   ]
