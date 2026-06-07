@@ -12,6 +12,7 @@ import {
 import { Tag } from "@/components/ui/tag";
 import { Lightbox } from "@/components/lightbox";
 import { textColorHex } from "@/lib/text-color";
+import { replaceWidows } from "@/lib/text";
 
 /**
  * „Pozostałe prace" na /projekty: poziome filtry kategorii (chipy design-systemu,
@@ -214,10 +215,10 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
         <p
           // Szerszy kontener (max-w-4xl) + mniejszy font na mobile (text-sm),
           // by pojedyncze zdanie mieściło się w jednej linii tam gdzie to możliwe.
-          className="mt-5 max-w-4xl text-sm sm:text-base"
+          className="mt-5 max-w-4xl hyphens-auto text-sm sm:text-base"
           style={{ color: textColorHex(item.descriptionColor) }}
         >
-          {item.description}
+          {replaceWidows(item.description)}
         </p>
       ) : null}
 

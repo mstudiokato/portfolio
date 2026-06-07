@@ -10,6 +10,7 @@ import {
 } from "@/lib/content";
 import { categoryLabel } from "@/lib/categories";
 import { cn } from "@/lib/cn";
+import { replaceWidows } from "@/lib/text";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Container, Section } from "@/components/ui/layout";
 import { H1, Lead, Body, Label, Caption } from "@/components/ui/typography";
@@ -231,8 +232,8 @@ function TextCell({
   return (
     <div className={className}>
       <SectionLabel>{label}</SectionLabel>
-      <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line">
-        {text}
+      <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line hyphens-auto">
+        {replaceWidows(text)}
       </Body>
     </div>
   );
@@ -338,8 +339,8 @@ function CaseStudyView({ project }: { project: Project }) {
       {hasText(project.effect) ? (
         <section className="mt-12 rounded-sm border-2 border-[#D4FF00] px-8 py-8">
           <SectionLabel>Rezultat</SectionLabel>
-          <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line">
-            {project.effect}
+          <Body className="text-ink mt-4 leading-relaxed whitespace-pre-line hyphens-auto">
+            {replaceWidows(project.effect)}
           </Body>
         </section>
       ) : null}
@@ -356,7 +357,9 @@ function GalleryView({ project }: { project: Project }) {
         <H1 className="text-h2 mt-3">{project.client}</H1>
         <Caption className="mt-3">{project.year}</Caption>
         {project.context ? (
-          <Lead className="mt-5 max-w-2xl">{project.context}</Lead>
+          <Lead className="mt-5 max-w-2xl hyphens-auto">
+            {replaceWidows(project.context)}
+          </Lead>
         ) : null}
       </header>
 

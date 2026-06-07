@@ -3,6 +3,7 @@ import { Container, Section } from "@/components/ui/layout";
 import { H2, Label } from "@/components/ui/typography";
 import { TESTIMONIALS, EYEBROW_COLOR } from "@/lib/site-content";
 import { textColorHex } from "@/lib/text-color";
+import { replaceWidows } from "@/lib/text";
 
 /**
  * TESTIMONIALE (FIX 2) — układ lewo/prawo: po lewej pionowe zdjęcie 80×120
@@ -79,10 +80,10 @@ export function Testimonials() {
               {/* Prawa — cytat + autor. */}
               <div className="flex flex-col">
                 <blockquote
-                  className="text-body italic"
+                  className="text-body hyphens-auto italic"
                   style={{ color: textColorHex(t.quoteColor) }}
                 >
-                  „{t.quote}”
+                  „{replaceWidows(t.quote)}”
                 </blockquote>
                 <figcaption className="mt-4">
                   <p className="font-display text-ink font-semibold">{t.name}</p>

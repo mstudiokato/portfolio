@@ -2,6 +2,7 @@ import { Container, Section } from "@/components/ui/layout";
 import { H2, H4, Body, Label } from "@/components/ui/typography";
 import { SERVICES, EYEBROW_COLOR } from "@/lib/site-content";
 import { textColorHex } from "@/lib/text-color";
+import { replaceWidows } from "@/lib/text";
 
 /**
  * WHAT I DESIGN / SERVICES (sek. 8.4). 6 obszarów: ikona PNG (akcent) + nazwa
@@ -54,13 +55,13 @@ export function Services() {
                   className="mb-4 h-12 w-12 object-contain p-1"
                 />
                 <H4
-                  className="transition-[font-weight] duration-150 group-hover:font-bold"
+                  className="text-balance transition-[font-weight] duration-150 group-hover:font-bold"
                   style={{ color }}
                 >
                   {service.title}
                 </H4>
-                <Body className="mt-3" style={{ color }}>
-                  {service.description}
+                <Body className="mt-3 hyphens-auto" style={{ color }}>
+                  {replaceWidows(service.description)}
                 </Body>
               </div>
             );
