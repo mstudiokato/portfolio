@@ -1,25 +1,25 @@
 {
   "category": "print-dtp",
-  "title": "Folder — Stadion Śląski",
-  "description": "Materiały drukowane dla Stadionu Śląskiego.",
+  "title": "Stadion Śląski",
+  "description": "Projekt folderu sprzedażowego „Centrum konferencyjno-biznesowe”.\n",
   "showDescription": true,
   "descriptionColor": "white",
   "order": 2,
   "images": [
     {
-      "src": "/galerie/folder-stadion/01.jpg",
+      "src": "/galerie/folder-stadion/images/0/src.jpg",
       "alt": "Folder — Stadion Śląski — 1"
     },
     {
-      "src": "/galerie/folder-stadion/02.jpg",
+      "src": "/galerie/folder-stadion/images/1/src.jpg",
       "alt": "Folder — Stadion Śląski — 2"
     },
     {
-      "src": "/galerie/folder-stadion/03.jpg",
+      "src": "/galerie/folder-stadion/images/2/src.jpg",
       "alt": "Folder — Stadion Śląski — 3"
     },
     {
-      "src": "/galerie/folder-stadion/04.jpg",
+      "src": "/galerie/folder-stadion/images/3/src.jpg",
       "alt": "Folder — Stadion Śląski — 4"
     }
   ]
