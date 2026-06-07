@@ -155,11 +155,10 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
         </div>
       </div>
 
-      {/* Opis (P4) — secondary, lekko mniejszy font niż body. */}
-      {item.description ? (
-        <p className="text-muted text-caption mt-5 max-w-2xl">
-          {item.description}
-        </p>
+      {/* Opis pod galerią — biały (#F5F7FA / text-ink), czytelny rozmiar
+          (text-base). Ukrywany, gdy w panelu odznaczono „Pokaż opis pod galerią". */}
+      {item.description && item.showDescription ? (
+        <p className="text-ink mt-5 max-w-2xl text-base">{item.description}</p>
       ) : null}
 
       <AnimatePresence>

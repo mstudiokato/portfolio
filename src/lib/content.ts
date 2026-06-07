@@ -262,6 +262,8 @@ export type GalleryItem = {
   year?: number;
   /** Krótki opis (1–2 zdania). */
   description: string;
+  /** Czy pokazać opis pod galerią na stronie (panel: checkbox, domyślnie true). */
+  showDescription: boolean;
   /** Zdjęcia (1–12), w oryginalnych proporcjach. */
   images: GalleryImage[];
   /** Kolejność w obrębie kategorii (mniejsze = wyżej). */
@@ -302,6 +304,8 @@ function parseGalleryItem(fileName: string): GalleryItem {
     category,
     year: Number.isFinite(yearNum) && yearNum > 0 ? yearNum : undefined,
     description: str(data.description),
+    // Domyślnie true — opis pokazujemy, chyba że w panelu jawnie odznaczono.
+    showDescription: data.showDescription !== false,
     images,
     order: data.order !== undefined ? Number(data.order) : 0,
   };

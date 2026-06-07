@@ -9,14 +9,12 @@ import {
   type Project,
 } from "@/lib/content";
 import { categoryLabel } from "@/lib/categories";
+import { cn } from "@/lib/cn";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Container, Section } from "@/components/ui/layout";
 import { H1, Lead, Body, Label, Caption } from "@/components/ui/typography";
-import {
-  ProjectImage,
-  isLandscapeImage,
-  isSquareImage,
-} from "@/components/project-image";
+import { ProjectImage, isWideImage } from "@/components/project-image";
+import { GallerySlider } from "@/components/gallery-slider";
 
 export function generateStaticParams() {
   return getAllProjects().map((p) => ({ slug: p.slug }));
@@ -163,45 +161,36 @@ export default async function ProjectPage({
   );
 }
 
+// Mapowanie liczby kolumn → klasa Tailwind (statyczna, by nie zgubił jej JIT).
+const GRID_COLS: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2",
+  3: "grid-cols-3",
+  4: "grid-cols-4",
+};
+
 /**
- * Galeria zdjęć projektu z progiem slidera (FIX 9 + grid kwadratów):
- *  - dokładnie 4 zdjęcia kwadratowe → grid-cols-4 na pełną szerokość, bez
- *    slidera i bez pustego miejsca po prawej;
- *  - 4 lub mniej zdjęć i żadne nie jest poziome → układ bez slidera (zawijany
- *    rząd), wszystkie widoczne od razu;
- *  - 5+ zdjęć ALBO którekolwiek poziome (szerokie, nie mieści się na ekranie) →
- *    poziomy slider ze scroll-snapem (jak dotychczas).
+ * Galeria zdjęć projektu — pełna logika układu (FIX):
+ *  - 1–3 zdjęcia → grid-cols-{n}, bez slidera;
+ *  - dokładnie 4 zdjęcia kwadratowe/pionowe (h/w ≥ 0.75) → grid-cols-4;
+ *  - dokładnie 4 zdjęcia szerokie poziome (h/w < 0.75) → grid-cols-2 (2×2);
+ *  - 5+ zdjęć → poziomy slider ze strzałkami, niezależnie od proporcji.
+ * W gridzie każde zdjęcie: w-full, naturalne proporcje (bez stałej wysokości).
  */
 function ProjectGallery({ images }: { images: ImageRef[] }) {
-  if (images.length === 0) return null;
+  const count = images.length;
+  if (count === 0) return null;
 
-  // Dokładnie 4 zdjęcia kwadratowe → grid-cols-4 na pełną szerokość, bez slidera
-  // i bez pustego miejsca po prawej (każde wypełnia komórkę 1:1).
-  const allSquare = images.every((img) => isSquareImage(img.src));
-  if (images.length === 4 && allSquare) {
+  // 5+ → slider ze strzałkami (kafle o jednolitej wysokości, naturalna szerokość).
+  if (count >= 5) {
     return (
-      <div className="grid grid-cols-4 gap-3">
+      <GallerySlider>
         {images.map((img) => (
-          <ProjectImage
+          <div
             key={img.src}
-            src={img.src}
-            alt={img.alt}
-            ratio="square"
-            sizes="(min-width: 1024px) 13rem, 25vw"
-          />
-        ))}
-      </div>
-    );
-  }
-
-  const hasLandscape = images.some((img) => isLandscapeImage(img.src));
-  const useSlider = images.length >= 5 || hasLandscape;
-
-  if (useSlider) {
-    return (
-      <div className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto">
-        {images.map((img) => (
-          <div key={img.src} className="shrink-0 snap-start">
+            data-gallery-item
+            className="shrink-0 snap-start"
+          >
             <ProjectImage
               src={img.src}
               alt={img.alt}
@@ -210,19 +199,23 @@ function ProjectGallery({ images }: { images: ImageRef[] }) {
             />
           </div>
         ))}
-      </div>
+      </GallerySlider>
     );
   }
 
-  // ≤4 zdjęć, brak poziomych → zawijany rząd (bez scrolla), wszystkie widoczne.
+  // 1–4 → grid bez slidera. Liczba kolumn: 1–3 = n; dla 4 zależy od proporcji
+  // (szerokie poziome → 2 kolumny, inaczej 4). Zdjęcia w naturalnych proporcjach.
+  const cols =
+    count < 4 ? count : images.some((img) => isWideImage(img.src)) ? 2 : 4;
+
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className={cn("grid gap-3", GRID_COLS[cols])}>
       {images.map((img) => (
         <ProjectImage
           key={img.src}
           src={img.src}
           alt={img.alt}
-          ratio="strip"
+          ratio="original"
           sizes="(min-width: 1024px) 18rem, 50vw"
         />
       ))}

@@ -23,25 +23,16 @@ function readDims(src: string): { width: number; height: number } | null {
 }
 
 /**
- * Czy zdjęcie jest poziome (landscape) — szerokość wyraźnie większa od wysokości
- * (próg 1.1, by kwadraty nie liczyły się jako poziome). Liczone build-time przez
- * image-size. Brak pliku/wymiarów → false. Używane do decyzji slider vs grid
- * w galeriach projektów (poziome zdjęcia są szerokie i wymagają scrolla).
+ * Czy zdjęcie jest „szerokie poziome" — proporcja wysokość/szerokość < 0.75
+ * (czyli szerokość > 1,33× wysokości). Liczone build-time przez image-size.
+ * Brak pliku/wymiarów → false (traktujemy jak nie-szerokie). Używane do decyzji
+ * o liczbie kolumn w gridzie galerii projektu: 4 szerokie → grid-cols-2 (2×2)
+ * zamiast grid-cols-4 (w 4 kolumnach poziome zdjęcia byłyby zbyt drobne).
  */
-export function isLandscapeImage(src: string): boolean {
-  const dims = src ? readDims(src) : null;
-  return dims ? dims.width > dims.height * 1.1 : false;
-}
-
-/**
- * Czy zdjęcie jest (w przybliżeniu) kwadratowe — proporcja 0.9–1.1. Build-time.
- * Używane do układu „4 kwadraty w grid-cols-4" bez slidera i pustego miejsca.
- */
-export function isSquareImage(src: string): boolean {
+export function isWideImage(src: string): boolean {
   const dims = src ? readDims(src) : null;
   if (!dims) return false;
-  const ratio = dims.width / dims.height;
-  return ratio >= 0.9 && ratio <= 1.1;
+  return dims.height / dims.width < 0.75;
 }
 
 type Props = {

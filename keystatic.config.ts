@@ -243,6 +243,12 @@ export default config({
           description: "Krótki opis zestawu prac.",
           multiline: true,
         }),
+        showDescription: fields.checkbox({
+          label: "Pokaż opis pod galerią",
+          description:
+            "Odznacz, aby ukryć opis pod zdjęciami na stronie. Domyślnie: pokazany.",
+          defaultValue: true,
+        }),
         order: fields.integer({
           label: "Kolejność w kategorii",
           description:
