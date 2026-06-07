@@ -1,47 +1,49 @@
 {
-  "title": "Kolekcja GKS Katowice",
   "category": "branding",
-  "description": "Projekt kolekcji odzieżowej GKS Katowice.",
+  "title": "GKS Katowice",
+  "description": "Projekty dedykowane kolekcji \"Lato 2025\" - gadżety dla Oficjalnego Sklepu Klubu.",
+  "showDescription": true,
+  "descriptionColor": "white",
   "order": 2,
   "images": [
     {
-      "src": "/galerie/gks-kolekcja/01.jpg",
+      "src": "/galerie/gks-kolekcja/images/0/src.jpg",
       "alt": "Kolekcja GKS Katowice — 1"
     },
     {
-      "src": "/galerie/gks-kolekcja/02.jpg",
+      "src": "/galerie/gks-kolekcja/images/1/src.jpg",
       "alt": "Kolekcja GKS Katowice — 2"
     },
     {
-      "src": "/galerie/gks-kolekcja/03.jpg",
+      "src": "/galerie/gks-kolekcja/images/2/src.jpg",
       "alt": "Kolekcja GKS Katowice — 3"
     },
     {
-      "src": "/galerie/gks-kolekcja/04.jpg",
+      "src": "/galerie/gks-kolekcja/images/3/src.jpg",
       "alt": "Kolekcja GKS Katowice — 4"
     },
     {
-      "src": "/galerie/gks-kolekcja/05.jpg",
+      "src": "/galerie/gks-kolekcja/images/4/src.jpg",
       "alt": "Kolekcja GKS Katowice — 5"
     },
     {
-      "src": "/galerie/gks-kolekcja/06.jpg",
+      "src": "/galerie/gks-kolekcja/images/5/src.jpg",
       "alt": "Kolekcja GKS Katowice — 6"
     },
     {
-      "src": "/galerie/gks-kolekcja/07.jpg",
+      "src": "/galerie/gks-kolekcja/images/6/src.jpg",
       "alt": "Kolekcja GKS Katowice — 7"
     },
     {
-      "src": "/galerie/gks-kolekcja/08.jpg",
+      "src": "/galerie/gks-kolekcja/images/7/src.jpg",
       "alt": "Kolekcja GKS Katowice — 8"
     },
     {
-      "src": "/galerie/gks-kolekcja/09.jpg",
+      "src": "/galerie/gks-kolekcja/images/8/src.jpg",
       "alt": "Kolekcja GKS Katowice — 9"
     },
     {
-      "src": "/galerie/gks-kolekcja/10.jpg",
+      "src": "/galerie/gks-kolekcja/images/9/src.jpg",
       "alt": "Kolekcja GKS Katowice — 10"
     }
   ]
