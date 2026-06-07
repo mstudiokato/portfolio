@@ -1,21 +1,21 @@
 {
   "category": "print-dtp",
-  "title": "Folder AMG",
-  "description": "Folder reklamowy AMG.",
+  "title": "Akademia Piłkarska \"Młoda GieKSa\"",
+  "description": "Oferta informacyjno-sponsoringowa dla Akademii Piłkarskiej szkolącej dzieci.",
   "showDescription": true,
   "descriptionColor": "white",
   "order": 4,
   "images": [
     {
-      "src": "/galerie/folder-amg/01.jpg",
+      "src": "/galerie/folder-amg/images/0/src.jpg",
       "alt": "Folder AMG — 1"
     },
     {
-      "src": "/galerie/folder-amg/02.jpg",
+      "src": "/galerie/folder-amg/images/1/src.jpg",
       "alt": "Folder AMG — 2"
     },
     {
-      "src": "/galerie/folder-amg/03.jpg",
+      "src": "/galerie/folder-amg/images/2/src.jpg",
       "alt": "Folder AMG — 3"
     }
   ]
