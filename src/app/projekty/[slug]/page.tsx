@@ -113,24 +113,6 @@ function ProjectFooterNav({ project }: { project: Project }) {
   );
 }
 
-/** Body MDX renderowane jako proste akapity (pełny MDX-runtime nie jest potrzebny w MVP). */
-function BodyParagraphs({ body }: { body: string }) {
-  const paragraphs = body
-    .split(/\n\s*\n/)
-    .map((p) => p.trim())
-    .filter(Boolean);
-  if (paragraphs.length === 0) return null;
-  return (
-    <div className="mt-6 flex max-w-2xl flex-col gap-4">
-      {paragraphs.map((p, i) => (
-        <Body key={i} className="text-muted">
-          {p}
-        </Body>
-      ))}
-    </div>
-  );
-}
-
 export default async function ProjectPage({
   params,
 }: {
@@ -217,19 +199,41 @@ function ProjectGallery({ images }: { images: ImageRef[] }) {
   );
 }
 
+/**
+ * Sekcja tekstowa case study: limonkowa etykieta (mały tekst) nad białym
+ * akapitem, duże odstępy (breathing room). Ukrywana gdy brak treści.
+ */
+function TextSection({
+  label,
+  children,
+}: {
+  label: string;
+  children?: string;
+}) {
+  if (!children || children.trim() === "") return null;
+  return (
+    <section className="mt-16">
+      <Label>{label}</Label>
+      <Body className="text-ink mt-4 max-w-2xl leading-relaxed whitespace-pre-line">
+        {children}
+      </Body>
+    </section>
+  );
+}
+
 /* ── SZABLON: case-study ──────────────────────────────────────────────── */
 function CaseStudyView({ project }: { project: Project }) {
-  const meta: Array<[string, string]> = [
-    ["Klient", project.client],
-    ["Rok", String(project.year)],
-    ["Scope", project.scope],
-    ["Deliverables", project.deliverables.join(", ")],
-    ["Rola", project.role],
-    ["Kontekst", project.context],
-  ];
+  // META — jedna linia: Klient · Rok · Zakres · Rola (puste pomijamy).
+  const metaParts = [
+    project.client,
+    project.year ? String(project.year) : "",
+    project.scope,
+    project.role,
+  ].filter((v) => v && v.trim() !== "");
 
   return (
     <>
+      {/* HERO — nagłówek + duże zdjęcie coveru (3:2, pełna szerokość). */}
       <header className="mt-8">
         <Label className="text-muted">{categoryLabel(project.category)}</Label>
         <H1 className="text-h2 mt-3">{project.client}</H1>
@@ -238,7 +242,6 @@ function CaseStudyView({ project }: { project: Project }) {
         ) : null}
       </header>
 
-      {/* Cover jako obraz prowadzący (3:2). */}
       {project.cover.src ? (
         <div className="mt-10">
           <ProjectImage
@@ -251,31 +254,30 @@ function CaseStudyView({ project }: { project: Project }) {
         </div>
       ) : null}
 
-      {/* Pola projektu. */}
-      <dl className="border-border mt-10 grid grid-cols-1 gap-x-8 gap-y-4 border-t pt-8 sm:grid-cols-2">
-        {meta
-          .filter(([, value]) => value)
-          .map(([label, value]) => (
-            <div key={label} className="flex flex-col">
-              <dt>
-                <Label className="text-muted">{label}</Label>
-              </dt>
-              <dd className="text-ink mt-1">{value}</dd>
-            </div>
-          ))}
-      </dl>
+      {/* META — Klient · Rok · Zakres · Rola. */}
+      {metaParts.length > 0 ? (
+        <p className="border-border text-muted mt-8 border-t pt-6 text-sm">
+          {metaParts.join("  ·  ")}
+        </p>
+      ) : null}
 
-      <BodyParagraphs body={project.body} />
+      {/* WYZWANIE / KONCEPCJA / PROCES. */}
+      <TextSection label="Wyzwanie">{project.challenge}</TextSection>
+      <TextSection label="Koncepcja">{project.concept}</TextSection>
+      <TextSection label="Proces projektowy">{project.process}</TextSection>
 
-      {/* Galeria — slider gdy 5+ zdjęć lub zdjęcia poziome; inaczej zawijany rząd. */}
+      {/* GALERIA ZDJĘĆ. */}
       {project.gallery.length > 0 ? (
-        <div className="mt-12">
-          <Label className="text-muted">Galeria</Label>
+        <section className="mt-16">
+          <Label>Galeria</Label>
           <div className="mt-6">
             <ProjectGallery images={project.gallery} />
           </div>
-        </div>
+        </section>
       ) : null}
+
+      {/* EFEKT. */}
+      <TextSection label="Efekt">{project.effect}</TextSection>
     </>
   );
 }

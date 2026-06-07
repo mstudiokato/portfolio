@@ -51,6 +51,11 @@ export type Project = {
   context: string;
   /** Krótki opis biznesowy (2–4 zdania). */
   description: string;
+  /** Case study (szablon): wyzwanie / koncepcja / proces / efekt (pola tekstowe). */
+  challenge: string;
+  concept: string;
+  process: string;
+  effect: string;
   /** Cover (ratio 3:2 — [ZABLOKOWANE]) ze ścieżką i altem. */
   cover: ImageRef;
   /** Czy plik coveru istnieje w /public (build-time) — brak → placeholder. */
@@ -157,6 +162,10 @@ function parseProject(fileName: string): Project {
     role: str(data.role),
     context: str(data.context),
     description: str(data.description),
+    challenge: str(data.challenge),
+    concept: str(data.concept),
+    process: str(data.process),
+    effect: str(data.effect),
     cover,
     coverExists: publicAssetExists(cover.src),
     gallery: toImageRefArray(data.gallery),

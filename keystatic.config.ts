@@ -141,6 +141,26 @@ export default config({
             "Zwięzły opis projektu pokazywany na podstronie i w podglądach.",
           multiline: true,
         }),
+        challenge: fields.text({
+          label: "Wyzwanie",
+          description: "1-2 zdania o problemie który rozwiązywał projekt",
+          multiline: true,
+        }),
+        concept: fields.text({
+          label: "Koncepcja",
+          description: "1-2 zdania o podejściu projektowym",
+          multiline: true,
+        }),
+        process: fields.text({
+          label: "Proces projektowy",
+          description: "Jeden akapit o wyzwaniach i decyzjach. Bez bulletów.",
+          multiline: true,
+        }),
+        effect: fields.text({
+          label: "Efekt",
+          description: "1-2 zdania o rezultacie projektu",
+          multiline: true,
+        }),
         tag: fields.text({
           label: "Tag (powiązane projekty)",
           description:
