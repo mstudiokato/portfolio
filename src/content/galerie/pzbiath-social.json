@@ -1,7 +1,9 @@
 {
-  "title": "Polski Związek Biathlonu",
   "category": "social-media",
+  "title": "Polski Związek Biathlonu",
   "description": "Grafiki social media dla Polskiego Związku Biathlonu.",
+  "showDescription": false,
+  "descriptionColor": "white",
   "order": 5,
   "images": [
     {
