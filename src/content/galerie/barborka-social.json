@@ -1,26 +1,25 @@
 {
   "category": "social-media",
   "title": "Realizacja własna",
-  "year": "2026",
   "description": "Grafiki social media z okazji Barbórki na potrzeby prywatnych social mediów.",
   "showDescription": true,
   "descriptionColor": "white",
-  "order": 10,
+  "order": 2,
   "images": [
     {
-      "src": "/galerie/barborka-social/01.jpeg",
+      "src": "/galerie/barborka-social/images/0/src.jpeg",
       "alt": "Barbórka — 1"
     },
     {
-      "src": "/galerie/barborka-social/02.jpeg",
+      "src": "/galerie/barborka-social/images/1/src.jpeg",
       "alt": "Barbórka — 2"
     },
     {
-      "src": "/galerie/barborka-social/03.jpeg",
+      "src": "/galerie/barborka-social/images/2/src.jpeg",
       "alt": "Barbórka — 3"
     },
     {
-      "src": "/galerie/barborka-social/04.jpeg",
+      "src": "/galerie/barborka-social/images/3/src.jpeg",
       "alt": "Barbórka — 4"
     }
   ]
