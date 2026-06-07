@@ -4,22 +4,22 @@
   "description": "Najważniejsze bramki GKS Katowice - subiektywny ranking w stylu gry Sensible World of Soccer.",
   "showDescription": true,
   "descriptionColor": "white",
-  "order": 9,
+  "order": 2,
   "images": [
     {
-      "src": "/galerie/gole-social/01.jpeg",
+      "src": "/galerie/gole-social/images/0/src.jpeg",
       "alt": "Gole.pl — 1"
     },
     {
-      "src": "/galerie/gole-social/02.jpeg",
+      "src": "/galerie/gole-social/images/1/src.jpeg",
       "alt": "Gole.pl — 2"
     },
     {
-      "src": "/galerie/gole-social/03.jpeg",
+      "src": "/galerie/gole-social/images/2/src.jpeg",
       "alt": "Gole.pl — 3"
     },
     {
-      "src": "/galerie/gole-social/04.jpeg",
+      "src": "/galerie/gole-social/images/3/src.jpeg",
       "alt": "Gole.pl — 4"
     }
   ]
