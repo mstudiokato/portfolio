@@ -1,0 +1,25 @@
+{
+  "category": "social-media",
+  "title": "Orkiestra Dęta OSP Żarki",
+  "showDescription": false,
+  "descriptionColor": "white",
+  "order": 6,
+  "images": [
+    {
+      "src": "/galerie/orkiestra-deta-osp-zarki/images/0/src.jpg",
+      "alt": "Plakat koncertowy Orkiestry Dętej OSP Żarki"
+    },
+    {
+      "src": "/galerie/orkiestra-deta-osp-zarki/images/1/src.jpg",
+      "alt": "Plakat koncertowy Orkiestry Dętej OSP Żarki"
+    },
+    {
+      "src": "/galerie/orkiestra-deta-osp-zarki/images/2/src.jpg",
+      "alt": "Plakat koncertowy Orkiestry Dętej OSP Żarki"
+    },
+    {
+      "src": "/galerie/orkiestra-deta-osp-zarki/images/3/src.jpg",
+      "alt": "Plakat koncertowy Orkiestry Dętej OSP Żarki"
+    }
+  ]
+}
