@@ -38,17 +38,17 @@ export function StatsAndClients() {
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-8">
           {/* LICZBY — eyebrow + bloki z separatorami; wycentrowane i wertykalnie
               wyrównane do logów, dosunięte do linii podziału (lg:pr-4). */}
-          <div className="min-w-0 lg:col-span-5 lg:flex lg:flex-col lg:items-center lg:border-r lg:pr-4">
+          <div className="min-w-0 lg:col-span-5 lg:flex lg:flex-col lg:border-r lg:pr-4 lg:pl-[39px]">
             <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
               — Fakty i liczby
             </Label>
-            <dl className="mt-6 flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-center md:gap-0 lg:mt-5">
+            <dl className="mt-6 flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-start md:gap-0 lg:mt-5">
               {stats.map((s, i) => (
                 <Fragment key={s.label}>
                   {i > 0 ? (
                     <div
                       aria-hidden="true"
-                      className="bg-border hidden h-16 w-px self-center md:mx-4 md:block lg:mx-[0.8rem] lg:h-[3.2rem]"
+                      className="bg-border hidden h-16 w-px self-center md:mx-4 md:block lg:mx-[1.4rem] lg:h-[3.2rem]"
                     />
                   ) : null}
                   <div className="flex flex-col items-center text-center">
