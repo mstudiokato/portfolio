@@ -1,0 +1,23 @@
+{
+  "category": "plakaty",
+  "title": "Brynowska GieKSa",
+  "year": "2025",
+  "description": "Projekt etykiety piwa kibicowskiego „Stadionowe” – produkcja: Browar Haksna, Ostrava",
+  "showDescription": true,
+  "descriptionColor": "white",
+  "order": 6,
+  "images": [
+    {
+      "src": "/galerie/brynowska-gie-k-sa/images/0/src.jpeg",
+      "alt": "Projekt etykiety piwa kibicowskiego „Stadionowe”"
+    },
+    {
+      "src": "/galerie/brynowska-gie-k-sa/images/1/src.jpeg",
+      "alt": "Projekt etykiety piwa kibicowskiego „Stadionowe”"
+    },
+    {
+      "src": "/galerie/brynowska-gie-k-sa/images/2/src.jpeg",
+      "alt": "Projekt etykiety piwa kibicowskiego „Stadionowe”"
+    }
+  ]
+}
