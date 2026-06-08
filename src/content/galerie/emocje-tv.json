@@ -1,0 +1,41 @@
+{
+  "category": "social-media",
+  "title": "Emocje.TV",
+  "showDescription": false,
+  "descriptionColor": "white",
+  "order": 5,
+  "images": [
+    {
+      "src": "/galerie/emocje-tv/images/0/src.jpg",
+      "alt": "Grafika social media EmocjeTV "
+    },
+    {
+      "src": "/galerie/emocje-tv/images/1/src.jpg",
+      "alt": "Grafika social media EmocjeTV "
+    },
+    {
+      "src": "/galerie/emocje-tv/images/2/src.jpg",
+      "alt": "Grafika social media EmocjeTV "
+    },
+    {
+      "src": "/galerie/emocje-tv/images/3/src.jpg",
+      "alt": "Grafika social media EmocjeTV "
+    },
+    {
+      "src": "/galerie/emocje-tv/images/4/src.jpg",
+      "alt": "Grafika social media EmocjeTV "
+    },
+    {
+      "src": "/galerie/emocje-tv/images/5/src.jpg",
+      "alt": "Grafika social media EmocjeTV "
+    },
+    {
+      "src": "/galerie/emocje-tv/images/6/src.jpg",
+      "alt": "Grafika social media EmocjeTV "
+    },
+    {
+      "src": "/galerie/emocje-tv/images/7/src.jpg",
+      "alt": "Grafika social media EmocjeTV "
+    }
+  ]
+}
