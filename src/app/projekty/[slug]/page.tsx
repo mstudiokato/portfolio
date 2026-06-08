@@ -191,14 +191,6 @@ function ProjectGallery({ images }: { images: ImageRef[] }) {
   );
 }
 
-/** Pierwsze zdanie tekstu — krótki lead-in pod tytułem (bez powtarzania sekcji). */
-function firstSentence(text: string): string {
-  const t = text.trim().replace(/\s+/g, " ");
-  if (t === "") return "";
-  const m = t.match(/^.*?[.!?](\s|$)/);
-  return (m ? m[0] : t).trim();
-}
-
 /**
  * JEDEN spójny system etykiet na całej podstronie (META + nagłówki sekcji) —
  * punkty nawigacyjne strony: limonkowy (#D4FF00), UPPERCASE, text-sm,
@@ -250,9 +242,6 @@ function CaseStudyView({ project }: { project: Project }) {
     { label: "Rola", value: project.role },
   ].filter((m) => m.value && m.value.trim() !== "");
 
-  // Intro = pierwsze zdanie pola „Kontekst" (lead-in) — bez powtarzania Wyzwania/Koncepcji.
-  const leadIn = firstSentence(project.context);
-
   return (
     <>
       {/* a) eyebrow (kategoria) + b) H1 = TYTUŁ PROJEKTU (klient jest w META). */}
@@ -293,11 +282,11 @@ function CaseStudyView({ project }: { project: Project }) {
 
       {/* e) Rząd 1: Kontekst (lewa) | Wyzwanie (prawa). Pionowy separator (#1F2D44)
           między kolumnami na desktop; na mobile (stack) ukryty. */}
-      {leadIn || hasText(project.challenge) ? (
+      {hasText(project.context) || hasText(project.challenge) ? (
         <div className="border-border mt-12 grid grid-cols-1 gap-y-12 border-t pt-8 md:grid-cols-2 md:gap-y-0">
           <TextCell
             label="Kontekst"
-            text={leadIn}
+            text={project.context}
             className="md:pr-12 lg:pr-16"
           />
           <TextCell
