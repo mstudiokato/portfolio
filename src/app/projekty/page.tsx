@@ -10,9 +10,15 @@ import { Container, Section } from "@/components/ui/layout";
 import { H1, H2, Label } from "@/components/ui/typography";
 
 export const metadata: Metadata = {
-  title: "Projekty",
+  // absolute → pomija szablon „%s — Michał Stężały" z layoutu (tytuł ma już sufiks).
+  title: {
+    absolute:
+      "Portfolio — projekty graficzne dla sportu i biznesu | Michał Stężały",
+  },
   description:
-    "Wybrane realizacje case-study oraz pozostałe prace: logo, social media, plakaty, branding i więcej.",
+    "Portfolio projektanta graficznego: branding sportowy, social media, identyfikacja wizualna i materiały do druku dla klubów, federacji i marek B2B.",
+  // Self-canonical → warianty z ?kategoria= wskazują na /projekty (bez parametru).
+  alternates: { canonical: "/projekty" },
 };
 
 export default function ProjektyPage() {

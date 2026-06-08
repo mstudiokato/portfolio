@@ -30,14 +30,21 @@ export async function generateMetadata({
   const project = getProjectBySlug(slug);
   if (!project) return {};
 
-  const title = project.seo.title || project.client;
-  const description = project.seo.description || project.context;
+  // Wzorzec: „[tytuł] | Michał Stężały" (brak pola „typ" w danych). absolute →
+  // pomija szablon layoutu. seo.title (per-projekt) ma pierwszeństwo nad tytułem.
+  const baseTitle = project.seo.title || project.title;
+  const fullTitle = `${baseTitle} | Michał Stężały`;
+  // Opis: seo.description lub context, przycięte do 155 znaków. Brak → undefined.
+  const rawDescription = project.seo.description || project.context;
+  const description = rawDescription
+    ? rawDescription.slice(0, 155)
+    : undefined;
   const ogImage = project.seo.ogImage || project.cover.src;
   return {
-    title,
+    title: { absolute: fullTitle },
     description,
     openGraph: {
-      title,
+      title: fullTitle,
       description,
       type: "article",
       images: ogImage ? [{ url: ogImage }] : undefined,
@@ -114,8 +121,38 @@ export default async function ProjectPage({
   const project = getProjectBySlug(slug);
   if (!project) notFound();
 
+  // BreadcrumbList (schema.org): Home → Projekty → [tytuł projektu].
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://michal-stezaly.pl",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Projekty",
+        item: "https://michal-stezaly.pl/projekty",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project.title,
+        item: `https://michal-stezaly.pl/projekty/${project.slug}`,
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <SiteHeader />
       <Section size="sm">
         <Container className="max-w-4xl">

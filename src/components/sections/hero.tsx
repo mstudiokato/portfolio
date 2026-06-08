@@ -50,7 +50,7 @@ export function Hero() {
             <Image
               id="hero-photo"
               src={heroImage}
-              alt=""
+              alt="Michał Stężały — projektant graficzny dla sportu i biznesu"
               fill
               sizes="100vw"
               priority

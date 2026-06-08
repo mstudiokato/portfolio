@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { clashDisplay, switzer } from "@/lib/fonts";
 import { CookieBanner } from "@/components/cookie-banner";
 import { SEO_DEFAULT } from "@/lib/site-content";
@@ -6,7 +7,18 @@ import "./globals.css";
 
 const SITE_NAME = "Michał Stężały — Senior Graphic Designer";
 
-// JSON-LD schema.org (S2) — Person + ProfessionalService. URL podglądu (netlify).
+// Cloudflare Web Analytics — token publiczny z env (NEXT_PUBLIC_CF_BEACON_TOKEN).
+// Właściciel wkleja prawdziwy token w panelu Vercel; skrypt renderuje się tylko
+// gdy token jest ustawiony (NEXT_PUBLIC_* jest inline'owany w czasie buildu).
+const CF_BEACON_TOKEN = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
+
+// JSON-LD schema.org — Person (autor) + ProfessionalService. URL produkcyjny.
+const SITE_URL = "https://michal-stezaly.pl";
+// UWAGA: profile sameAs są PLACEHOLDERAMI do potwierdzenia (brak źródła w danych).
+const SAME_AS = [
+  "https://www.linkedin.com/in/michalstezaly/",
+  "https://www.behance.net/michalstezaly",
+];
 const JSON_LD = {
   "@context": "https://schema.org",
   "@graph": [
@@ -14,37 +26,29 @@ const JSON_LD = {
       "@type": "Person",
       name: "Michał Stężały",
       jobTitle: "Senior Graphic Designer",
-      description: "Visual communication design for sport, events and business",
-      url: "https://michal-stezaly.netlify.app",
+      description:
+        "Projektant graficzny dla sportu i biznesu. 14 lat doświadczenia — branding, social media, identyfikacja wizualna dla klubów, federacji i marek B2B.",
+      url: SITE_URL,
       email: "kontakt@michal-stezaly.pl",
-      telephone: "+48668010262",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Katowice",
-        addressRegion: "Śląsk",
-        addressCountry: "Polska",
+        addressCountry: "PL",
       },
-      knowsAbout: [
-        "sport branding",
-        "event design",
-        "social media",
-        "graphic design",
-        "visual identity",
-      ],
-      sameAs: [],
+      sameAs: SAME_AS,
     },
     {
       "@type": "ProfessionalService",
       name: "Michał Stężały — Senior Graphic Designer",
       description: "Visual communication design for sport, events and business",
-      url: "https://michal-stezaly.netlify.app",
+      url: SITE_URL,
       email: "kontakt@michal-stezaly.pl",
       telephone: "+48668010262",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Katowice",
         addressRegion: "Śląsk",
-        addressCountry: "Polska",
+        addressCountry: "PL",
       },
       knowsAbout: [
         "sport branding",
@@ -53,7 +57,7 @@ const JSON_LD = {
         "graphic design",
         "visual identity",
       ],
-      sameAs: [],
+      sameAs: SAME_AS,
     },
   ],
 };
@@ -98,6 +102,13 @@ export default function RootLayout({
         />
         {children}
         <CookieBanner />
+        {CF_BEACON_TOKEN ? (
+          <Script
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            strategy="afterInteractive"
+            data-cf-beacon={JSON.stringify({ token: CF_BEACON_TOKEN })}
+          />
+        ) : null}
       </body>
     </html>
   );
