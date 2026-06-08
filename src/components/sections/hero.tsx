@@ -37,7 +37,7 @@ export function Hero() {
   const scale = HERO.scale ?? 100;
 
   return (
-    <section className="bg-navy relative isolate flex min-h-[510px] items-start overflow-hidden lg:min-h-[75vh] lg:items-center">
+    <section className="bg-navy relative isolate flex min-h-[510px] items-start overflow-hidden lg:min-h-[calc(75vh-80px)] lg:items-center">
       {/* Tło — zdjęcie (za treścią). Kadr przez transform translate()+scale():
           zoom daje nadmiar w obu osiach, translate przesuwa X i Y. 50% = środek. */}
       {heroImage ? (
@@ -78,8 +78,8 @@ export function Hero() {
           DOKŁADNIE takim samym jak kontener sekcji „Fakty i liczby"
           (stats-and-clients.tsx), więc lewa krawędź tekstu pokrywa się z lewą
           krawędzią liczb poniżej. Zdjęcie full-bleed (absolute) bez zmian. */}
-      <div className="relative z-[2] w-full px-6 pt-8 pb-16 md:px-12 lg:px-16 lg:py-[50px]">
-        <div className="max-w-2xl lg:ml-[39px]">
+      <div className="relative z-[2] w-full px-6 pt-8 pb-16 md:px-12 lg:px-16 lg:py-[10px]">
+        <div className="max-w-2xl lg:ml-[71px]">
           <Label>{HERO.eyebrow}</Label>
 
           <h1 className="font-display text-ink mt-[18px] text-[clamp(2.415rem,9.66vw,6.0375rem)] leading-[0.92] font-semibold tracking-[-0.03em] uppercase">
