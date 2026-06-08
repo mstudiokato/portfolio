@@ -145,7 +145,7 @@ export const STATS: Array<{
     prefix: "Ponad",
   },
   { value: site.numbers.projects, label: "Zrealizowanych projektów" },
-  { value: site.numbers.clients, label: "Zadowolonych klientów" },
+  { value: site.numbers.clients, label: "Zadowolonych klientów", prefix: "Ponad" },
 ];
 
 /** Kolor etykiet pod liczbami — z panelu (Liczby → Kolor tekstu), domyślnie biały. */
