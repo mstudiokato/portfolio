@@ -1,0 +1,25 @@
+{
+  "category": "plakaty",
+  "title": "International Biathlon Union",
+  "showDescription": true,
+  "descriptionColor": "white",
+  "order": 3,
+  "images": [
+    {
+      "src": "/galerie/international-biathlon-union/images/0/src.jpg",
+      "alt": "Plakat eventowy dla International Biathlon Union (IBU) "
+    },
+    {
+      "src": "/galerie/international-biathlon-union/images/1/src.jpg",
+      "alt": "Plakat eventowy dla International Biathlon Union (IBU) "
+    },
+    {
+      "src": "/galerie/international-biathlon-union/images/2/src.jpg",
+      "alt": "Plakat eventowy dla International Biathlon Union (IBU) "
+    },
+    {
+      "src": "/galerie/international-biathlon-union/images/3/src.jpg",
+      "alt": "Plakat eventowy dla International Biathlon Union (IBU) "
+    }
+  ]
+}
