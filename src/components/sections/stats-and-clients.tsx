@@ -29,8 +29,8 @@ export function StatsAndClients() {
       id="klienci"
       size="sm"
       tone="section"
+      className="pt-[calc(var(--spacing-section-sm)*0.45)] lg:pt-[calc(var(--spacing-section-sm)*0.45_-_10px)]"
       style={{
-        paddingTop: "calc(var(--spacing-section-sm) * 0.45)",
         paddingBottom: "calc(var(--spacing-section-sm) * 0.45)",
       }}
     >
