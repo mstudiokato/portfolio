@@ -37,7 +37,7 @@ export function Hero() {
   const scale = HERO.scale ?? 100;
 
   return (
-    <section className="bg-navy relative isolate flex min-h-[510px] items-start overflow-hidden lg:min-h-[calc(75vh-80px)] lg:items-center">
+    <section className="bg-navy relative isolate flex min-h-0 items-start overflow-hidden md:min-h-[510px] lg:min-h-[calc(75vh-80px)] lg:items-center">
       {/* Tło — zdjęcie (za treścią). Kadr przez transform translate()+scale():
           zoom daje nadmiar w obu osiach, translate przesuwa X i Y. 50% = środek. */}
       {heroImage ? (
