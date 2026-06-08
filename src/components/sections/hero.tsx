@@ -82,33 +82,33 @@ export function Hero() {
         <div className="max-w-2xl">
           <Label>{HERO.eyebrow}</Label>
 
-          <h1 className="font-display text-ink mt-4 text-[clamp(2.1rem,8.4vw,5.25rem)] leading-[0.92] font-semibold tracking-[-0.03em] uppercase">
+          <h1 className="font-display text-ink mt-[18px] text-[clamp(2.415rem,9.66vw,6.0375rem)] leading-[0.92] font-semibold tracking-[-0.03em] uppercase">
             Michał
             <br />
             Stężały
           </h1>
 
-          <p className="font-display text-ink mt-4 text-[clamp(1.05rem,0.875rem_+_0.84vw,1.4rem)] leading-[1.15] font-semibold tracking-[-0.01em]">
+          <p className="font-display text-ink mt-[18px] text-[clamp(1.2075rem,1.00625rem_+_0.966vw,1.61rem)] leading-[1.15] font-semibold tracking-[-0.01em]">
             Senior Graphic Designer
             <br />
             <span className="text-lime">for Sport &amp; Business</span>
           </p>
 
-          <p className="text-[0.7875rem] text-ink/85 mt-4 max-w-xl leading-relaxed text-balance lg:text-[0.875rem]">
+          <p className="text-[0.906rem] text-ink/85 mt-[18px] max-w-xl leading-relaxed text-balance lg:text-[1.006rem]">
             {replaceWidows(HERO.subline.replace("{lata}", String(years)))}
           </p>
 
-          <div className="mt-6">
+          <div className="mt-[28px]">
             <Button
               href="/projekty"
               variant="primary"
               className="w-full uppercase sm:w-auto"
               style={{
-                fontSize: "0.9rem",
-                paddingLeft: "1.35rem",
-                paddingRight: "1.35rem",
-                paddingTop: "0.675rem",
-                paddingBottom: "0.675rem",
+                fontSize: "1.035rem",
+                paddingLeft: "1.553rem",
+                paddingRight: "1.553rem",
+                paddingTop: "0.776rem",
+                paddingBottom: "0.776rem",
               }}
             >
               Zobacz moje projekty ↗
