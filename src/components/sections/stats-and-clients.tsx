@@ -35,14 +35,14 @@ export function StatsAndClients() {
       }}
     >
       <div className="px-6 md:px-12 lg:px-16">
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-8">
+        <div className="grid gap-10 xl:grid-cols-12 xl:items-center xl:gap-8">
           {/* LICZBY — eyebrow + bloki z separatorami; wycentrowane i wertykalnie
               wyrównane do logów, dosunięte do linii podziału (lg:pr-4). */}
-          <div className="min-w-0 lg:col-span-6 lg:flex lg:flex-col lg:border-r lg:pr-4 lg:pl-[71px]">
+          <div className="min-w-0 xl:col-span-6 xl:flex xl:flex-col xl:items-end xl:border-r xl:pr-8">
             <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
               — Fakty i liczby
             </Label>
-            <dl className="mt-6 flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-start md:gap-0 lg:mt-5">
+            <dl className="mt-6 flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-start md:gap-0 xl:mt-5">
               {stats.map((s, i) => (
                 <Fragment key={s.label}>
                   {i > 0 ? (
@@ -99,7 +99,7 @@ export function StatsAndClients() {
           </div>
 
           {/* LOGOTYPY — eyebrow + marquee 56px bez ramek, separatory pionowe. */}
-          <div className="border-border mt-2 min-w-0 border-t pt-8 lg:col-span-6 lg:mt-0 lg:border-t-0 lg:pt-0">
+          <div className="border-border mt-2 min-w-0 border-t pt-8 xl:col-span-6 xl:mt-0 xl:border-t-0 xl:pt-0">
             <p className="text-label text-muted uppercase">
               Współpracowałem min. z
             </p>

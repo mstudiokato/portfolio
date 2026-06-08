@@ -79,7 +79,7 @@ export function Hero() {
           (stats-and-clients.tsx), więc lewa krawędź tekstu pokrywa się z lewą
           krawędzią liczb poniżej. Zdjęcie full-bleed (absolute) bez zmian. */}
       <div className="relative z-[2] w-full px-6 pt-8 pb-16 md:px-12 lg:px-16 lg:py-[10px]">
-        <div className="max-w-2xl lg:ml-[71px]">
+        <div className="max-w-2xl xl:ml-[135px]">
           <Label>{HERO.eyebrow}</Label>
 
           <h1 className="font-display text-ink mt-[18px] text-[clamp(2.415rem,9.66vw,6.0375rem)] leading-[0.92] font-semibold tracking-[-0.03em] uppercase">
