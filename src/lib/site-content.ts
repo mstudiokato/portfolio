@@ -144,8 +144,12 @@ export const STATS: Array<{
     label: "doświadczenia\nprojektowego",
     prefix: "Ponad",
   },
-  { value: site.numbers.projects, label: "Zrealizowanych projektów" },
-  { value: site.numbers.clients, label: "Zadowolonych klientów", prefix: "Ponad" },
+  { value: site.numbers.projects, label: "Zrealizowanych\nprojektów" },
+  {
+    value: site.numbers.clients,
+    label: "Zadowolonych\nklientów",
+    prefix: "Ponad",
+  },
 ];
 
 /** Kolor etykiet pod liczbami — z panelu (Liczby → Kolor tekstu), domyślnie biały. */

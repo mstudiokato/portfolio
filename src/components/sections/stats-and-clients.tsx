@@ -42,22 +42,31 @@ export function StatsAndClients() {
             <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
               — Fakty i liczby
             </Label>
-            <dl className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:flex sm:items-center sm:justify-center sm:gap-0 lg:mt-5">
+            <dl className="mt-6 flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-center md:gap-0 lg:mt-5">
               {stats.map((s, i) => (
                 <Fragment key={s.label}>
                   {i > 0 ? (
                     <div
                       aria-hidden="true"
-                      className="bg-border hidden h-16 w-px self-center sm:mx-4 sm:block lg:mx-[0.8rem] lg:h-[3.2rem]"
+                      className="bg-border hidden h-16 w-px self-center md:mx-4 md:block lg:mx-[0.8rem] lg:h-[3.2rem]"
                     />
                   ) : null}
                   <div className="flex flex-col items-center text-center">
-                    {/* Opcjonalny prefix (np. „Ponad") — mniejszy tekst nad liczbą. */}
+                    {/* Prefix (np. „Ponad") nad liczbą. Gdy brak — pusty placeholder
+                        o tych samych klasach rezerwuje wiersz, by górne krawędzie
+                        wszystkich liczb były wyrównane (md:items-start). */}
                     {s.prefix ? (
                       <span className="text-muted mb-1 text-[0.65rem] font-semibold tracking-[0.16em] uppercase lg:mb-0.5 lg:text-[0.52rem]">
                         {s.prefix}
                       </span>
-                    ) : null}
+                    ) : (
+                      <span
+                        aria-hidden="true"
+                        className="mb-1 text-[0.65rem] font-semibold tracking-[0.16em] uppercase lg:mb-0.5 lg:text-[0.52rem]"
+                      >
+                        &nbsp;
+                      </span>
+                    )}
                     {/* Liczba (limonkowa). Stat z jednostką (np. „14 LAT") jest
                         wyeksponowany jako główny akcent — większy font, jednostka
                         w tym samym kolorze obok liczby. */}
