@@ -14,11 +14,8 @@ const CF_BEACON_TOKEN = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
 
 // JSON-LD schema.org — Person (autor) + ProfessionalService. URL produkcyjny.
 const SITE_URL = "https://michal-stezaly.pl";
-// UWAGA: profile sameAs są PLACEHOLDERAMI do potwierdzenia (brak źródła w danych).
-const SAME_AS = [
-  "https://www.linkedin.com/in/michalstezaly/",
-  "https://www.behance.net/michalstezaly",
-];
+// Potwierdzony profil LinkedIn. (Behance usunięty — niepotwierdzony przez właściciela.)
+const SAME_AS = ["https://www.linkedin.com/in/michal-stezaly/"];
 const JSON_LD = {
   "@context": "https://schema.org",
   "@graph": [

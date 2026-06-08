@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/layout";
 import { Button } from "@/components/ui/button";
 import { MainNav } from "@/components/main-nav";
+import { LinkedinIcon } from "@/components/linkedin-icon";
 import { CONTACT } from "@/lib/site-content";
 
 export function SiteHeader() {
@@ -22,6 +23,15 @@ export function SiteHeader() {
           <Button href="/#kontakt" variant="primary" size="sm">
             Porozmawiajmy ↗
           </Button>
+          <a
+            href="https://www.linkedin.com/in/michal-stezaly/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn — Michał Stężały"
+            className="text-ink hover:text-lime transition-colors"
+          >
+            <LinkedinIcon size={22} />
+          </a>
         </div>
       </Container>
     </header>

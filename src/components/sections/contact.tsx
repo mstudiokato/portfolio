@@ -2,6 +2,7 @@ import { Container, Section } from "@/components/ui/layout";
 import { H2, Body, Label } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/contact-form";
+import { LinkedinIcon } from "@/components/linkedin-icon";
 import { CONTACT } from "@/lib/site-content";
 
 /**
@@ -40,6 +41,20 @@ export function Contact() {
                   className="hover:text-lime"
                 >
                   {CONTACT.phone}
+                </a>
+              </Body>
+            </div>
+            <div>
+              <Label className="text-muted">LinkedIn</Label>
+              <Body className="mt-2">
+                <a
+                  href="https://www.linkedin.com/in/michal-stezaly/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lime inline-flex items-center gap-2"
+                >
+                  <LinkedinIcon size={18} />
+                  Znajdź mnie na LinkedIn ↗
                 </a>
               </Body>
             </div>
