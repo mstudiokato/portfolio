@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Container, Section } from "@/components/ui/layout";
 import { H2, Label } from "@/components/ui/typography";
-import { TESTIMONIALS, EYEBROW_COLOR } from "@/lib/site-content";
+import { TESTIMONIALS } from "@/lib/site-content";
 import { textColorHex } from "@/lib/text-color";
 import { replaceWidows } from "@/lib/text";
 
@@ -33,9 +33,7 @@ export function Testimonials() {
       style={{ paddingTop: "calc(var(--spacing-section-tight) * 0.7)" }}
     >
       <Container>
-        <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
-          — CO MÓWIĄ ZLECENIODAWCY
-        </Label>
+        <Label>— CO MÓWIĄ ZLECENIODAWCY</Label>
         <H2 className="mt-4 max-w-2xl">Rekomendacje</H2>
 
         <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">

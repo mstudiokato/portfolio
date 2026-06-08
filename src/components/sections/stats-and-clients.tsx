@@ -3,12 +3,7 @@ import Image from "next/image";
 import { Section } from "@/components/ui/layout";
 import { Label } from "@/components/ui/typography";
 import { CountUp } from "@/components/count-up";
-import {
-  STATS,
-  CREDIBILITY,
-  STATS_LABEL_COLOR,
-  EYEBROW_COLOR,
-} from "@/lib/site-content";
+import { STATS, CREDIBILITY, STATS_LABEL_COLOR } from "@/lib/site-content";
 import { textColorHex } from "@/lib/text-color";
 
 /**
@@ -35,13 +30,11 @@ export function StatsAndClients() {
       }}
     >
       <div className="px-6 md:px-12 lg:px-16">
-        <div className="grid gap-10 xl:grid-cols-[auto_1fr] xl:items-center xl:gap-0">
+        <div className="grid gap-10 xl:grid-cols-[auto_1fr] xl:items-start xl:gap-0">
           {/* LICZBY — eyebrow + bloki z separatorami; wycentrowane i wertykalnie
               wyrównane do logów, dosunięte do linii podziału (lg:pr-4). */}
           <div className="min-w-0 text-center xl:flex xl:flex-col xl:items-start xl:ml-[var(--hero-left-offset)] xl:pr-8 xl:text-left">
-            <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
-              — Fakty i liczby
-            </Label>
+            <Label>— Fakty i liczby</Label>
             <dl className="mt-6 flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-center md:gap-0 xl:mt-5">
               {stats.map((s, i) => (
                 <Fragment key={s.label}>
@@ -99,10 +92,8 @@ export function StatsAndClients() {
           </div>
 
           {/* LOGOTYPY — eyebrow + marquee 56px bez ramek, separatory pionowe. */}
-          <div className="border-border mt-2 min-w-0 border-t pt-8 xl:mt-0 xl:border-t-0 xl:border-l xl:pt-0 xl:pl-8">
-            <p className="text-label text-muted uppercase">
-              Współpracowałem min. z
-            </p>
+          <div className="border-border mt-2 min-w-0 border-t pt-8 xl:mt-0 xl:flex xl:flex-col xl:border-t-0 xl:border-l xl:pt-0 xl:pl-8">
+            <Label>— Klienci, dla których projektowałem</Label>
             <div className="marquee-mask relative mt-6 w-full max-w-full overflow-hidden">
               <ul className="marquee-track flex w-max items-center">
                 {marqueeClients.map((c, i) => (

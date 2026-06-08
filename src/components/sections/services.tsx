@@ -1,6 +1,6 @@
 import { Container, Section } from "@/components/ui/layout";
 import { H2, H4, Body, Label } from "@/components/ui/typography";
-import { SERVICES, EYEBROW_COLOR } from "@/lib/site-content";
+import { SERVICES } from "@/lib/site-content";
 import { textColorHex } from "@/lib/text-color";
 import { replaceWidows } from "@/lib/text";
 
@@ -14,8 +14,6 @@ import { replaceWidows } from "@/lib/text";
  * (inline style, domyślnie biały). Eyebrow: kolor z ustawień strony.
  */
 export function Services() {
-  const eyebrowColor = textColorHex(EYEBROW_COLOR, "lime");
-
   return (
     <Section
       id="specjalizacje"
@@ -24,7 +22,7 @@ export function Services() {
       style={{ paddingTop: "calc(var(--spacing-section-tight) * 0.7)" }}
     >
       <Container>
-        <Label style={{ color: eyebrowColor }}>— CO PROJEKTUJĘ</Label>
+        <Label>— CO PROJEKTUJĘ</Label>
         <H2 className="mt-4 max-w-2xl">Od social media do brandingu</H2>
 
         <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
