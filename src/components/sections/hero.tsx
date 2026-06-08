@@ -78,7 +78,7 @@ export function Hero() {
           DOKŁADNIE takim samym jak kontener sekcji „Fakty i liczby"
           (stats-and-clients.tsx), więc lewa krawędź tekstu pokrywa się z lewą
           krawędzią liczb poniżej. Zdjęcie full-bleed (absolute) bez zmian. */}
-      <div className="relative z-[2] w-full px-6 pt-8 pb-16 md:px-12 lg:px-16 lg:pt-4 lg:pb-2">
+      <div className="relative z-[2] w-full px-6 pt-8 pb-16 md:px-12 lg:px-16 lg:pt-4 lg:pb-[50px]">
         <div className="max-w-2xl">
           <Label>{HERO.eyebrow}</Label>
 
