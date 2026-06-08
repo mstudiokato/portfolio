@@ -38,11 +38,11 @@ export function StatsAndClients() {
         <div className="grid gap-10 xl:grid-cols-[auto_1fr] xl:items-center xl:gap-0">
           {/* LICZBY — eyebrow + bloki z separatorami; wycentrowane i wertykalnie
               wyrównane do logów, dosunięte do linii podziału (lg:pr-4). */}
-          <div className="min-w-0 xl:flex xl:flex-col xl:items-start xl:ml-[135px] xl:pr-8">
+          <div className="min-w-0 text-center xl:flex xl:flex-col xl:items-start xl:ml-[var(--hero-left-offset)] xl:pr-8 xl:text-left">
             <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
               — Fakty i liczby
             </Label>
-            <dl className="mt-6 flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-start md:gap-0 xl:mt-5">
+            <dl className="mt-6 flex flex-col items-center gap-6 md:flex-row md:items-start md:justify-center md:gap-0 xl:mt-5">
               {stats.map((s, i) => (
                 <Fragment key={s.label}>
                   {i > 0 ? (

@@ -82,6 +82,11 @@
 
 :root {
   color-scheme: dark;
+  /* Wspólne wcięcie lewe (desktop/xl) — JEDNO źródło dla hero i bloku liczb.
+     Zmiana tej wartości rusza oba bloki razem → ich lewe krawędzie nigdy się
+     nie rozjadą (px-16 64px + ten offset = ta sama pionowa linia na każdej
+     szerokości desktopu). Patrz hero.tsx i stats-and-clients.tsx (xl:ml-[var(...)]). */
+  --hero-left-offset: 135px;
 }
 
 html {
