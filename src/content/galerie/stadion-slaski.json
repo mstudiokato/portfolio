@@ -1,0 +1,33 @@
+{
+  "category": "plakaty",
+  "title": "Stadion Śląski",
+  "showDescription": false,
+  "descriptionColor": "white",
+  "order": 1,
+  "images": [
+    {
+      "src": "/galerie/stadion-slaski/images/0/src.jpg",
+      "alt": "Plakat eventowy Stadionu Śląskiego — materiał promocyjny"
+    },
+    {
+      "src": "/galerie/stadion-slaski/images/1/src.jpg",
+      "alt": "Plakat biznesowy Stadionu Śląskiego — materiał promocyjny"
+    },
+    {
+      "src": "/galerie/stadion-slaski/images/2/src.jpg",
+      "alt": "Plakat sportowy Stadionu Śląskiego — materiał promocyjny"
+    },
+    {
+      "src": "/galerie/stadion-slaski/images/3/src.jpg",
+      "alt": "Plakat eventowy Stadionu Śląskiego — materiał promocyjny"
+    },
+    {
+      "src": "/galerie/stadion-slaski/images/4/src.jpg",
+      "alt": "Plakat eventowy Stadionu Śląskiego — materiał promocyjny"
+    },
+    {
+      "src": "/galerie/stadion-slaski/images/5/src.jpg",
+      "alt": "Plakat eventowy Stadionu Śląskiego — materiał promocyjny"
+    }
+  ]
+}
