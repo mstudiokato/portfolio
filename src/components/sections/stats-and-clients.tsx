@@ -30,8 +30,8 @@ export function StatsAndClients() {
       size="sm"
       tone="section"
       style={{
-        paddingTop: "calc(var(--spacing-section-sm) * 0.85)",
-        paddingBottom: "calc(var(--spacing-section-sm) * 0.85)",
+        paddingTop: "calc(var(--spacing-section-sm) * 0.6)",
+        paddingBottom: "calc(var(--spacing-section-sm) * 0.6)",
       }}
     >
       <div className="px-6 md:px-12 lg:px-16">
