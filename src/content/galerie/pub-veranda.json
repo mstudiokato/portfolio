@@ -1,0 +1,29 @@
+{
+  "category": "plakaty",
+  "title": "Pub Veranda",
+  "showDescription": true,
+  "descriptionColor": "white",
+  "order": 5,
+  "images": [
+    {
+      "src": "/galerie/pub-veranda/images/0/src.jpg",
+      "alt": "Plakat eventowy Pub Veranda — materiał promocyjny wydarzeń"
+    },
+    {
+      "src": "/galerie/pub-veranda/images/1/src.jpg",
+      "alt": "Plakat eventowy Pub Veranda — materiał promocyjny wydarzeń"
+    },
+    {
+      "src": "/galerie/pub-veranda/images/2/src.jpg",
+      "alt": "Plakat eventowy Pub Veranda — materiał promocyjny wydarzeń"
+    },
+    {
+      "src": "/galerie/pub-veranda/images/3/src.jpg",
+      "alt": "Plakat eventowy Pub Veranda — materiał promocyjny wydarzeń"
+    },
+    {
+      "src": "/galerie/pub-veranda/images/4/src.jpg",
+      "alt": "Plakat eventowy Pub Veranda — materiał promocyjny wydarzeń"
+    }
+  ]
+}
