@@ -155,7 +155,10 @@ function parseProject(fileName: string): Project {
     coverExists: publicAssetExists(cover.src),
     gallery: toImageRefArray(data.gallery),
     featured: data.featured === true,
-    order: data.order !== undefined ? Number(data.order) : undefined,
+    order:
+      data.order !== undefined && Number(data.order) !== 0
+        ? Number(data.order)
+        : undefined,
     seo: {
       title: str(seoData.title),
       description: str(seoData.description),

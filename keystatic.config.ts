@@ -83,8 +83,8 @@ export default config({
         order: fields.integer({
           label: "Kolejność",
           description:
-            "Liczba określa kolejność na liście. 1 = pierwszy, 2 = drugi itd.",
-          defaultValue: 99,
+            "Kolejność wyświetlania (1 = pierwszy). Zostaw puste lub 0 = sortowanie po roku (nowe pierwsze). Projekty z numerem zawsze przed projektami bez numeru. Aktualna lista projektów z pozycjami: sprawdź /api/projekty-kolejnosc",
+          defaultValue: 0,
         }),
         featured: fields.checkbox({
           label: "Wyróżniony na stronie głównej",
