@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getFeaturedProjects, getGalleryItems } from "@/lib/content";
 import { EYEBROW_COLOR } from "@/lib/site-content";
 import { textColorHex } from "@/lib/text-color";
@@ -52,7 +53,9 @@ export default function ProjektyPage() {
           <H2 className="mt-4">Projekty</H2>
 
           <div className="mt-8">
-            <GalleryArchive items={gallery} />
+            <Suspense fallback={null}>
+              <GalleryArchive items={gallery} />
+            </Suspense>
           </div>
         </Container>
       </Section>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import type { GalleryItem, GalleryImage } from "@/lib/content";
@@ -241,10 +242,27 @@ export function GalleryArchive({ items }: { items: GalleryItem[] }) {
     items.some((i) => i.category === slug),
   );
   const reduce = useReducedMotion();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const [active, setActive] = useState<GalleryCategorySlug>(
-    presentCategories[0] ?? "social-media",
-  );
+  // Aktywny filtr trzymany w URL (?kategoria=<slug>) zamiast lokalnego stanu —
+  // odświeżenie strony i linki bezpośrednie (/projekty?kategoria=plakaty)
+  // zachowują wybór. Brak/niepoprawny param → pierwsza dostępna kategoria.
+  const defaultCategory: GalleryCategorySlug =
+    presentCategories[0] ?? "social-media";
+  const param = searchParams.get("kategoria");
+  const active: GalleryCategorySlug =
+    param && (presentCategories as readonly string[]).includes(param)
+      ? (param as GalleryCategorySlug)
+      : defaultCategory;
+
+  // Klik filtra → zapis do URL (shallow, bez przeładowania; bez skoku scrolla).
+  const setActive = (slug: GalleryCategorySlug) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("kategoria", slug);
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   const filtered = items.filter((i) => i.category === active);
 
