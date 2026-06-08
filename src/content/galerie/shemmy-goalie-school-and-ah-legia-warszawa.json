@@ -1,0 +1,25 @@
+{
+  "category": "plakaty",
+  "title": "Shemmy Goalie School & AH Legia Warszawa",
+  "showDescription": true,
+  "descriptionColor": "white",
+  "order": 2,
+  "images": [
+    {
+      "src": "/galerie/shemmy-goalie-school-and-ah-legia-warszawa/images/0/src.jpg",
+      "alt": "Plakat promocyjny Shemmy Goalie School — materiały dla hokejowego campu"
+    },
+    {
+      "src": "/galerie/shemmy-goalie-school-and-ah-legia-warszawa/images/1/src.jpg",
+      "alt": "Plakat promocyjny Shemmy Goalie School — materiały dla hokejowego campu"
+    },
+    {
+      "src": "/galerie/shemmy-goalie-school-and-ah-legia-warszawa/images/2/src.jpg",
+      "alt": "Plakat promocyjny Shemmy Goalie School — materiały dla hokejowego campu"
+    },
+    {
+      "src": "/galerie/shemmy-goalie-school-and-ah-legia-warszawa/images/3/src.jpg",
+      "alt": "Plakat promocyjny - Akademia Hokejowa Legia Warszawa"
+    }
+  ]
+}
