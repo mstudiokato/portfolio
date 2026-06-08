@@ -35,10 +35,10 @@ export function StatsAndClients() {
       }}
     >
       <div className="px-6 md:px-12 lg:px-16">
-        <div className="grid gap-10 xl:grid-cols-12 xl:items-center xl:gap-8">
+        <div className="grid gap-10 xl:grid-cols-[auto_1fr] xl:items-center xl:gap-0">
           {/* LICZBY — eyebrow + bloki z separatorami; wycentrowane i wertykalnie
               wyrównane do logów, dosunięte do linii podziału (lg:pr-4). */}
-          <div className="min-w-0 xl:col-span-6 xl:flex xl:flex-col xl:items-end xl:border-r xl:pr-8">
+          <div className="min-w-0 xl:flex xl:flex-col xl:items-start xl:ml-[135px] xl:pr-8">
             <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
               — Fakty i liczby
             </Label>
@@ -99,7 +99,7 @@ export function StatsAndClients() {
           </div>
 
           {/* LOGOTYPY — eyebrow + marquee 56px bez ramek, separatory pionowe. */}
-          <div className="border-border mt-2 min-w-0 border-t pt-8 xl:col-span-6 xl:mt-0 xl:border-t-0 xl:pt-0">
+          <div className="border-border mt-2 min-w-0 border-t pt-8 xl:mt-0 xl:border-t-0 xl:border-l xl:pt-0 xl:pl-8">
             <p className="text-label text-muted uppercase">
               Współpracowałem min. z
             </p>
