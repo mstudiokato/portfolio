@@ -82,27 +82,34 @@ export function Hero() {
         <div className="max-w-2xl">
           <Label>{HERO.eyebrow}</Label>
 
-          <h1 className="font-display text-ink mt-6 text-[clamp(3rem,12vw,7.5rem)] leading-[0.92] font-semibold tracking-[-0.03em] uppercase">
+          <h1 className="font-display text-ink mt-4 text-[clamp(2.1rem,8.4vw,5.25rem)] leading-[0.92] font-semibold tracking-[-0.03em] uppercase">
             Michał
             <br />
             Stężały
           </h1>
 
-          <p className="font-display text-ink text-h3 mt-6">
+          <p className="font-display text-ink mt-4 text-[clamp(1.05rem,0.875rem_+_0.84vw,1.4rem)] leading-[1.15] font-semibold tracking-[-0.01em]">
             Senior Graphic Designer
             <br />
             <span className="text-lime">for Sport &amp; Business</span>
           </p>
 
-          <p className="text-body-lg text-ink/85 mt-6 max-w-xl leading-relaxed text-balance lg:text-[1.25rem]">
+          <p className="text-[0.7875rem] text-ink/85 mt-4 max-w-xl leading-relaxed text-balance lg:text-[0.875rem]">
             {replaceWidows(HERO.subline.replace("{lata}", String(years)))}
           </p>
 
-          <div className="mt-9">
+          <div className="mt-6">
             <Button
               href="/projekty"
               variant="primary"
               className="w-full uppercase sm:w-auto"
+              style={{
+                fontSize: "0.9rem",
+                paddingLeft: "1.35rem",
+                paddingRight: "1.35rem",
+                paddingTop: "0.675rem",
+                paddingBottom: "0.675rem",
+              }}
             >
               Zobacz moje projekty ↗
             </Button>
