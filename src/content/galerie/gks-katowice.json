@@ -1,0 +1,41 @@
+{
+  "category": "plakaty",
+  "title": "GKS Katowice",
+  "showDescription": false,
+  "descriptionColor": "white",
+  "order": 4,
+  "images": [
+    {
+      "src": "/galerie/gks-katowice/images/0/src.jpg",
+      "alt": "Plakat GKS Katowice — materiały promocyjne meczów i akcji społecznych"
+    },
+    {
+      "src": "/galerie/gks-katowice/images/1/src.jpg",
+      "alt": "Plakat GKS Katowice — materiały promocyjne meczów i akcji społecznych"
+    },
+    {
+      "src": "/galerie/gks-katowice/images/2/src.jpg",
+      "alt": "Plakat GKS Katowice — materiały promocyjne meczów i akcji społecznych"
+    },
+    {
+      "src": "/galerie/gks-katowice/images/3/src.jpg",
+      "alt": "Plakat GKS Katowice — materiały promocyjne meczów i akcji społecznych"
+    },
+    {
+      "src": "/galerie/gks-katowice/images/4/src.jpg",
+      "alt": "Plakat GKS Katowice — materiały promocyjne meczów i akcji społecznych"
+    },
+    {
+      "src": "/galerie/gks-katowice/images/5/src.jpg",
+      "alt": "Plakat GKS Katowice — materiały promocyjne meczów i akcji społecznych"
+    },
+    {
+      "src": "/galerie/gks-katowice/images/6/src.jpg",
+      "alt": "Plakat GKS Katowice — materiały promocyjne meczów i akcji społecznych"
+    },
+    {
+      "src": "/galerie/gks-katowice/images/7/src.jpg",
+      "alt": "Plakat GKS Katowice — materiały promocyjne meczów i akcji społecznych"
+    }
+  ]
+}
