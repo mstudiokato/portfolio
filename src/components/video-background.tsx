@@ -66,7 +66,7 @@ export function VideoBackground({ heroImage, posX, posY, scale }: Props) {
           style={{ objectPosition: "50% 20%" }}
           onError={() => setVideoError(true)}
         >
-          <source src="/hero-video.mp4" type="video/mp4" />
+          <source src="/video_heroV2.mp4" type="video/mp4" />
         </video>
       ) : null}
     </div>
