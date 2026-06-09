@@ -7,6 +7,7 @@
         "Członek Zarządu - Polski Związek Piłki Nożnej"
       ],
       "quote": "Fachowiec. Bez dwóch zdań. Polecam! 👍",
+      "quoteColor": "white",
       "image": "/opinie/items/0/image.png"
     },
     {
@@ -16,21 +17,25 @@
         "Prezes Zarządu - ŁKS Łódź"
       ],
       "quote": "Zawsze zaangażowany na 100% Kreatywny i nietuzinkowy. Wszystkie aktywności na czas. Praca z Michałem to czysta przyjemność.",
+      "quoteColor": "white",
       "image": "/opinie/items/1/image.png"
     },
     {
       "name": "Dagmara Gerasimuk",
       "roles": [
-        "IBU Development Director"
+        "Development Director - International Biathlon Union"
       ],
-      "quote": "Opinia w trakcie uzupełniania."
+      "quote": "Terminowy, kreatywny i profesjonalny. Wielokrotnie udowodnił, że można na niego liczyć nawet w sytuacjach wymagających wsparcia na ostatnią chwilę.",
+      "quoteColor": "white",
+      "image": "/opinie/items/2/image.png"
     },
     {
       "name": "Monika Płaczkowska",
       "roles": [
         "Superbet"
       ],
-      "quote": "Opinia w trakcie uzupełniania."
+      "quote": "Opinia w trakcie uzupełniania.",
+      "quoteColor": "white"
     }
   ]
 }
