@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { heroTransform } from "@/lib/hero-style";
@@ -26,8 +26,16 @@ type Props = {
 export function VideoBackground({ heroImage, posX, posY, scale }: Props) {
   const reduce = useReducedMotion();
   const [videoError, setVideoError] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const showVideo = !reduce && !videoError;
+
+  // Fallback dla Android Chrome (Data Saver / oszczędzanie baterii potrafi
+  // blokować autoPlay): po zamontowaniu wymuszamy play(), błąd ignorujemy.
+  useEffect(() => {
+    if (!showVideo) return;
+    videoRef.current?.play().catch(() => {});
+  }, [showVideo]);
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden">
@@ -58,10 +66,12 @@ export function VideoBackground({ heroImage, posX, posY, scale }: Props) {
       {showVideo ? (
         <div className="absolute inset-0 z-[1]">
           <video
+            ref={videoRef}
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
             aria-hidden="true"
             className="h-full w-full object-cover [object-position:60%_20%] lg:[object-position:50%_20%]"
             onError={() => setVideoError(true)}
