@@ -7,44 +7,44 @@
   "order": 4,
   "images": [
     {
-      "src": "/galerie/shark-social/01.jpg",
-      "alt": "Shark Entertainment — 1"
+      "src": "/galerie/shark-social/images/0/src.jpg",
+      "alt": "Shark Entertainment — 10"
     },
     {
-      "src": "/galerie/shark-social/02.jpg",
-      "alt": "Shark Entertainment — 2"
-    },
-    {
-      "src": "/galerie/shark-social/03.jpg",
-      "alt": "Shark Entertainment — 3"
-    },
-    {
-      "src": "/galerie/shark-social/04.jpg",
-      "alt": "Shark Entertainment — 4"
-    },
-    {
-      "src": "/galerie/shark-social/05.jpg",
-      "alt": "Shark Entertainment — 5"
-    },
-    {
-      "src": "/galerie/shark-social/06.jpg",
-      "alt": "Shark Entertainment — 6"
-    },
-    {
-      "src": "/galerie/shark-social/07.jpg",
-      "alt": "Shark Entertainment — 7"
-    },
-    {
-      "src": "/galerie/shark-social/08.jpg",
-      "alt": "Shark Entertainment — 8"
-    },
-    {
-      "src": "/galerie/shark-social/09.jpg",
+      "src": "/galerie/shark-social/images/1/src.jpg",
       "alt": "Shark Entertainment — 9"
     },
     {
-      "src": "/galerie/shark-social/10.jpg",
-      "alt": "Shark Entertainment — 10"
+      "src": "/galerie/shark-social/images/2/src.jpg",
+      "alt": "Shark Entertainment — 4"
+    },
+    {
+      "src": "/galerie/shark-social/images/3/src.jpg",
+      "alt": "Shark Entertainment — 1"
+    },
+    {
+      "src": "/galerie/shark-social/images/4/src.jpg",
+      "alt": "Shark Entertainment — 2"
+    },
+    {
+      "src": "/galerie/shark-social/images/5/src.jpg",
+      "alt": "Shark Entertainment — 3"
+    },
+    {
+      "src": "/galerie/shark-social/images/6/src.jpg",
+      "alt": "Shark Entertainment — 5"
+    },
+    {
+      "src": "/galerie/shark-social/images/7/src.jpg",
+      "alt": "Shark Entertainment — 6"
+    },
+    {
+      "src": "/galerie/shark-social/images/8/src.jpg",
+      "alt": "Shark Entertainment — 7"
+    },
+    {
+      "src": "/galerie/shark-social/images/9/src.jpg",
+      "alt": "Shark Entertainment — 8"
     }
   ]
 }
