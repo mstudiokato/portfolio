@@ -68,6 +68,29 @@ export const metadata: Metadata = {
   description: SEO_DEFAULT.defaultDescription,
   applicationName: SITE_NAME,
   authors: [{ name: "Michał Stężały" }],
+  // OG image — absolutny URL wymagany przez social media (FB/LinkedIn/X).
+  openGraph: {
+    type: "website",
+    locale: "pl_PL",
+    siteName: SITE_NAME,
+    title: SEO_DEFAULT.defaultTitle,
+    description: SEO_DEFAULT.defaultDescription,
+    url: "https://michal-stezaly.pl",
+    images: [
+      {
+        url: "https://michal-stezaly.pl/ogImage.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Michał Stężały — Senior Graphic Designer for Sport & Business",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SEO_DEFAULT.defaultTitle,
+    description: SEO_DEFAULT.defaultDescription,
+    images: ["https://michal-stezaly.pl/ogImage.jpg"],
+  },
   // Favicon (monogram MS) — pliki w /public, generowane z favicon.svg (sharp).
   icons: {
     icon: [
