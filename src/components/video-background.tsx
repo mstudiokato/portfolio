@@ -63,7 +63,7 @@ export function VideoBackground({ heroImage, posX, posY, scale }: Props) {
             loop
             playsInline
             aria-hidden="true"
-            className="h-full w-full object-cover [object-position:30%_20%] lg:[object-position:50%_20%]"
+            className="h-full w-full object-cover [object-position:60%_20%] lg:[object-position:50%_20%]"
             onError={() => setVideoError(true)}
           >
             <source src={VIDEO_SRC} type="video/mp4" />
