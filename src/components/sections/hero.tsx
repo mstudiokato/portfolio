@@ -1,12 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/typography";
 import { yearsOfExperience } from "@/lib/experience";
 import { HERO } from "@/lib/site-content";
-import { HERO_OVERLAY, heroTransform } from "@/lib/hero-style";
+import { HERO_OVERLAY } from "@/lib/hero-style";
 import { replaceWidows } from "@/lib/text";
+import { VideoBackground } from "@/components/video-background";
 
 /**
  * HERO (masterprompt sek. 8.1). Zdjęcie projektanta jako pełne tło sekcji
@@ -38,27 +38,15 @@ export function Hero() {
 
   return (
     <section className="bg-navy relative isolate flex min-h-0 items-start overflow-hidden md:min-h-[510px] lg:min-h-[calc(75vh-80px)] lg:items-center">
-      {/* Tło — zdjęcie (za treścią). Kadr przez transform translate()+scale():
-          zoom daje nadmiar w obu osiach, translate przesuwa X i Y. 50% = środek. */}
-      {heroImage ? (
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <div
-            id="hero-photo-scale"
-            className="relative h-full w-full"
-            style={{ transform: heroTransform(posX, posY, scale) }}
-          >
-            <Image
-              id="hero-photo"
-              src={heroImage}
-              alt="Michał Stężały — projektant graficzny dla sportu i biznesu"
-              fill
-              sizes="100vw"
-              priority
-              className="object-cover"
-            />
-          </div>
-        </div>
-      ) : null}
+      {/* Tło — video z fallbackiem na zdjęcie (client component VideoBackground).
+          Video: autoPlay/muted/loop/playsInline, fallback gdy prefers-reduced-motion
+          lub błąd ładowania. Zdjęcie zawsze wyrenderowane pod spodem. */}
+      <VideoBackground
+        heroImage={heroImage}
+        posX={posX}
+        posY={posY}
+        scale={scale}
+      />
 
       {/* Overlay gradientowy nad zdjęciem, pod treścią (FIX 2: z-index 1). */}
       <div
