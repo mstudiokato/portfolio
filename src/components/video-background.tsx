@@ -63,6 +63,7 @@ export function VideoBackground({ heroImage, posX, posY, scale }: Props) {
           playsInline
           aria-hidden="true"
           className="absolute inset-0 z-[1] h-full w-full object-cover"
+          style={{ objectPosition: "50% 20%" }}
           onError={() => setVideoError(true)}
         >
           <source src="/hero-video.mp4" type="video/mp4" />
