@@ -1,23 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { heroTransform } from "@/lib/hero-style";
 
 /**
- * Tło hero — video (autoPlay/muted/loop) z fallbackiem na zdjęcie.
- * Wyodrębniony jako "use client" bo server component (hero.tsx) nie może
- * obsługiwać autoPlay ani hooków React.
+ * Tło hero — crossfade video loop z fallbackiem na zdjęcie.
  *
- * Priorytet wyświetlania:
- *   1. Video — gdy plik dostępny i !prefers-reduced-motion
- *   2. Zdjęcie — zawsze renderowane jako baza (fallback przy błędzie video
- *      lub prefers-reduced-motion: reduce)
+ * Dwa elementy <video> (refA, refB) nałożone absolutnie. Gdy aktywne video
+ * zbliża się do końca (currentTime > duration - 1s), drugie video startuje
+ * od 0 i fade-in przez 1s CSS transition. W każdej chwili jedno ma opacity:1,
+ * drugie opacity:0. Brak skoku na granicy pętli.
  *
- * Zdjęcie jest zawsze wyrenderowane pod spodem (zapobiega migotaniu gdy
- * video jeszcze się ładuje). Video nakłada się na zdjęcie.
+ * Mobile (< lg): wrapper video przesunięty -20px w lewo (twarz lepiej wykadrowana).
+ * prefers-reduced-motion / onError → fallback na zdjęcie.
  */
+
+const VIDEO_SRC = "/video_heroV3b.mp4";
+
 type Props = {
   heroImage: string | null;
   posX: number;
@@ -25,17 +26,47 @@ type Props = {
   scale: number;
 };
 
+const VIDEO_STYLE: React.CSSProperties = {
+  objectPosition: "50% 20%",
+  transition: "opacity 1s ease-in-out",
+};
+
 export function VideoBackground({ heroImage, posX, posY, scale }: Props) {
   const reduce = useReducedMotion();
   const [videoError, setVideoError] = useState(false);
+  // Które video jest aktualnie aktywne (widoczne, opacity:1)
+  const [active, setActive] = useState<"A" | "B">("A");
+  const refA = useRef<HTMLVideoElement>(null);
+  const refB = useRef<HTMLVideoElement>(null);
+  // Blokada — chroni przed podwójnym triggerem crossfade w tym samym cyklu
+  const fadingRef = useRef(false);
 
-  // Video widoczne gdy: brak preferencji redukcji ruchu + brak błędu ładowania.
   const showVideo = !reduce && !videoError;
+
+  // Wywoływane przez onTimeUpdate aktywnego video.
+  // Gdy zostaje < 1s do końca → startuje drugie video i swap opacity.
+  const handleTimeUpdate = useCallback((which: "A" | "B") => {
+    // Reaguj tylko na aktywne video (ignoruj idle)
+    if (which !== (fadingRef.current ? null : active)) return;
+    const cur = which === "A" ? refA.current : refB.current;
+    const nxt = which === "A" ? refB.current : refA.current;
+    if (!cur || !nxt) return;
+    const { currentTime, duration } = cur;
+    if (!duration || currentTime < duration - 1) return;
+    if (fadingRef.current) return;
+
+    fadingRef.current = true;
+    nxt.currentTime = 0;
+    nxt.play().catch(() => {});
+    setActive(which === "A" ? "B" : "A");
+    // Odblokuj po zakończeniu crossfade (1s + margines)
+    setTimeout(() => { fadingRef.current = false; }, 1300);
+  }, [active]);
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden">
       {/* Zdjęcie — zawsze jako baza (fallback + tło podczas ładowania video).
-          id="hero-photo-scale" / id="hero-photo" zachowane dla admina (/admin/hero-editor). */}
+          id="hero-photo-scale" / id="hero-photo" zachowane dla admina. */}
       {heroImage ? (
         <div
           id="hero-photo-scale"
@@ -54,20 +85,40 @@ export function VideoBackground({ heroImage, posX, posY, scale }: Props) {
         </div>
       ) : null}
 
-      {/* Video — na wierzchu zdjęcia; ukryte gdy błąd lub prefers-reduced-motion. */}
+      {/* Para video (crossfade). Mobile: -20px w lewo; lg+: bez przesunięcia. */}
       {showVideo ? (
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-hidden="true"
-          className="absolute inset-0 z-[1] h-full w-full object-cover"
-          style={{ objectPosition: "50% 20%" }}
-          onError={() => setVideoError(true)}
-        >
-          <source src="/video_heroV2.mp4" type="video/mp4" />
-        </video>
+        <div className="absolute inset-0 z-[1] -translate-x-5 lg:translate-x-0">
+          {/* Video A — startuje autoPlay */}
+          <video
+            ref={refA}
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ ...VIDEO_STYLE, opacity: active === "A" ? 1 : 0 }}
+            onTimeUpdate={() => handleTimeUpdate("A")}
+            onError={() => setVideoError(true)}
+          >
+            <source src={VIDEO_SRC} type="video/mp4" />
+          </video>
+
+          {/* Video B — idle na starcie, przejmuje po pierwszym crossfade */}
+          <video
+            ref={refB}
+            muted
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ ...VIDEO_STYLE, opacity: active === "B" ? 1 : 0 }}
+            onTimeUpdate={() => handleTimeUpdate("B")}
+            onError={() => setVideoError(true)}
+          >
+            <source src={VIDEO_SRC} type="video/mp4" />
+          </video>
+        </div>
       ) : null}
     </div>
   );
