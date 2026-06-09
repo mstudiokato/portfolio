@@ -7,27 +7,35 @@
   "order": 7,
   "images": [
     {
-      "src": "/galerie/coerver-social/01.jpg",
-      "alt": "Coerver Coaching Poland — 1"
+      "src": "/galerie/coerver-social/images/0/src.jpg",
+      "alt": "Coerver Coaching Poland - grafika promująca jubileusz"
     },
     {
-      "src": "/galerie/coerver-social/02.jpg",
-      "alt": "Coerver Coaching Poland — 2"
+      "src": "/galerie/coerver-social/images/1/src.jpg",
+      "alt": "Coerver Coaching Poland - grafika promująca obozy sportowe"
     },
     {
-      "src": "/galerie/coerver-social/03.jpg",
+      "src": "/galerie/coerver-social/images/2/src.jpg",
       "alt": "Coerver Coaching Poland — 3"
     },
     {
-      "src": "/galerie/coerver-social/04.jpg",
+      "src": "/galerie/coerver-social/images/3/src.jpg",
       "alt": "Coerver Coaching Poland — 4"
     },
     {
-      "src": "/galerie/coerver-social/05.jpg",
+      "src": "/galerie/coerver-social/images/4/src.jpg",
+      "alt": "Coerver Coaching Poland — 2"
+    },
+    {
+      "src": "/galerie/coerver-social/images/5/src.jpg",
+      "alt": "Coerver Coaching Poland — 1"
+    },
+    {
+      "src": "/galerie/coerver-social/images/6/src.jpg",
       "alt": "Coerver Coaching Poland — 5"
     },
     {
-      "src": "/galerie/coerver-social/06.jpg",
+      "src": "/galerie/coerver-social/images/7/src.jpg",
       "alt": "Coerver Coaching Poland — 6"
     }
   ]
