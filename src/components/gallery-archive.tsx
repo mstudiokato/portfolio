@@ -266,25 +266,18 @@ export function GalleryArchive({ items }: { items: GalleryItem[] }) {
 
   const filtered = items.filter((i) => i.category === active);
 
-  // ── Scroll-reveal variants ──────────────────────────────────────────────
-  // Kontener orkiestruje stagger (staggerChildren). Każdy blok galerii wchodzi
-  // fade-up (y 30→0, opacity 0→1). prefers-reduced-motion → natychmiastowe
-  // pojawienie się (duration 0, y 0).
-  const listVariants = {
-    hidden: {},
-    visible: {
-      transition: { staggerChildren: reduce ? 0 : 0.08 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: reduce ? 0 : 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      // "easeOut" as const — TypeScript wymaga literału, nie ogólnego string.
-      transition: { duration: reduce ? 0 : 0.45, ease: "easeOut" as const },
-    },
+  // ── Scroll-reveal per-item ─────────────────────────────────────────────
+  // whileInView na KAŻDYM kaflu osobno — każdy triggeruje animację gdy sam
+  // wchodzi w viewport. Poprzednia wersja (whileInView na kontenerze +
+  // staggerChildren) odpalała animację raz przy wejściu kontenera → tylko
+  // pierwsze kafle były widoczne w tym momencie, reszta bez animacji.
+  // Stagger usunięty — przy per-item podejściu efekt naturalnego cascade
+  // wynika ze scroll velocity, bez potrzeby sztucznego opóźnienia.
+  const revealInitial = { opacity: reduce ? 1 : 0, y: reduce ? 0 : 30 };
+  const revealAnimate = { opacity: 1, y: 0 };
+  const revealTransition = {
+    duration: reduce ? 0 : 0.45,
+    ease: "easeOut" as const,
   };
 
   return (
@@ -318,19 +311,19 @@ export function GalleryArchive({ items }: { items: GalleryItem[] }) {
             transition={{ duration: reduce ? 0 : 0.2 }}
           >
             {filtered.length > 0 ? (
-              <motion.div
-                className="divide-border divide-y"
-                variants={listVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-              >
+              <div className="divide-border divide-y">
                 {filtered.map((item) => (
-                  <motion.div key={item.slug} variants={itemVariants}>
+                  <motion.div
+                    key={item.slug}
+                    initial={revealInitial}
+                    whileInView={revealAnimate}
+                    transition={revealTransition}
+                    viewport={{ once: true, margin: "-80px" }}
+                  >
                     <GalleryBlock item={item} />
                   </motion.div>
                 ))}
-              </motion.div>
+              </div>
             ) : (
               <p className="text-muted text-body py-10">
                 Brak prac w tej kategorii.
