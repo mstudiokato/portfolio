@@ -126,7 +126,7 @@ function GalleryBlock({ item }: { item: GalleryItem }) {
     "absolute top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-navy/70 text-ink text-xl backdrop-blur transition-colors hover:bg-navy sm:flex";
 
   return (
-    <article className="py-12 first:pt-0">
+    <article>
       {/* Nagłówek bloku (P4): KLIENT + nazwa po lewej, data po prawej. */}
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -315,6 +315,7 @@ export function GalleryArchive({ items }: { items: GalleryItem[] }) {
                 {filtered.map((item) => (
                   <motion.div
                     key={item.slug}
+                    className="py-12 first:pt-0"
                     initial={revealInitial}
                     whileInView={revealAnimate}
                     transition={revealTransition}
