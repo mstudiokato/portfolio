@@ -45,14 +45,17 @@ export function Testimonials() {
               {/* Lewa — pionowe zdjęcie 100×140 (FIX 3). Wrapper relative+overflow-hidden:
                   zdjęcie skaluje się przy hover karty (scale 1.05), gradient od dołu
                   wtapia zdjęcie w tło karty (#152238). prefers-reduced-motion → bez ruchu. */}
+              {/* Shadow na kontenerze (overflow-hidden nie przycina box-shadow
+                  elementu, tylko jego dzieci). Transition-shadow osobno od
+                  transition-transform na Image — oba 300ms ease-out. */}
               {t.imageExists && t.image ? (
-                <div className="relative h-[140px] w-[100px] shrink-0 overflow-hidden rounded-[4px]">
+                <div className="relative h-[140px] w-[100px] shrink-0 overflow-hidden rounded-[4px] transition-shadow duration-300 ease-out group-hover:shadow-[0_8px_24px_rgba(0,0,0,0.45)]">
                   <Image
                     src={t.image}
                     alt={t.name}
                     fill
                     sizes="100px"
-                    className="object-cover object-top transition-transform duration-300 ease-in-out group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
+                    className="object-cover object-top transition-transform duration-300 ease-out group-hover:scale-[1.08] motion-reduce:transform-none motion-reduce:transition-none"
                   />
                   {/* Gradient od dołu — zdjęcie wtapia się w tło karty. */}
                   <div

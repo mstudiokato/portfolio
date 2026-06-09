@@ -266,6 +266,27 @@ export function GalleryArchive({ items }: { items: GalleryItem[] }) {
 
   const filtered = items.filter((i) => i.category === active);
 
+  // ── Scroll-reveal variants ──────────────────────────────────────────────
+  // Kontener orkiestruje stagger (staggerChildren). Każdy blok galerii wchodzi
+  // fade-up (y 30→0, opacity 0→1). prefers-reduced-motion → natychmiastowe
+  // pojawienie się (duration 0, y 0).
+  const listVariants = {
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: reduce ? 0 : 0.08 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: reduce ? 0 : 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      // "easeOut" as const — TypeScript wymaga literału, nie ogólnego string.
+      transition: { duration: reduce ? 0 : 0.45, ease: "easeOut" as const },
+    },
+  };
+
   return (
     <div>
       {/* Filtry — chipy design-systemu (pill, active = lime fill). Bez „Wszystkie". */}
@@ -286,7 +307,7 @@ export function GalleryArchive({ items }: { items: GalleryItem[] }) {
         </ul>
       </nav>
 
-      {/* Bloki — płynne przejście przy zmianie filtra, bez przeładowania. */}
+      {/* Bloki — płynne przejście przy zmianie filtra + scroll-reveal fade-up. */}
       <div className="mt-8">
         <AnimatePresence mode="wait">
           <motion.div
@@ -297,11 +318,19 @@ export function GalleryArchive({ items }: { items: GalleryItem[] }) {
             transition={{ duration: reduce ? 0 : 0.2 }}
           >
             {filtered.length > 0 ? (
-              <div className="divide-border divide-y">
+              <motion.div
+                className="divide-border divide-y"
+                variants={listVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+              >
                 {filtered.map((item) => (
-                  <GalleryBlock key={item.slug} item={item} />
+                  <motion.div key={item.slug} variants={itemVariants}>
+                    <GalleryBlock item={item} />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             ) : (
               <p className="text-muted text-body py-10">
                 Brak prac w tej kategorii.
