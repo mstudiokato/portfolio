@@ -20,15 +20,21 @@ export function SiteHeader() {
         <MainNav />
 
         <div className="flex items-center gap-5">
-          <Button href="/#kontakt" variant="primary" size="sm">
+          <Button
+            href="/#kontakt"
+            variant="primary"
+            size="sm"
+            className="py-1 whitespace-nowrap md:py-2"
+          >
             Porozmawiajmy ↗
           </Button>
+          {/* LinkedIn widoczny tylko na lg+ — na mobile jest w hamburger menu. */}
           <a
             href="https://www.linkedin.com/in/michal-stezaly/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn — Michał Stężały"
-            className="text-ink hover:text-lime transition-colors"
+            className="text-ink hover:text-lime hidden transition-colors lg:block"
           >
             <LinkedinIcon size={22} />
           </a>

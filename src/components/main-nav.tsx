@@ -3,14 +3,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { LinkedinIcon } from "@/components/linkedin-icon";
 
 /**
  * Główna nawigacja (N1, N2). Aktywny link dostaje limonkowe podkreślenie
  * (border-bottom 2px), na desktopie podkreślenie pojawia się też na hover.
  * Aktywność: trasa /projekty wg usePathname; linki sekcji (#…) przez scroll-spy
- * (IntersectionObserver) na stronie głównej. Sekcje O MNIE / KLIENCI / PROCES
- * nie istnieją — nie ma ich w menu.
+ * (IntersectionObserver) na stronie głównej.
+ *
+ * Na mobile (< lg): hamburgera + bottom sheet z linkami i LinkedIn.
+ * Na lg+: klasyczna pozioma nawigacja; hamburger i sheet ukryte.
  */
 
 type NavItem = { label: string; href: string; sectionId?: string };
@@ -30,6 +34,24 @@ export function MainNav() {
   const pathname = usePathname();
   const onHome = pathname === "/";
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+
+  // Zamknij menu klawiszem Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  // Zablokuj scroll body gdy menu otwarte
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   useEffect(() => {
     if (!onHome) {
@@ -62,28 +84,119 @@ export function MainNav() {
   }
 
   return (
-    <nav aria-label="Główna nawigacja" className="hidden lg:block">
-      <ul className="text-caption text-ink flex items-center gap-7 tracking-wide uppercase">
-        {NAV.map((item) => {
-          const active = isActive(item);
-          return (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                aria-current={active ? "page" : undefined}
-                // Jednolity styl: off-white, medium. Aktywny = tylko limonkowe
-                // podkreślenie (tekst koloru NIE zmienia); hover dokłada podkreślenie.
-                className={cn(
-                  "hover:border-lime inline-block border-b-2 border-transparent pb-1 font-medium transition-colors",
-                  active && "border-lime",
-                )}
+    <>
+      {/* ── Desktop nav (lg+) ─────────────────────────────────────────── */}
+      <nav aria-label="Główna nawigacja" className="hidden lg:block">
+        <ul className="text-caption text-ink flex items-center gap-7 tracking-wide uppercase">
+          {NAV.map((item) => {
+            const active = isActive(item);
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  // Jednolity styl: off-white, medium. Aktywny = tylko limonkowe
+                  // podkreślenie (tekst koloru NIE zmienia); hover dokłada podkreślenie.
+                  className={cn(
+                    "hover:border-lime inline-block border-b-2 border-transparent pb-1 font-medium transition-colors",
+                    active && "border-lime",
+                  )}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      {/* ── Hamburger button (mobile < lg) ────────────────────────────── */}
+      <button
+        className="text-ink hover:text-lime p-1 transition-colors lg:hidden"
+        onClick={() => setOpen(true)}
+        aria-label="Otwórz menu nawigacji"
+        aria-expanded={open}
+        aria-controls="mobile-menu"
+      >
+        <Menu size={24} />
+      </button>
+
+      {/* ── Mobile bottom sheet ───────────────────────────────────────── */}
+      {open && (
+        <>
+          {/* Backdrop — klik zamyka */}
+          <div
+            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Sheet */}
+          <div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu nawigacji"
+            className="bg-navy border-border fixed right-0 bottom-0 left-0 z-[70] rounded-t-2xl border-t px-6 pt-6 pb-10"
+          >
+            {/* Nagłówek sheetu */}
+            <div className="mb-6 flex items-center justify-between">
+              <span className="text-muted text-caption uppercase tracking-wide">
+                Menu
+              </span>
+              <button
+                onClick={() => setOpen(false)}
+                className="text-ink hover:text-lime p-1 transition-colors"
+                aria-label="Zamknij menu"
               >
-                {item.label}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
+                <X size={22} />
+              </button>
+            </div>
+
+            {/* Linki nawigacyjne */}
+            <nav aria-label="Menu mobilne">
+              <ul className="flex flex-col">
+                {NAV.map((item) => {
+                  const active = isActive(item);
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          "font-display block py-3 text-2xl font-semibold tracking-tight transition-colors",
+                          active
+                            ? "text-lime"
+                            : "text-ink hover:text-lime",
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+
+            {/* LinkedIn na dole sheetu */}
+            <div className="border-border mt-8 border-t pt-6">
+              <a
+                href="https://www.linkedin.com/in/michal-stezaly/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn — Michał Stężały"
+                className="text-ink hover:text-lime flex items-center gap-3 transition-colors"
+                onClick={() => setOpen(false)}
+              >
+                <LinkedinIcon size={20} />
+                <span className="text-caption font-medium uppercase tracking-wide">
+                  LinkedIn
+                </span>
+              </a>
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 }
