@@ -318,7 +318,7 @@ export function GalleryArchive({ items }: { items: GalleryItem[] }) {
                     initial={revealInitial}
                     whileInView={revealAnimate}
                     transition={revealTransition}
-                    viewport={{ once: true, margin: "-80px" }}
+                    viewport={{ once: false, margin: "-80px", amount: 0.2 }}
                   >
                     <GalleryBlock item={item} />
                   </motion.div>
