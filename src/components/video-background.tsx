@@ -51,17 +51,19 @@ export function VideoBackground({ heroImage, posX, posY, scale }: Props) {
         </div>
       ) : null}
 
-      {/* Video — prosty natywny loop. Mobile: -20px w lewo. */}
+      {/* Video — prosty natywny loop. Wrapper wypełnia całą sekcję (inset-0),
+          bez translate — na mobile kadr przesuwamy w lewo przez object-position
+          (30% zamiast 50%), więc video nadal pokrywa pełną szerokość, w tym
+          prawą krawędź (wcześniej -translate-x-5 odsłaniał zdjęcie po prawej). */}
       {showVideo ? (
-        <div className="absolute inset-0 z-[1] -translate-x-5 lg:translate-x-0">
+        <div className="absolute inset-0 z-[1]">
           <video
             autoPlay
             muted
             loop
             playsInline
             aria-hidden="true"
-            className="h-full w-full object-cover"
-            style={{ objectPosition: "50% 20%" }}
+            className="h-full w-full object-cover [object-position:30%_20%] lg:[object-position:50%_20%]"
             onError={() => setVideoError(true)}
           >
             <source src={VIDEO_SRC} type="video/mp4" />
