@@ -3,32 +3,32 @@
     {
       "title": "Social Media Systems",
       "description": "Spójne systemy graficzne do mediów społecznościowych: szablony, key visuale i adaptacje, które trzymają markę rozpoznawalną w każdym poście.",
-      "color": "lime"
+      "color": "white"
     },
     {
       "title": "Event Branding",
       "description": "Identyfikacja i oprawa wizualna wydarzeń sportowych i biznesowych — od key visuala po materiały na obiekcie i w kanałach cyfrowych.",
-      "color": "lime"
+      "color": "white"
     },
     {
       "title": "Sponsorship & Pitch Decks",
       "description": "Pitch decki i prezentacje sponsorskie — czytelne, dopracowane, gotowe do wysłania klientowi.",
-      "color": "lime"
+      "color": "white"
     },
     {
       "title": "Identity & Campaign Design",
       "description": "Systemy identyfikacji i kampanie wizualne działające spójnie na wielu nośnikach.",
-      "color": "lime"
+      "color": "white"
     },
     {
       "title": "DTP & Print Design",
       "description": "Projekty graficzne przygotowane do produkcji drukarskiej — od koncepcji po pliki gotowe do druku.",
-      "color": "lime"
+      "color": "white"
     },
     {
       "title": "Produkcja wizualna z AI",
       "description": "AI do przyspieszenia produkcji wizualnej: moodboardy, eksploracja wariantów i materiały pomocnicze — przy zachowaniu kontroli jakości po stronie projektanta.",
-      "color": "lime"
+      "color": "white"
     }
   ]
 }
