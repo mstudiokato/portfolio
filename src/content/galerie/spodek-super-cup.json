@@ -7,36 +7,32 @@
   "order": 1,
   "images": [
     {
-      "src": "/galerie/spodek-super-cup/01.jpg",
-      "alt": "Spodek Super Cup — grafika social media 1"
-    },
-    {
-      "src": "/galerie/spodek-super-cup/02.jpg",
-      "alt": "Spodek Super Cup — grafika social media 2"
-    },
-    {
-      "src": "/galerie/spodek-super-cup/03.jpg",
-      "alt": "Spodek Super Cup — grafika social media 3"
-    },
-    {
-      "src": "/galerie/spodek-super-cup/04.png",
-      "alt": "Spodek Super Cup — grafika social media 4"
-    },
-    {
-      "src": "/galerie/spodek-super-cup/05.jpg",
+      "src": "/galerie/spodek-super-cup/images/0/src.jpg",
       "alt": "Spodek Super Cup — grafika social media 5"
     },
     {
-      "src": "/galerie/spodek-super-cup/06.jpg",
-      "alt": "Spodek Super Cup — grafika social media 6"
+      "src": "/galerie/spodek-super-cup/images/1/src.jpg",
+      "alt": "Spodek Super Cup — grafika social media 3"
     },
     {
-      "src": "/galerie/spodek-super-cup/07.jpg",
-      "alt": "Spodek Super Cup — grafika social media 7"
-    },
-    {
-      "src": "/galerie/spodek-super-cup/08.jpg",
+      "src": "/galerie/spodek-super-cup/images/2/src.jpg",
       "alt": "Spodek Super Cup — grafika social media 8"
+    },
+    {
+      "src": "/galerie/spodek-super-cup/images/3/src.png",
+      "alt": "Spodek Super Cup — grafika social media 4"
+    },
+    {
+      "src": "/galerie/spodek-super-cup/images/4/src.jpg",
+      "alt": "Spodek Super Cup — grafika social media 2"
+    },
+    {
+      "src": "/galerie/spodek-super-cup/images/5/src.jpg",
+      "alt": "Spodek Super Cup — grafika social media 1"
+    },
+    {
+      "src": "/galerie/spodek-super-cup/images/6/src.jpg",
+      "alt": "Spodek Super Cup — grafika social media 6"
     }
   ]
 }
