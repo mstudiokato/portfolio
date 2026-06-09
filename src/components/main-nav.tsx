@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { LinkedinIcon } from "@/components/linkedin-icon";
@@ -10,11 +11,14 @@ import { LinkedinIcon } from "@/components/linkedin-icon";
 /**
  * Główna nawigacja (N1, N2). Aktywny link dostaje limonkowe podkreślenie
  * (border-bottom 2px), na desktopie podkreślenie pojawia się też na hover.
- * Aktywność: trasa /projekty wg usePathname; linki sekcji (#…) przez scroll-spy
- * (IntersectionObserver) na stronie głównej.
  *
  * Na mobile (< lg): hamburgera + bottom sheet z linkami i LinkedIn.
  * Na lg+: klasyczna pozioma nawigacja; hamburger i sheet ukryte.
+ *
+ * WAŻNE: bottom sheet i backdrop renderowane przez createPortal do document.body
+ * — omija stacking context tworzony przez backdrop-filter: blur() na <header>,
+ * który łamie position:fixed u dzieci (fixed byłoby relative do headera,
+ * nie do viewportu).
  */
 
 type NavItem = { label: string; href: string; sectionId?: string };
@@ -35,6 +39,12 @@ export function MainNav() {
   const onHome = pathname === "/";
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  // Portal wymaga document.body — dostępne tylko po montażu (nie na serwerze).
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Zamknij menu klawiszem Escape
   useEffect(() => {
@@ -64,7 +74,6 @@ export function MainNav() {
       .filter((el): el is HTMLElement => el !== null);
     if (els.length === 0) return;
 
-    // Wąskie pasmo w środku ekranu — sekcja je przecinająca jest „aktywna".
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -95,8 +104,6 @@ export function MainNav() {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  // Jednolity styl: off-white, medium. Aktywny = tylko limonkowe
-                  // podkreślenie (tekst koloru NIE zmienia); hover dokłada podkreślenie.
                   className={cn(
                     "hover:border-lime inline-block border-b-2 border-transparent pb-1 font-medium transition-colors",
                     active && "border-lime",
@@ -121,82 +128,85 @@ export function MainNav() {
         <Menu size={24} />
       </button>
 
-      {/* ── Mobile bottom sheet ───────────────────────────────────────── */}
-      {open && (
-        <>
-          {/* Backdrop — klik zamyka */}
-          <div
-            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
-            onClick={() => setOpen(false)}
-            aria-hidden="true"
-          />
+      {/* ── Mobile bottom sheet — portal do body (fix: backdrop-filter
+          na <header> łamie position:fixed u dzieci) ─────────────────── */}
+      {open && mounted &&
+        createPortal(
+          <>
+            {/* Backdrop — klik zamyka */}
+            <div
+              className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
+              onClick={() => setOpen(false)}
+              aria-hidden="true"
+            />
 
-          {/* Sheet */}
-          <div
-            id="mobile-menu"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Menu nawigacji"
-            className="bg-navy border-border fixed right-0 bottom-0 left-0 z-[70] rounded-t-2xl border-t px-6 pt-6 pb-10"
-          >
-            {/* Nagłówek sheetu */}
-            <div className="mb-6 flex items-center justify-between">
-              <span className="text-muted text-caption uppercase tracking-wide">
-                Menu
-              </span>
-              <button
-                onClick={() => setOpen(false)}
-                className="text-ink hover:text-lime p-1 transition-colors"
-                aria-label="Zamknij menu"
-              >
-                <X size={22} />
-              </button>
-            </div>
-
-            {/* Linki nawigacyjne */}
-            <nav aria-label="Menu mobilne">
-              <ul className="flex flex-col">
-                {NAV.map((item) => {
-                  const active = isActive(item);
-                  return (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        onClick={() => setOpen(false)}
-                        className={cn(
-                          "font-display block py-3 text-2xl font-semibold tracking-tight transition-colors",
-                          active
-                            ? "text-lime"
-                            : "text-ink hover:text-lime",
-                        )}
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-
-            {/* LinkedIn na dole sheetu */}
-            <div className="border-border mt-8 border-t pt-6">
-              <a
-                href="https://www.linkedin.com/in/michal-stezaly/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn — Michał Stężały"
-                className="text-ink hover:text-lime flex items-center gap-3 transition-colors"
-                onClick={() => setOpen(false)}
-              >
-                <LinkedinIcon size={20} />
-                <span className="text-caption font-medium uppercase tracking-wide">
-                  LinkedIn
+            {/* Sheet */}
+            <div
+              id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Menu nawigacji"
+              className="bg-navy border-border fixed right-0 bottom-0 left-0 z-[70] rounded-t-2xl border-t px-6 pt-6 pb-10"
+            >
+              {/* Nagłówek sheetu */}
+              <div className="mb-6 flex items-center justify-between">
+                <span className="text-muted text-caption uppercase tracking-wide">
+                  Menu
                 </span>
-              </a>
+                <button
+                  onClick={() => setOpen(false)}
+                  className="text-ink hover:text-lime p-1 transition-colors"
+                  aria-label="Zamknij menu"
+                >
+                  <X size={22} />
+                </button>
+              </div>
+
+              {/* Linki nawigacyjne */}
+              <nav aria-label="Menu mobilne">
+                <ul className="flex flex-col">
+                  {NAV.map((item) => {
+                    const active = isActive(item);
+                    return (
+                      <li key={item.href}>
+                        <Link
+                          href={item.href}
+                          onClick={() => setOpen(false)}
+                          className={cn(
+                            "font-display block py-3 text-2xl font-semibold tracking-tight transition-colors",
+                            active
+                              ? "text-lime"
+                              : "text-ink hover:text-lime",
+                          )}
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+
+              {/* LinkedIn na dole sheetu */}
+              <div className="border-border mt-8 border-t pt-6">
+                <a
+                  href="https://www.linkedin.com/in/michal-stezaly/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn — Michał Stężały"
+                  className="text-ink hover:text-lime flex items-center gap-3 transition-colors"
+                  onClick={() => setOpen(false)}
+                >
+                  <LinkedinIcon size={20} />
+                  <span className="text-caption font-medium uppercase tracking-wide">
+                    LinkedIn
+                  </span>
+                </a>
+              </div>
             </div>
-          </div>
-        </>
-      )}
+          </>,
+          document.body,
+        )}
     </>
   );
 }
