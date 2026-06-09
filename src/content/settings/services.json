@@ -2,27 +2,33 @@
   "items": [
     {
       "title": "Social Media Systems",
-      "description": "Spójne systemy graficzne do mediów społecznościowych: szablony, key visuale i adaptacje, które trzymają markę rozpoznawalną w każdym poście."
+      "description": "Spójne systemy graficzne do mediów społecznościowych: szablony, key visuale i adaptacje, które trzymają markę rozpoznawalną w każdym poście.",
+      "color": "lime"
     },
     {
       "title": "Event Branding",
-      "description": "Identyfikacja i oprawa wizualna wydarzeń sportowych i biznesowych — od key visuala po materiały na obiekcie i w kanałach cyfrowych."
+      "description": "Identyfikacja i oprawa wizualna wydarzeń sportowych i biznesowych — od key visuala po materiały na obiekcie i w kanałach cyfrowych.",
+      "color": "lime"
     },
     {
       "title": "Sponsorship & Pitch Decks",
-      "description": "Prezentacje sponsorskie i ofertowe, które porządkują argumenty i wyglądają na tyle dobrze, że pomagają domykać rozmowy."
+      "description": "Pitch decki i prezentacje sponsorskie — czytelne, dopracowane, gotowe do wysłania klientowi.",
+      "color": "lime"
     },
     {
       "title": "Identity & Campaign Design",
-      "description": "Systemy identyfikacji i kampanie wizualne działające spójnie na wielu nośnikach."
+      "description": "Systemy identyfikacji i kampanie wizualne działające spójnie na wielu nośnikach.",
+      "color": "lime"
     },
     {
       "title": "DTP & Print Design",
-      "description": "Projekty graficzne przygotowane do produkcji drukarskiej — od koncepcji po pliki gotowe do druku."
+      "description": "Projekty graficzne przygotowane do produkcji drukarskiej — od koncepcji po pliki gotowe do druku.",
+      "color": "lime"
     },
     {
       "title": "Produkcja wizualna z AI",
-      "description": "AI do przyspieszenia produkcji wizualnej: moodboardy, eksploracja wariantów i materiały pomocnicze — przy zachowaniu kontroli jakości po stronie projektanta."
+      "description": "AI do przyspieszenia produkcji wizualnej: moodboardy, eksploracja wariantów i materiały pomocnicze — przy zachowaniu kontroli jakości po stronie projektanta.",
+      "color": "lime"
     }
   ]
 }
