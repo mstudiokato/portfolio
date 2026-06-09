@@ -7,52 +7,52 @@
   "order": 5,
   "images": [
     {
-      "src": "/galerie/pzbiath-social/01.jpg",
-      "alt": "Polski Związek Biathlonu — 1"
+      "src": "/galerie/pzbiath-social/images/0/src.jpg",
+      "alt": "Polski Związek Biathlonu - Puchar Świata"
     },
     {
-      "src": "/galerie/pzbiath-social/02.jpg",
-      "alt": "Polski Związek Biathlonu — 2"
+      "src": "/galerie/pzbiath-social/images/1/src.jpg",
+      "alt": "Polski Związek Biathlonu - Puchar Świata"
     },
     {
-      "src": "/galerie/pzbiath-social/03.jpg",
-      "alt": "Polski Związek Biathlonu — 3"
-    },
-    {
-      "src": "/galerie/pzbiath-social/04.jpg",
-      "alt": "Polski Związek Biathlonu — 4"
-    },
-    {
-      "src": "/galerie/pzbiath-social/05.jpg",
+      "src": "/galerie/pzbiath-social/images/2/src.jpg",
       "alt": "Polski Związek Biathlonu — 5"
     },
     {
-      "src": "/galerie/pzbiath-social/06.jpg",
+      "src": "/galerie/pzbiath-social/images/3/src.jpg",
+      "alt": "Polski Związek Biathlonu — 1"
+    },
+    {
+      "src": "/galerie/pzbiath-social/images/4/src.jpg",
+      "alt": "Polski Związek Biathlonu — 4"
+    },
+    {
+      "src": "/galerie/pzbiath-social/images/5/src.jpg",
+      "alt": "Polski Związek Biathlonu - kurs sędziowski"
+    },
+    {
+      "src": "/galerie/pzbiath-social/images/6/src.jpg",
       "alt": "Polski Związek Biathlonu — 6"
     },
     {
-      "src": "/galerie/pzbiath-social/07.jpg",
-      "alt": "Polski Związek Biathlonu — 7"
-    },
-    {
-      "src": "/galerie/pzbiath-social/08.jpg",
+      "src": "/galerie/pzbiath-social/images/7/src.jpg",
       "alt": "Polski Związek Biathlonu — 8"
     },
     {
-      "src": "/galerie/pzbiath-social/09.jpg",
-      "alt": "Polski Związek Biathlonu — 9"
+      "src": "/galerie/pzbiath-social/images/8/src.jpg",
+      "alt": "Polski Związek Biathlonu — Biathlon Dla Każdego"
     },
     {
-      "src": "/galerie/pzbiath-social/10.jpg",
-      "alt": "Polski Związek Biathlonu — 10"
+      "src": "/galerie/pzbiath-social/images/9/src.jpg",
+      "alt": "Polski Związek Biathlonu — Biathlon Dla Każdego"
     },
     {
-      "src": "/galerie/pzbiath-social/11.jpg",
-      "alt": "Polski Związek Biathlonu — 11"
+      "src": "/galerie/pzbiath-social/images/10/src.jpg",
+      "alt": "Polski Związek Biathlonu — Biathlon Dla Każdego"
     },
     {
-      "src": "/galerie/pzbiath-social/12.jpg",
-      "alt": "Polski Związek Biathlonu — 12"
+      "src": "/galerie/pzbiath-social/images/11/src.jpg",
+      "alt": "Polski Związek Biathlonu — Biathlon Dla Każdego"
     }
   ]
 }
