@@ -95,7 +95,13 @@ export function StatsAndClients() {
           <div className="border-border mt-2 min-w-0 border-t pt-8 xl:mt-0 xl:flex xl:flex-col xl:border-t-0 xl:border-l xl:pt-0 xl:pl-8">
             <Label>— Pracowałem m.in. dla:</Label>
             <div className="marquee-mask relative mt-6 w-full max-w-full overflow-hidden">
-              <ul className="marquee-track flex w-max items-center">
+              {/* style width:max-content — bardziej kompatybilne z Safari niż
+                  Tailwind w-max (Safari czasem nie oblicza go przed pierwszą
+                  klatką animacji → dziury w marquee). */}
+              <ul
+                className="marquee-track flex items-center"
+                style={{ width: "max-content" }}
+              >
                 {marqueeClients.map((c, i) => (
                   <Fragment key={`${c.name}-${i}`}>
                     {/* Logo bez ramki, object-contain. BEZ stałej wysokości li —

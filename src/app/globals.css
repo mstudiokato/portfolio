@@ -119,6 +119,12 @@ body {
 }
 .marquee-track {
   animation: marquee 30s linear infinite;
+  /* GPU acceleration — Safari nie gubi klatek i poprawnie oblicza max-content
+     przed startem animacji (fix dziur w marquee na iOS Safari). */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 /* Pauza na hover TYLKO na urządzeniach wskaźnikowych (mysz). Na mobile dotyk
    nie zatrzymuje marquee (touch nie wyzwala :hover trwale → bug zatrzymania). */
@@ -126,6 +132,10 @@ body {
   .marquee-mask:hover .marquee-track {
     animation-play-state: paused;
   }
+}
+/* Płynne scrollowanie dotykowe na iOS (pomocnicze dla masek overflow). */
+.marquee-mask {
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Dostępność: widoczny focus na akcencie limonkowym (sek. 6.08). */
