@@ -315,7 +315,7 @@ export function GalleryArchive({ items }: { items: GalleryItem[] }) {
                 {filtered.map((item) => (
                   <motion.div
                     key={item.slug}
-                    className="py-12 first:pt-0"
+                    className="py-8 md:py-12 first:pt-0"
                     initial={revealInitial}
                     whileInView={revealAnimate}
                     transition={revealTransition}

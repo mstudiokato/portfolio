@@ -52,7 +52,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn(SECTION_SIZE[size], SECTION_TONE[tone], className)}
+      className={cn(id && "scroll-mt-16", SECTION_SIZE[size], SECTION_TONE[tone], className)}
       style={style}
     >
       {children}
