@@ -131,30 +131,46 @@ export function ContactForm({ calUrl }: { calUrl: string }) {
     return (
       <div
         role="status"
-        className="border-lime/40 bg-surface rounded-card flex flex-col gap-3 border p-6"
+        className="border-lime/30 bg-surface rounded-card flex h-auto max-w-md flex-col items-start gap-4 border p-6 text-left sm:p-8"
       >
-        <p className="font-display text-ink text-h4">
-          Dziękuję za wiadomość! Odezwę się najszybciej jak to możliwe —
-          zazwyczaj w ciągu 24 godzin.
-        </p>
-        <p className="text-caption text-muted">
-          Jeśli wolisz porozmawiać od razu —{" "}
-          <a
-            href={calConfigured ? calUrl : "#kontakt"}
-            target={calConfigured ? "_blank" : undefined}
-            rel={calConfigured ? "noopener noreferrer" : undefined}
-            className="text-lime hover:underline"
-          >
-            zarezerwuj termin poniżej
-          </a>
-          .
-        </p>
+        <span
+          aria-hidden
+          className="border-lime/40 text-lime flex h-9 w-9 items-center justify-center rounded-full border text-base"
+        >
+          ✓
+        </span>
+
+        <div className="flex flex-col gap-1.5">
+          <p className="font-display text-ink text-h4">
+            Dziękuję za wiadomość!
+          </p>
+          <p className="text-caption text-muted">
+            Odezwę się najszybciej jak to możliwe — zazwyczaj w ciągu 24 godzin.
+            Jeśli wolisz porozmawiać od razu,{" "}
+            <a
+              href={calConfigured ? calUrl : "#kontakt"}
+              target={calConfigured ? "_blank" : undefined}
+              rel={calConfigured ? "noopener noreferrer" : undefined}
+              className="text-lime hover:underline"
+            >
+              zarezerwuj termin poniżej
+            </a>
+            .
+          </p>
+        </div>
+
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="text-caption text-lime w-fit hover:underline"
+          className="group text-caption text-lime inline-flex w-fit items-center gap-1 hover:underline"
         >
-          Wyślij kolejną →
+          Wyślij kolejną
+          <span
+            aria-hidden
+            className="transition-transform group-hover:translate-x-0.5"
+          >
+            →
+          </span>
         </button>
       </div>
     );
