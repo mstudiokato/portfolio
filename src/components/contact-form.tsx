@@ -131,7 +131,7 @@ export function ContactForm({ calUrl }: { calUrl: string }) {
     return (
       <div
         role="status"
-        className="border-lime/30 bg-surface rounded-card flex h-auto max-w-md flex-col items-start gap-4 border p-6 text-left sm:p-8"
+        className="border-lime/30 bg-surface rounded-card flex max-w-md flex-col items-start gap-4 self-start border p-6 text-left sm:p-8"
       >
         <span
           aria-hidden
@@ -144,7 +144,7 @@ export function ContactForm({ calUrl }: { calUrl: string }) {
           <p className="font-display text-ink text-h4">
             Dziękuję za wiadomość!
           </p>
-          <p className="text-caption text-muted">
+          <p className="text-caption text-ink">
             Odezwę się najszybciej jak to możliwe — zazwyczaj w ciągu 24 godzin.
             Jeśli wolisz porozmawiać od razu,{" "}
             <a
@@ -158,20 +158,6 @@ export function ContactForm({ calUrl }: { calUrl: string }) {
             .
           </p>
         </div>
-
-        <button
-          type="button"
-          onClick={() => setStatus("idle")}
-          className="group text-caption text-lime inline-flex w-fit items-center gap-1 hover:underline"
-        >
-          Wyślij kolejną
-          <span
-            aria-hidden
-            className="transition-transform group-hover:translate-x-0.5"
-          >
-            →
-          </span>
-        </button>
       </div>
     );
   }
