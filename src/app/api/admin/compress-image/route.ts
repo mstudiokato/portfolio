@@ -26,6 +26,11 @@ function clamp(n: number, min: number, max: number, fallback: number): number {
 }
 
 export async function POST(request: Request) {
+  // Narzędzie panelu — niedostępne publicznie na produkcji (jak save-hero).
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   let form: FormData;
   try {
     form = await request.formData();

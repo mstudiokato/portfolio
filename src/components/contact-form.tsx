@@ -89,7 +89,15 @@ export function ContactForm({ calUrl }: { calUrl: string }) {
         }),
       });
 
-      if (res.ok) {
+      const data = (await res.json().catch(() => null)) as {
+        ok?: boolean;
+        delivered?: boolean;
+        error?: string;
+      } | null;
+
+      // Sukces tylko gdy serwer potwierdził dostarczenie. ok:true z delivered:false
+      // (np. tryb dev/preview bez klucza) NIE może pokazywać „Dziękuję".
+      if (res.ok && data?.delivered !== false) {
         setStatus("success");
         setValues({
           name: "",
@@ -103,12 +111,9 @@ export function ContactForm({ calUrl }: { calUrl: string }) {
         return;
       }
 
-      const data = (await res.json().catch(() => null)) as {
-        error?: string;
-      } | null;
       setServerError(
         data?.error ??
-          "Coś poszło nie tak. Napisz bezpośrednio na kontakt@michal-stezaly.pl",
+          "Coś poszło nie tak, spróbuj ponownie lub napisz bezpośrednio na kontakt@michal-stezaly.pl",
       );
       setStatus("error");
       window.turnstile?.reset();

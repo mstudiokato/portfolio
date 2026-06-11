@@ -1,6 +1,30 @@
 import type { NextConfig } from "next";
 
+// Nagłówki bezpieczeństwa (N2/S1). Wcześniej tylko w netlify.toml — Vercel tego
+// pliku nie czyta, więc trzymamy je tu, by działały na żywej stronie. CSP
+// przepuszcza: własną domenę, Cloudflare Turnstile (challenges.cloudflare.com),
+// Cloudflare Analytics (static.cloudflareinsights.com → beacon na
+// cloudflareinsights.com) oraz 'unsafe-inline' dla stylów (Tailwind) i skryptów
+// (hydracja Next.js). Lista skopiowana 1:1 z netlify.toml — nie zaostrzać.
+const CSP =
+  "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'";
+
+const SECURITY_HEADERS = [
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=()",
+  },
+  { key: "X-XSS-Protection", value: "1; mode=block" },
+  { key: "Content-Security-Policy", value: CSP },
+];
+
 const nextConfig: NextConfig = {
+  async headers() {
+    return [{ source: "/:path*", headers: SECURITY_HEADERS }];
+  },
   async redirects() {
     return [
       // Strony główne

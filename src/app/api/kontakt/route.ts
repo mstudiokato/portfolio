@@ -109,6 +109,14 @@ export async function POST(req: Request) {
   // Resend — wyślij tylko, gdy klucz skonfigurowany; inaczej no-op (dev/preview).
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
+    // Na produkcji brak klucza to błąd konfiguracji — nie wolno udawać sukcesu,
+    // bo mail nie dotrze, a użytkownik zobaczyłby „Dziękuję".
+    if (process.env.NODE_ENV === "production") {
+      console.error(
+        "[kontakt] Brak RESEND_API_KEY na produkcji — zwracam 500.",
+      );
+      return NextResponse.json({ error: GENERIC_ERROR }, { status: 500 });
+    }
     console.warn(
       "[kontakt] Brak RESEND_API_KEY — pomijam wysyłkę maila (tryb dev/preview).",
     );
