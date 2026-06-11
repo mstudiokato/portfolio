@@ -11,7 +11,7 @@ export function SiteHeader() {
       <Container className="flex items-center justify-between gap-6 py-4">
         <Link
           href="/"
-          className="font-display text-h4 font-semibold tracking-tight"
+          className="font-display text-h4 order-first font-semibold tracking-tight lg:order-none"
         >
           <span className="text-ink">Michał </span>
           <span className="text-lime">Stężały</span>
@@ -19,7 +19,9 @@ export function SiteHeader() {
 
         <MainNav />
 
-        <div className="flex items-center gap-5">
+        {/* Mobile: CTA przed hamburgerem (hamburger w MainNav zostaje skrajnie
+            po prawej). order-[-1] stawia ten blok przed hamburgerem; reset na lg. */}
+        <div className="order-[-1] flex items-center gap-5 lg:order-none">
           {/* LinkedIn widoczny tylko na lg+ — na mobile jest w hamburger menu. */}
           <a
             href="https://www.linkedin.com/in/michal-stezaly/"
