@@ -35,8 +35,9 @@ export default function ProjektyPage() {
       <SiteHeader />
 
       {/* SEKCJA 1 — Case studies (wszystkie): grid 3-kol desktop / 1 mobile (P1, P2).
-          Domyślnie 6 kafli + CTA „Zobacz wszystkie" gdy projektów jest więcej. */}
-      <Section>
+          Domyślnie 6 kafli + CTA „Zobacz wszystkie" gdy projektów jest więcej.
+          paddingTop zredukowany ~35% (mniej pustki pod navbarem). */}
+      <Section style={{ paddingTop: "calc(var(--spacing-section) * 0.65)" }}>
         <Container>
           <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
             — Wybrane realizacje

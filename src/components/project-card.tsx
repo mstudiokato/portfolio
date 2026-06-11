@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Project } from "@/lib/content";
+import { categoryLabel } from "@/lib/categories";
+import { Tag } from "@/components/ui/tag";
 import { ProjectImage } from "@/components/project-image";
 
 /**
@@ -52,6 +54,10 @@ export function ProjectCard({ project }: { project: Project }) {
           </Link>
         </h3>
 
+        {/* Tylko tag kategorii (scope celowo ukryty na kaflu — widoczny na /projekty/[slug]). */}
+        <div className="mt-1">
+          <Tag>{categoryLabel(project.category)}</Tag>
+        </div>
       </div>
     </article>
   );
