@@ -23,7 +23,7 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
         <Label>— Wybrane realizacje</Label>
         <H2 className="mt-4 max-w-2xl">Case Studies</H2>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-x-grid md:gap-y-12">
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-x-grid md:gap-y-12 xl:grid-cols-3">
           {projects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}

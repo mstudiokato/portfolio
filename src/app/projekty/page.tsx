@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { getFeaturedProjects, getGalleryItems } from "@/lib/content";
+import { getAllProjects, getGalleryItems } from "@/lib/content";
 import { EYEBROW_COLOR } from "@/lib/site-content";
 import { textColorHex } from "@/lib/text-color";
+import { CaseStudiesGrid } from "@/components/sections/case-studies-grid";
 import { ProjectCard } from "@/components/project-card";
 import { GalleryArchive } from "@/components/gallery-archive";
 import { SiteHeader, SiteFooter } from "@/components/site-chrome";
@@ -22,14 +23,19 @@ export const metadata: Metadata = {
 };
 
 export default function ProjektyPage() {
-  const featured = getFeaturedProjects();
+  const projects = getAllProjects();
+  // Domyślnie 6 kafli; reszta rozwijana po stronie klienta (CaseStudiesGrid).
+  const VISIBLE = 6;
+  const firstProjects = projects.slice(0, VISIBLE);
+  const restProjects = projects.slice(VISIBLE);
   const gallery = getGalleryItems();
 
   return (
     <>
       <SiteHeader />
 
-      {/* SEKCJA 1 — Case studies (featured): grid 3-kol desktop / 1 mobile (P1, P2). */}
+      {/* SEKCJA 1 — Case studies (wszystkie): grid 3-kol desktop / 1 mobile (P1, P2).
+          Domyślnie 6 kafli + CTA „Zobacz wszystkie" gdy projektów jest więcej. */}
       <Section>
         <Container>
           <Label style={{ color: textColorHex(EYEBROW_COLOR, "lime") }}>
@@ -37,11 +43,16 @@ export default function ProjektyPage() {
           </Label>
           <H1 className="text-h2 mt-4">Case Studies</H1>
 
-          <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-x-grid md:gap-y-12 xl:grid-cols-3">
-            {featured.map((project) => (
+          <CaseStudiesGrid
+            hasMore={restProjects.length > 0}
+            extra={restProjects.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
-          </div>
+          >
+            {firstProjects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </CaseStudiesGrid>
         </Container>
       </Section>
 
