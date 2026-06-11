@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { ProjectCard } from "@/components/project-card";
 
 /**
- * SELECTED WORK (sek. 8.3). Równy grid wszystkich featured projektów — 3 kolumny
- * desktop / 1 mobile (H1). Ratio kafli 3:2 [ZABLOKOWANE], hover states i linki
+ * SELECTED WORK (sek. 8.3). Równy grid featured projektów — na stałe 2 kolumny
+ * desktop / 1 mobile (układ 2+2). Ratio kafli 3:2 [ZABLOKOWANE], hover states i linki
  * w ProjectCard. CTA „Zobacz wszystkie projekty" jako Button primary wycentrowany
  * pod gridem (H2).
  */
@@ -23,7 +23,7 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
         <Label>— Wybrane realizacje</Label>
         <H2 className="mt-4 max-w-2xl">Case Studies</H2>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-grid sm:gap-y-12 xl:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-x-grid md:gap-y-12">
           {projects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
