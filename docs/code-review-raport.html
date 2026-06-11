@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Raport z przeglądu kodu — portfolio Michał Stężały</title>
+<style>
+  :root { --navy:#0B1220; --lime:#9be15d; --ink:#1a1a1a; --muted:#5b6470;
+          --crit:#b3261e; --high:#d9480f; --med:#b88300; --low:#2b6cb0; --green:#2f855a; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+         color: var(--ink); line-height: 1.55; font-size: 12.5px; margin: 0; }
+  .page { padding: 28px 34px; }
+  h1 { font-size: 26px; color: var(--navy); margin: 0 0 4px; }
+  h2 { font-size: 19px; color: var(--navy); border-bottom: 3px solid var(--lime);
+       padding-bottom: 5px; margin: 34px 0 14px; page-break-after: avoid; }
+  h3 { font-size: 15px; color: var(--navy); margin: 22px 0 6px; page-break-after: avoid; }
+  h4 { font-size: 13px; margin: 14px 0 4px; }
+  p { margin: 6px 0; }
+  .sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .lead { background: #f4f7fb; border-left: 4px solid var(--lime); padding: 12px 16px;
+          border-radius: 6px; margin: 14px 0; }
+  code { background: #f0f2f5; padding: 1px 5px; border-radius: 4px; font-size: 11.5px;
+         font-family: "SF Mono", Menlo, Consolas, monospace; }
+  .finding { border: 1px solid #e2e6ec; border-radius: 8px; padding: 12px 15px;
+             margin: 12px 0; page-break-inside: avoid; }
+  .finding .row { margin: 5px 0; }
+  .lbl { font-weight: 700; color: var(--navy); }
+  .badge { display: inline-block; color: #fff; font-weight: 700; font-size: 10.5px;
+           padding: 2px 9px; border-radius: 20px; letter-spacing: .4px; vertical-align: middle; }
+  .b-crit { background: var(--crit); }
+  .b-high { background: var(--high); }
+  .b-med  { background: var(--med); }
+  .b-low  { background: var(--low); }
+  .b-info { background: var(--muted); }
+  .tag { font-family: "SF Mono", Menlo, monospace; font-size: 11px; color: var(--muted); }
+  .plain { background: #fffbe9; border: 1px solid #f0e3a8; border-radius: 6px;
+           padding: 8px 12px; margin: 6px 0; }
+  .plain b { color: #8a6d00; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 11.5px; }
+  th, td { border: 1px solid #dde2e8; padding: 6px 9px; text-align: left; vertical-align: top; }
+  th { background: var(--navy); color: #fff; }
+  ul { margin: 6px 0; padding-left: 22px; }
+  li { margin: 3px 0; }
+  .glossary dt { font-weight: 700; color: var(--navy); margin-top: 8px; }
+  .glossary dd { margin: 0 0 0 0; color: #333; }
+  .toc a { color: var(--navy); text-decoration: none; }
+  .role-sec { color: var(--crit); }
+  .role-perf { color: var(--low); }
+  .role-rel { color: var(--green); }
+  footer { color: var(--muted); font-size: 10.5px; margin-top: 30px;
+           border-top: 1px solid #e2e6ec; padding-top: 8px; }
+  .pagebreak { page-break-before: always; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>Raport z przeglądu kodu (code review)</h1>
+<p class="sub">Strona portfolio — <b>Michał Stężały</b> · Next.js 15 + Keystatic CMS + Resend (e-mail) · hosting: Vercel</p>
+<p class="sub">Data: 11 czerwca 2026 · Przegląd wykonany przez zespół 3 wirtualnych recenzentów: <b>Bezpieczeństwo</b>, <b>Wydajność</b>, <b>Niezawodność</b></p>
+
+<div class="lead">
+<b>Dla kogo jest ten raport.</b> Jesteś projektantem, nie programistą — dlatego cały dokument jest napisany prostym językiem.
+Każdy problem opisuję najpierw „po ludzku” (<i>co Ci realnie grozi</i>), a dopiero potem technicznie, ze wskazaniem dokładnego pliku i numeru linii.
+Terminy techniczne tłumaczę na bieżąco, a na końcu jest słowniczek.
+</div>
+
+<h3>Jak czytać oceny ważności (severity)</h3>
+<table>
+<tr><th>Etykieta</th><th>Co znaczy po ludzku</th></tr>
+<tr><td><span class="badge b-crit">CRITICAL</span></td><td>Pali się — naprawić natychmiast, grozi wyciekiem danych lub całkowitą awarią.</td></tr>
+<tr><td><span class="badge b-high">HIGH</span></td><td>Poważne — naprawić w pierwszej kolejności, realnie szkodzi biznesowi lub bezpieczeństwu.</td></tr>
+<tr><td><span class="badge b-med">MEDIUM</span></td><td>Średnie — warto naprawić wkrótce, ale strona działa.</td></tr>
+<tr><td><span class="badge b-low">LOW</span></td><td>Drobne — do backlogu, kosmetyka lub mało prawdopodobny scenariusz.</td></tr>
+</table>
+
+<div class="lead">
+<b>Najważniejsze w jednym zdaniu:</b> nie znaleziono żadnego problemu klasy CRITICAL (nic się „nie pali”),
+ale są <b>3 sprawy do pilnej naprawy</b> — z czego najgroźniejsza to taka, że
+<b>klient może wysłać wiadomość przez formularz, zobaczyć „Dziękuję”, a mail nigdy do Ciebie nie dotrze</b>.
+</div>
+
+<!-- ============================ BEZPIECZEŃSTWO ============================ -->
+<h2 class="pagebreak">1. Recenzent: Bezpieczeństwo 🔒</h2>
+<p class="sub">Szukałem: włamań, podszywania się, wycieków danych, otwartych „drzwi” w aplikacji, sekretów w kodzie, braku sprawdzania uprawnień.</p>
+
+<div class="finding">
+  <div class="row"><span class="badge b-high">HIGH</span> &nbsp;<span class="lbl">S1 — Zabezpieczenia przeglądarki ustawione w złym miejscu (nie działają na żywej stronie)</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> nagłówki bezpieczeństwa / konfiguracja hostingu</div>
+  <div class="row"><span class="lbl">Opis:</span> Wszystkie „nagłówki bezpieczeństwa” (zasady, które mówią przeglądarce m.in. „nie pozwól osadzić tej strony w cudzej ramce” i „blokuj podejrzane skrypty” — tzw. CSP, X-Frame-Options) są zapisane w pliku <code>netlify.toml</code>. Ale ten plik czyta wyłącznie hosting Netlify. Twoja żywa strona stoi na <b>Vercelu</b> (potwierdza to <code>.vercel/repo.json</code> i adres <code>michal-stezaly.vercel.app</code>), a Vercel <b>kompletnie ignoruje</b> ten plik. W projekcie nie ma <code>vercel.json</code> ani sekcji <code>headers()</code> w <code>next.config.ts</code>.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Na żywej stronie te zabezpieczenia w praktyce <b>nie istnieją</b>. Otwiera to drogę m.in. do „clickjackingu” (ktoś osadza Twoją stronę w niewidzialnej ramce na swojej i podstępem zbiera kliknięcia) oraz osłabia ochronę przed wstrzykiwaniem obcych skryptów.</div>
+  <div class="row plain"><b>Po ludzku:</b> myślisz, że masz w mieszkaniu alarm, ale instrukcja montażu leży w szufladzie — alarm nigdy nie został podłączony.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">netlify.toml:18–28</span> (tu są nagłówki) · <span class="tag">next.config.ts:1–35</span> (brak <code>headers()</code>)</div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Przenieść nagłówki do miejsca, które czyta Vercel — dodać funkcję <code>async headers()</code> w <code>next.config.ts</code> z tą samą listą (CSP, X-Frame-Options: DENY, X-Content-Type-Options: nosniff, Referrer-Policy, Permissions-Policy). Wtedy zadziałają niezależnie od hostingu.</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Zbyt restrykcyjne CSP potrafi zablokować własne skrypty (np. Cloudflare Turnstile, analytics). Trzeba przekleić dokładnie te same dozwolone adresy, które są już w <code>netlify.toml</code>, i przetestować formularz po wdrożeniu.</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-high">HIGH</span> &nbsp;<span class="lbl">S2 — Otwarty endpoint do kompresji obrazów (każdy z internetu może go używać)</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> brak uwierzytelnienia / autoryzacji</div>
+  <div class="row"><span class="lbl">Opis:</span> Adres <code>/api/admin/compress-image</code> przyjmuje pliki do 25 MB i przerabia je biblioteką <code>sharp</code> (operacja obciążająca procesor i pamięć). Mimo „admin” w nazwie <b>nie sprawdza, kto wysyła</b> — nie ma logowania, hasła ani limitu liczby zapytań. Każdy w internecie może go wywołać dowolnie wiele razy.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Ktoś może w pętli wysyłać duże pliki i (a) zapłacisz za zużyty czas serwera na Vercelu, (b) doprowadzić do przeciążenia (strona zwalnia lub przestaje odpowiadać). To klasyczny „atak na portfel” i odmowa usługi (DoS).</div>
+  <div class="row plain"><b>Po ludzku:</b> to jak ksero w Twoim biurze wystawione na ulicę bez nadzoru — każdy może przyjść, robić tysiące kopii, a rachunek za prąd i toner przychodzi do Ciebie.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/app/api/admin/compress-image/route.ts:28–67</span> (cała funkcja POST, brak jakiegokolwiek sprawdzenia tożsamości)</div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Skoro to narzędzie wewnętrzne (tak jak <code>save-hero</code>, które jest wyłączone na produkcji), najprościej: zablokować je na produkcji tak samo (<code>404</code> gdy nie development) <i>albo</i> wymagać prostego sekretu/logowania. Niezależnie — dołożyć limit zapytań (jak w formularzu).</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Jeśli korzystasz z tego narzędzia (<code>/admin/compress</code>) na żywej stronie, a nie tylko lokalnie — po zablokowaniu przestanie działać online. Wtedy lepsza opcja to logowanie/sekret zamiast pełnej blokady.</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-med">MEDIUM</span> &nbsp;<span class="lbl">S3 — Limit wiadomości można obejść, podrabiając swój adres</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> rate limiting / zaufanie do danych z przeglądarki</div>
+  <div class="row"><span class="lbl">Opis:</span> Formularz ogranicza liczbę zgłoszeń „3 na 10 minut z jednego adresu IP”. Adres odczytywany jest z nagłówka <code>x-forwarded-for</code>, biorąc jego <b>pierwszą</b> wartość — a tę wartość nadawca może dowolnie zmyślić.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Spamer przy każdym wysłaniu wpisuje inny zmyślony adres i limit go nie dotyczy — może zasypać Twoją skrzynkę.</div>
+  <div class="row plain"><b>Po ludzku:</b> ochroniarz wpuszcza „3 osoby o tym samym nazwisku”, ale wierzy w nazwisko podane ustnie — wystarczy za każdym razem powiedzieć inne.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/app/api/kontakt/route.ts:13–21</span> (funkcja <code>getClientIp</code>, <code>xff.split(",")[0]</code>)</div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Na Vercelu używać zaufanego adresu dostarczanego przez platformę (np. nagłówek <code>x-vercel-forwarded-for</code> / pole, które ustawia sam Vercel), a nie pierwszej wartości <code>x-forwarded-for</code>. To wartość, której użytkownik nie kontroluje.</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Jeśli kiedyś zmienisz hosting, trzeba dopasować nazwę nagłówka. Ryzyko częściowo łagodzi Turnstile (patrz S4) — o ile jest włączony.</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-med">MEDIUM</span> &nbsp;<span class="lbl">S4 — Ochrona antyspamowa (Turnstile) wyłącza się sama, gdy brak klucza</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> walidacja / „fail-open” (przy braku konfiguracji przepuszcza wszystko)</div>
+  <div class="row"><span class="lbl">Opis:</span> Funkcja sprawdzająca „czy to człowiek, czy bot” zwraca <i>„OK, przepuść”</i>, jeśli na serwerze nie ustawiono klucza <code>TURNSTILE_SECRET_KEY</code>. Podobnie pole-pułapka i widżet nie pojawiają się, gdy brak klucza publicznego.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Jeśli klucz nie zostanie poprawnie ustawiony na Vercelu (łatwa pomyłka przy wdrożeniu), antyspam <b>w ogóle nie działa</b>, a Ty o tym nie wiesz. W połączeniu z S3 ochrona formularza może spaść do zera → fala spamu.</div>
+  <div class="row plain"><b>Po ludzku:</b> bramka antyspamowa, która przy braku konfiguracji nie krzyczy „brak ochrony!”, tylko cicho otwiera drzwi na oścież.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/app/api/kontakt/route.ts:28–29</span> (<code>if (!secret) return true;</code>) · <span class="tag">src/components/contact-form.tsx:16, 282–288</span></div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Na produkcji traktować brak klucza jako błąd konfiguracji (zalogować ostrzeżenie i ewentualnie odmówić wysyłki), zamiast po cichu przepuszczać. W trybie dev/preview obecne zachowanie jest OK.</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Jeśli zrobimy „brak klucza = blokuj”, to przy pomyłce w konfiguracji formularz przestanie wysyłać. Bezpieczniejszy kompromis: przepuszczać tylko poza produkcją, a na produkcji głośno alarmować.</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-low">LOW</span> &nbsp;<span class="lbl">S5 — Strona „design-system” jest publicznie dostępna</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> ekspozycja wewnętrznych narzędzi</div>
+  <div class="row"><span class="lbl">Opis:</span> <code>/design-system</code> (paleta, komponenty) jest tylko oznaczona jako „nie indeksuj” w <code>robots.txt</code> i metadanych — ale wpisując adres ręcznie, każdy ją otworzy. To samo dotyczy <code>/admin/hero-editor</code> i <code>/admin/compress</code> (UI).</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Nie ma tu danych wrażliwych, więc ryzyko małe — głównie „nieprofesjonalnie”, że narzędzia wewnętrzne są na widoku. (Faktyczny zapis blokuje GitHub/produkcja — patrz S2 i dev-only <code>save-hero</code>.)</div>
+  <div class="row plain"><b>Po ludzku:</b> zaplecze sklepu jest niezamknięte, ale stoją tam tylko próbki i miarka — nic cennego, ale lepiej zamknąć.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/app/design-system/page.tsx:18–21</span> · <span class="tag">public/robots.txt</span></div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Niski priorytet. Jeśli zależy: ukryć te trasy za prostym logowaniem albo wyłączyć na produkcji.</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Utrudniony własny dostęp do podglądu na żywej stronie.</div>
+</div>
+
+<!-- ============================ WYDAJNOŚĆ ============================ -->
+<h2 class="pagebreak">2. Recenzent: Wydajność ⚡</h2>
+<p class="sub">Szukałem: wolnych miejsc, robót wykonywanych wielokrotnie bez potrzeby, dużych plików, rzeczy które „nie udźwigną” większego ruchu.</p>
+
+<div class="lead">
+<b>Dobra wiadomość na wstępie:</b> strona jest w dużej części „statyczna” (generowana raz, przy publikacji), więc wiele potencjalnie wolnych operacji wykonuje się <i>podczas budowania</i>, a nie przy każdym wejściu gościa. Dlatego poniższe sprawy to głównie kwestia <b>skalowalności i kosztów</b>, a nie odczuwalnej dziś wolności.
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-med">MEDIUM</span> &nbsp;<span class="lbl">P1 — Lista projektów wczytywana z dysku wielokrotnie, bez zapamiętywania</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> odczyt plików / brak cache</div>
+  <div class="row"><span class="lbl">Opis:</span> Funkcja <code>getAllProjects()</code> przy każdym wywołaniu czyta i parsuje <b>wszystkie</b> pliki projektów z dysku. Inne funkcje (sąsiedzi projektu, grupowanie po kategorii, liczniki) wołają ją osobno — więc na jednej stronie ten sam katalog bywa skanowany kilka razy. Endpoint <code>/api/projekty-kolejnosc</code> jest dodatkowo „force-dynamic” (liczony przy każdym żądaniu).</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Przy małej liczbie projektów to niezauważalne. Ale gdy projektów przybędzie albo wzrośnie ruch na trasach dynamicznych, te same pliki czytane są w kółko — niepotrzebna praca, wolniejsze odpowiedzi, wyższe koszty.</div>
+  <div class="row plain"><b>Po ludzku:</b> za każdym razem, gdy ktoś pyta o jeden projekt, pracownik na nowo przegląda całą szafę z dokumentami — zamiast raz spisać listę i z niej korzystać.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/lib/content.ts:180–187</span> (<code>getAllProjects</code>) i wołające ją <span class="tag">:202–236</span> · <span class="tag">src/app/api/projekty-kolejnosc/route.ts:4–7</span></div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Zapamiętać wynik raz na proces (np. funkcja <code>cache()</code> z React/Next albo prosta zmienna-pamięć), żeby pliki czytać raz, a nie przy każdym wywołaniu.</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Po zmianie treści w CMS trzeba przebudować/odświeżyć cache (na Vercelu dzieje się to przy nowym wdrożeniu — więc bezpieczne). Dla narzędzia podglądu kolejności <code>/api/projekty-kolejnosc</code> cache trzeba dobrać tak, by pokazywało aktualny stan.</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-med">MEDIUM</span> &nbsp;<span class="lbl">P2 — Kompresja obrazu trzyma cały plik (do 25 MB) w pamięci, bez limitu równoczesnych zadań</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> zużycie pamięci / brak kolejkowania</div>
+  <div class="row"><span class="lbl">Opis:</span> Endpoint kompresji wczytuje cały plik do pamięci i uruchamia <code>sharp</code>. Nie ma ograniczenia, ile takich operacji może iść naraz.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Kilka dużych plików jednocześnie potrafi „zjeść” pamięć funkcji i ją wywrócić. W połączeniu z S2 (endpoint otwarty dla każdego) to wprost zaproszenie do przeciążenia.</div>
+  <div class="row plain"><b>Po ludzku:</b> jedna osoba przy stole może rozłożyć wielki projekt, ale gdy dziesięć osób naraz rozkłada wielkie plansze, stół się załamuje.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/app/api/admin/compress-image/route.ts:53–61</span></div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Najpierw zamknąć dostęp (S2). Limit 25 MB jest rozsądny; rozważyć niższy. To narzędzie wewnętrzne — nie wymaga skalowania.</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Obniżenie limitu odrzuci bardzo duże oryginały — ale takie i tak nie powinny iść na stronę.</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-low">LOW</span> &nbsp;<span class="lbl">P3 — Pamięć limitera zapytań rośnie i nigdy nie jest sprzątana</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> wyciek pamięci (drobny)</div>
+  <div class="row"><span class="lbl">Opis:</span> Limiter trzyma w pamięci wpis dla każdego adresu IP, który kiedykolwiek wysłał formularz. Stare wpisy są filtrowane, ale nigdy usuwane z mapy — lista kluczy tylko rośnie przez całe życie „ciepłej” instancji.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Bardzo powoli rosnące zużycie pamięci. Przy małym ruchu nieistotne; przy dużym i długo żyjącej instancji — może z czasem przeszkadzać.</div>
+  <div class="row plain"><b>Po ludzku:</b> notes, w którym dopisujesz każdego gościa i nigdy nie wyrywasz starych kartek — kiedyś się zapełni.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/lib/rate-limit.ts:11, 18–28</span></div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Gdy po odfiltrowaniu lista dla klucza jest pusta — usuwać klucz z mapy. (I patrz decyzja architektoniczna o wspólnym liczniku — R3.)</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Brak — to czysta poprawka porządkowa.</div>
+</div>
+
+<!-- ============================ NIEZAWODNOŚĆ ============================ -->
+<h2 class="pagebreak">3. Recenzent: Niezawodność 🛟</h2>
+<p class="sub">Szukałem: braku obsługi błędów, sytuacji „dane gdzieś znikają”, braku ponawiania prób, słabego wglądu w to, że coś się psuje.</p>
+
+<div class="finding">
+  <div class="row"><span class="badge b-high">HIGH</span> &nbsp;<span class="lbl">R1 — Formularz mówi „Dziękuję”, nawet jeśli mail do Ciebie nie poszedł</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> ciche gubienie danych / błędna informacja zwrotna</div>
+  <div class="row"><span class="lbl">Opis:</span> Jeśli na serwerze brakuje klucza <code>RESEND_API_KEY</code> (usługa do wysyłki maili), serwer <b>nie wysyła maila</b>, ale zwraca odpowiedź „sukces” (<code>ok: true, delivered: false</code>). Przeglądarka sprawdza tylko, czy odpowiedź jest „udana”, i pokazuje gościowi ekran <i>„Dziękuję za wiadomość!”</i>. Pole <code>delivered:false</code> jest ignorowane.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> To najgroźniejszy scenariusz biznesowy w całym raporcie. Potencjalny klient pisze do Ciebie, widzi podziękowanie i czeka na odpowiedź — a Ty <b>nigdy nie dostajesz tej wiadomości</b> i nawet nie wiesz, że istniała. Tracisz zlecenie i nie masz pojęcia, że je straciłeś.</div>
+  <div class="row plain"><b>Po ludzku:</b> klient wrzuca list do skrzynki, na której świeci napis „Dziękujemy, dostarczymy!”, ale skrzynka nie ma dna — list spada w pustkę, a obie strony myślą, że dotarł.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/app/api/kontakt/route.ts:110–116</span> (zwraca <code>ok:true</code> mimo braku wysyłki) · <span class="tag">src/components/contact-form.tsx:92</span> (<code>if (res.ok)</code> → pokazuje sukces)</div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> (1) Upewnić się, że <code>RESEND_API_KEY</code> jest ustawiony na produkcji. (2) Na produkcji brak klucza powinien być błędem (np. <code>500</code> + alert), a nie „cichym sukcesem”. (3) Najlepiej dodać kopię/powiadomienie zapasowe (np. drugi kanał), żeby żadne zgłoszenie nie ginęło.</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> W trybie dev/preview (gdzie brak klucza jest celowy) nie chcemy pokazywać błędu — dlatego zmiana powinna dotyczyć tylko produkcji.</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-med">MEDIUM</span> &nbsp;<span class="lbl">R2 — Brak limitu długości wiadomości</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> brak walidacji rozmiaru / odporność na nadużycia</div>
+  <div class="row"><span class="lbl">Opis:</span> Pole „wiadomość” (i „imię i nazwisko”) mają tylko minimum (musi nie być puste), ale <b>nie mają maksimum</b>. Ktoś może wysłać wiadomość na megabajty tekstu.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Usługa pocztowa może odrzucić wielką wiadomość (gość zobaczy błąd), a ktoś złośliwy może tym obciążać system. To też furtka do spamu „na ilość”.</div>
+  <div class="row plain"><b>Po ludzku:</b> formularz przyjmuje „książkę telefoniczną” wklejoną w jedno pole — niepotrzebnie.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/lib/contact-schema.ts:9, 16</span> (<code>name</code> i <code>message</code> bez <code>.max(...)</code>)</div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Dodać rozsądne limity, np. <code>name.max(120)</code>, <code>message.max(5000)</code>. Schemat jest wspólny dla przeglądarki i serwera, więc poprawka działa po obu stronach.</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Bardzo długie (i tak rzadkie) wiadomości zostaną odrzucone z komunikatem — limit warto dobrać hojnie.</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-med">MEDIUM</span> &nbsp;<span class="lbl">R3 — Limit zapytań żyje tylko w jednej instancji i znika po „uśpieniu”</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> stan trzymany w pamięci / brak wspólnego licznika</div>
+  <div class="row"><span class="lbl">Opis:</span> Licznik „3 na 10 minut” trzymany jest w pamięci pojedynczej instancji funkcji. Vercel uruchamia wiele instancji równolegle i usypia je — więc licznik bywa zerowany i nie jest współdzielony.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Ochrona jest „dziurawa”: spamer trafiający na różne instancje (lub po uśpieniu) dostaje świeży limit. To osłabia zabezpieczenie, na którym polegasz (zwłaszcza razem z S3 i S4).</div>
+  <div class="row plain"><b>Po ludzku:</b> kilku ochroniarzy, z których każdy liczy gości osobno i co chwilę zapomina — łatwo przejść kilka razy.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/lib/rate-limit.ts:1–11</span> (komentarz wprost to przyznaje) · używane w <span class="tag">src/app/api/kontakt/route.ts:65–66</span></div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Do prawdziwego limitu potrzebny wspólny magazyn (np. Upstash Redis z Vercel Marketplace). Patrz „Decyzje architektoniczne”. Na dziś główną ochroną pozostaje Turnstile (S4).</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Dodanie zewnętrznego magazynu to nowa zależność (może paść). Trzeba zdecydować: gdy magazyn nie odpowiada — przepuszczać czy blokować (patrz wzajemna recenzja).</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-med">MEDIUM</span> &nbsp;<span class="lbl">R4 — Jeden błędny plik treści może wywalić całą sekcję projektów</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> obsługa błędów / odporność na złe dane</div>
+  <div class="row"><span class="lbl">Opis:</span> Wczytywanie projektów i galerii „rzuca wyjątkiem” (przerywa działanie), gdy w pliku brakuje wymaganego pola albo kategoria jest spoza listy. Ponieważ ta funkcja zasila wiele miejsc, jeden zepsuty wpis psuje całą listę.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Przy budowaniu strony — build się wywali (nie opublikujesz). Na trasie dynamicznej — gość zobaczy błąd zamiast listy projektów. Wystarczy jedna pomyłka w CMS.</div>
+  <div class="row plain"><b>Po ludzku:</b> jedno krzywo wpięte zdjęcie w albumie sprawia, że nie otwiera się cały album, a nie tylko ta jedna strona.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/lib/content.ts:99–117</span> (projekty) · <span class="tag">:283–288</span> (galerie)</div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Rozważyć „pomiń i zaloguj ostrzeżenie” dla pojedynczego błędnego pliku zamiast wywracania całości — albo przynajmniej czytelny komunikat z nazwą pliku (to akurat już jest) i świadomy wybór, czy build ma padać. Keystatic w dużej mierze pilnuje pól, więc ryzyko realne głównie przy ręcznej edycji.</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> „Pomijanie” błędnych wpisów może ukryć fakt, że projekt zniknął ze strony — dlatego konieczne logowanie ostrzeżeń.</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-med">MEDIUM</span> &nbsp;<span class="lbl">R6 — Słaby wgląd w awarie: gdy maile padają, nikt o tym nie wie</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> obserwowalność / brak alertów</div>
+  <div class="row"><span class="lbl">Opis:</span> Gdy wysyłka maila się nie powiedzie, błąd trafia tylko do logów (<code>console.error</code>). Nikt ich nie ogląda na bieżąco.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Razem z R1 oznacza, że awaria poczty może trwać tygodniami niezauważona — a każdy taki dzień to potencjalnie utracone zapytania.</div>
+  <div class="row plain"><b>Po ludzku:</b> czujka dymu, która „mruga w piwnicy”, ale nie ma syreny — pożar zauważysz, dopiero gdy będzie za późno.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/app/api/kontakt/route.ts:134, 138</span></div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Dodać proste powiadomienie o błędzie (np. mail awaryjny innym kanałem, alert w Vercelu lub usługa typu Sentry). Minimum: regularnie zaglądać w logi Resend.</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Dodatkowa usługa/koszt; trzeba unikać „zalewu” powiadomieniami.</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-low">LOW</span> &nbsp;<span class="lbl">R5 — Zapytanie do Turnstile bez limitu czasu (może „wisieć”)</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> brak timeoutu</div>
+  <div class="row"><span class="lbl">Opis:</span> Sprawdzenie tokena u Cloudflare nie ma ustawionego limitu czasu. Jeśli Cloudflare odpowiada wolno, całe wysłanie formularza czeka aż do twardego limitu funkcji.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Rzadkie, ale przy awarii Cloudflare gość długo patrzy na „Wysyłanie…”, a potem dostaje błąd.</div>
+  <div class="row plain"><b>Po ludzku:</b> dzwonisz, żeby potwierdzić rezerwację, nikt nie odbiera, a Ty trzymasz słuchawkę w nieskończoność, zamiast odłożyć po chwili.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/app/api/kontakt/route.ts:32–39</span> (<code>fetch</code> bez <code>AbortSignal.timeout</code>)</div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Dodać limit czasu (np. 5 s) i zdecydować, co przy przekroczeniu (raczej odmówić niż przepuścić).</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Przy bardzo wolnym (ale działającym) Cloudflare zgłoszenie może zostać odrzucone — limit warto dobrać z zapasem.</div>
+</div>
+
+<div class="finding">
+  <div class="row"><span class="badge b-low">LOW</span> &nbsp;<span class="lbl">R7 — Zapis ustawień hero bez obsługi błędów i ochrony przed równoczesnym zapisem (tylko dev)</span></div>
+  <div class="row"><span class="lbl">Obszar:</span> obsługa błędów / wyścig (race condition)</div>
+  <div class="row"><span class="lbl">Opis:</span> Endpoint <code>save-hero</code> czyta i parsuje plik JSON bez zabezpieczenia — jeśli plik byłby uszkodzony, poleci nieobsłużony błąd. Dwa zapisy naraz mogą sobie nadpisać zmiany. Działa <b>tylko lokalnie</b> (na produkcji zwraca 404), więc wpływ jest mały.</div>
+  <div class="row"><span class="lbl">Dlaczego to ryzyko:</span> Tylko podczas Twojej pracy lokalnej; w najgorszym razie utrata jednej zmiany kadru.</div>
+  <div class="row plain"><b>Po ludzku:</b> dwie osoby edytują tę samą kartkę naraz — wygrywa ta, która zapisze później, druga zmiana przepada.</div>
+  <div class="row"><span class="lbl">Gdzie szukać:</span> <span class="tag">src/app/api/admin/save-hero/route.ts:43–69</span></div>
+  <div class="row"><span class="lbl">Rekomendacja:</span> Opakować odczyt/parse w obsługę błędu z czytelnym komunikatem. Wyścig — pomijalny dla narzędzia jednoosobowego.</div>
+  <div class="row"><span class="lbl">Możliwy efekt uboczny:</span> Brak.</div>
+</div>
+
+<!-- ============================ WZAJEMNA RECENZJA ============================ -->
+<h2 class="pagebreak">4. Recenzenci podważają się nawzajem</h2>
+<p class="sub">Każda poprawka może popsuć coś innego. Oto jak trzej recenzenci sprawdzili swoje propozycje.</p>
+
+<h3 class="role-sec">Bezpieczeństwo ocenia poprawki Wydajności</h3>
+<ul>
+<li><b>P1 (zapamiętywanie listy projektów):</b> bezpieczne. Cache treści, która i tak jest publiczna, nie tworzy ryzyka wycieku. ✔️ Uwaga: nie wolno cache’ować <i>odpowiedzi maila ani tokenów</i> — ale tego nikt nie proponuje.</li>
+<li><b>P2 (limity kompresji):</b> wręcz wzmacnia bezpieczeństwo — niższy limit pliku to mniejsza powierzchnia nadużycia. Zgoda, ale to <u>nie zastępuje</u> zamknięcia dostępu (S2). Najpierw S2.</li>
+</ul>
+
+<h3 class="role-perf">Wydajność ocenia poprawki Bezpieczeństwa</h3>
+<ul>
+<li><b>S1 (nagłówki/CSP):</b> koszt wydajności zerowy — nagłówki to kilka bajtów. ✔️ Tylko nie ustawiać agresywnego cache na odpowiedziach API (i tak nie ma).</li>
+<li><b>S2 (zamknięcie kompresji) i S3 (zaufany adres IP):</b> sprawdzenie tożsamości i odczyt innego nagłówka są błyskawiczne — brak wpływu na szybkość. ✔️</li>
+<li><b>S4 (twarde wymaganie Turnstile na produkcji):</b> dokłada jedno zapytanie sieciowe do Cloudflare — ale ono już istnieje, gdy klucz jest ustawiony. Bez realnej zmiany kosztu.</li>
+</ul>
+
+<h3 class="role-rel">Niezawodność ocenia, czy poprawki nie wprowadzą nowych awarii</h3>
+<ul>
+<li><b>S4 + R1 (brak klucza = błąd na produkcji):</b> ⚠️ uwaga! Trzeba to ograniczyć <u>wyłącznie do produkcji</u>. Inaczej dev/preview (gdzie celowo nie ma kluczy) zacznie zwracać błędy i utrudni pracę. Rozwiązanie: warunek „tylko gdy <code>NODE_ENV === production</code>”.</li>
+<li><b>R3 (wspólny licznik w Redis):</b> ⚠️ nowa zależność = nowe ryzyko awarii. Jeśli Redis padnie i wybierzemy „blokuj przy błędzie”, formularz przestanie działać dla wszystkich. <b>Rekomendacja: przy awarii magazynu przepuszczać (fail-open) i logować</b> — spam jest mniej groźny niż zablokowany kontakt. Bezpieczeństwo akceptuje ten kompromis, bo Turnstile zostaje drugą warstwą.</li>
+<li><b>P1 (cache listy):</b> ⚠️ jeśli kiedyś dojdzie odświeżanie treści „na żywo” bez przebudowy, cache mógłby pokazać stare dane. Dziś treść zmienia się przez nowe wdrożenie, więc bezpiecznie — ale warto to udokumentować, by ktoś w przyszłości nie wpadł w pułapkę „nieaktualnej listy”.</li>
+<li><b>R4 (pomijanie błędnych plików):</b> ⚠️ „ciche pomijanie” może ukryć zniknięcie projektu. Konieczny widoczny log/ostrzeżenie, najlepiej też w trakcie budowania.</li>
+</ul>
+
+<!-- ============================ LISTY ============================ -->
+<h2 class="pagebreak">5. Do naprawy natychmiast (CRITICAL i HIGH)</h2>
+<p>Nie wykryto żadnego problemu klasy <b>CRITICAL</b>. Poniższe trzy to <b>HIGH</b> — najpierw te:</p>
+<table>
+<tr><th>#</th><th>Problem (po ludzku)</th><th>Gdzie</th><th>Dlaczego pilne</th></tr>
+<tr><td><b>R1</b></td><td>Formularz mówi „Dziękuję”, choć mail może nie dotrzeć</td><td>kontakt/route.ts:110–116 · contact-form.tsx:92</td><td>Tracisz zapytania klientów i nawet o tym nie wiesz</td></tr>
+<tr><td><b>S2</b></td><td>Otwarte narzędzie kompresji — każdy z internetu może je obciążać</td><td>api/admin/compress-image/route.ts:28–67</td><td>Koszty + ryzyko przeciążenia strony</td></tr>
+<tr><td><b>S1</b></td><td>Zabezpieczenia przeglądarki nie działają na żywej stronie (są w pliku Netlify, a hosting to Vercel)</td><td>netlify.toml:18–28 · next.config.ts</td><td>Brak ochrony m.in. przed clickjackingiem</td></tr>
+</table>
+
+<h2>6. Do backlogu (MEDIUM i LOW)</h2>
+<table>
+<tr><th>#</th><th>Waga</th><th>Problem</th><th>Gdzie</th></tr>
+<tr><td>S3</td><td><span class="badge b-med">MEDIUM</span></td><td>Limit można obejść podrobionym adresem IP</td><td>kontakt/route.ts:13–21</td></tr>
+<tr><td>S4</td><td><span class="badge b-med">MEDIUM</span></td><td>Antyspam wyłącza się sam przy braku klucza</td><td>kontakt/route.ts:28–29</td></tr>
+<tr><td>P1</td><td><span class="badge b-med">MEDIUM</span></td><td>Lista projektów czytana wielokrotnie bez cache</td><td>content.ts:180–236</td></tr>
+<tr><td>P2</td><td><span class="badge b-med">MEDIUM</span></td><td>Kompresja trzyma duży plik w pamięci, bez limitu równoległości</td><td>compress-image/route.ts:53–61</td></tr>
+<tr><td>R2</td><td><span class="badge b-med">MEDIUM</span></td><td>Brak maksymalnej długości wiadomości</td><td>contact-schema.ts:9,16</td></tr>
+<tr><td>R3</td><td><span class="badge b-med">MEDIUM</span></td><td>Limit zapytań nie jest współdzielony i znika po uśpieniu</td><td>rate-limit.ts:1–11</td></tr>
+<tr><td>R4</td><td><span class="badge b-med">MEDIUM</span></td><td>Jeden błędny plik treści wywala całą sekcję</td><td>content.ts:99–117, 283–288</td></tr>
+<tr><td>R6</td><td><span class="badge b-med">MEDIUM</span></td><td>Brak alertu, gdy maile padają</td><td>kontakt/route.ts:134,138</td></tr>
+<tr><td>S5</td><td><span class="badge b-low">LOW</span></td><td>Strona design-system / narzędzia admin publicznie dostępne</td><td>design-system/page.tsx</td></tr>
+<tr><td>P3</td><td><span class="badge b-low">LOW</span></td><td>Pamięć limitera rośnie bez sprzątania</td><td>rate-limit.ts:11–28</td></tr>
+<tr><td>R5</td><td><span class="badge b-low">LOW</span></td><td>Zapytanie do Turnstile bez limitu czasu</td><td>kontakt/route.ts:32–39</td></tr>
+<tr><td>R7</td><td><span class="badge b-low">LOW</span></td><td>save-hero bez obsługi błędów (tylko dev)</td><td>save-hero/route.ts:43–69</td></tr>
+</table>
+
+<h2>7. Decyzje architektoniczne do podjęcia</h2>
+<p class="sub">To wybory dla Ciebie (lub Twojego programisty) — nie „naprawa”, tylko kierunek.</p>
+<ol>
+<li><b>Jeden hosting, nie dwa.</b> W repo są ślady i Netlify (<code>netlify.toml</code>), i Vercela (<code>.vercel/</code>). Żywa strona stoi na Vercelu. Decyzja: oficjalnie wybrać Vercela i przenieść tam wszystkie ustawienia (zwłaszcza nagłówki bezpieczeństwa — S1), albo świadomie wrócić na Netlify. Trzymanie obu po cichu = ustawienia „znikają”.</li>
+<li><b>Limit zapytań: pamięć czy wspólny magazyn?</b> Dziś „w pamięci” (zawodny, R3). Opcje: zostawić jak jest i polegać głównie na Turnstile, albo dołożyć wspólny magazyn (np. Upstash Redis z Vercel Marketplace). Jeśli magazyn — z góry ustalić: przy jego awarii <i>przepuszczać</i> (rekomendacja) czy <i>blokować</i>.</li>
+<li><b>Narzędzia /admin na produkcji.</b> Zdecydować, czy <code>/admin/compress</code> ma w ogóle istnieć online. Opcje: tylko lokalnie (jak <code>save-hero</code>), albo za logowaniem. Dziś jest otwarte (S2).</li>
+<li><b>Czy formularz ma gwarancję dostarczenia?</b> Rozważyć drugi, niezależny kanał zapisu zgłoszeń (np. kopia do innej skrzynki / prosty zapis), żeby awaria jednej usługi nie gubiła klientów (powiązane z R1).</li>
+</ol>
+
+<h2>8. Testy, które warto dopisać</h2>
+<p class="sub">„Test” to mały programik, który automatycznie sprawdza, że dana rzecz działa — żeby przyszła zmiana czegoś nie zepsuła po cichu.</p>
+<h4>Formularz kontaktowy — endpoint <code>/api/kontakt</code></h4>
+<ul>
+<li>Niepoprawny JSON w żądaniu → odpowiedź 400 (a nie awaria).</li>
+<li>Wypełniona pułapka (pole „firma”) → udawany sukces, mail NIE wychodzi.</li>
+<li>Czwarte zgłoszenie w 10 minut → odpowiedź 429 (limit) z nagłówkiem <code>Retry-After</code>.</li>
+<li>Błędny token Turnstile → 400; brak klucza na produkcji → błąd (po poprawce S4/R1), w dev → przepuszczenie.</li>
+<li>Resend zwraca błąd → 502 i komunikat zastępczy.</li>
+<li><b>Kluczowe (R1):</b> brak <code>RESEND_API_KEY</code> na produkcji → użytkownik NIE widzi fałszywego „Dziękuję”.</li>
+<li>Wiadomość ponad limit długości (po poprawce R2) → 400.</li>
+</ul>
+<h4>Walidacja danych — <code>contact-schema.ts</code></h4>
+<ul>
+<li>Poprawny i niepoprawny e-mail; brak zgody RODO → błąd; nowe limity długości.</li>
+</ul>
+<h4>Odczyt adresu IP — <code>getClientIp</code></h4>
+<ul>
+<li>Próba podrobienia <code>x-forwarded-for</code> → po poprawce S3 brany jest adres zaufany.</li>
+</ul>
+<h4>Wczytywanie treści — <code>content.ts</code></h4>
+<ul>
+<li>Plik z brakującym polem / złą kategorią → czytelny błąd z nazwą pliku (lub pominięcie z ostrzeżeniem, zależnie od decyzji R4).</li>
+</ul>
+<h4>Kompresja — <code>/api/admin/compress-image</code></h4>
+<ul>
+<li>Plik niebędący obrazem → 415; plik za duży → 413; po poprawce S2: brak dostępu bez uprawnień.</li>
+</ul>
+
+<!-- ============================ PODSUMOWANIE ============================ -->
+<h2 class="pagebreak">9. Krótkie podsumowanie dla właściciela produktu</h2>
+<div class="lead">
+<p>Twoja strona jest napisana solidnie i schludnie — widać dbałość o szczegóły (walidacja formularza po obu stronach, pułapka na boty, sensowne komentarze). <b>Nie ma niczego, co „się pali”</b> (zero problemów klasy CRITICAL).</p>
+<p>Są jednak <b>trzy rzeczy do pilnej naprawy</b>:</p>
+<ol>
+<li><b>Najważniejsza:</b> w pewnych warunkach klient wyśle wiadomość, zobaczy „Dziękuję”, <b>a mail do Ciebie nie dotrze</b> — i nikt się nie zorientuje. Najpierw upewnij się, że klucz do wysyłki maili (<code>RESEND_API_KEY</code>) jest wpisany na Vercelu, a docelowo niech brak tego klucza zgłasza błąd zamiast udawać sukces. (R1)</li>
+<li>Masz <b>otwarte „ksero na ulicy”</b> — narzędzie do kompresji obrazów, którego może użyć każdy z internetu i naliczyć Ci koszty albo zamulić stronę. Zamknąć je albo schować za logowaniem. (S2)</li>
+<li>Twoje <b>zabezpieczenia przeglądarki są wpięte w plik, którego Twój hosting nie czyta</b> — czyli realnie nie działają. Przenieść je tam, gdzie zadziałają (Vercel). (S1)</li>
+</ol>
+<p>Reszta (12 punktów) to sprawy „średnie i drobne” do backlogu — głównie wzmocnienie ochrony przed spamem i porządki pod większy ruch. Nie blokują uruchomienia strony.</p>
+<p><b>Co zrobić w tym tygodniu:</b> (1) sprawdzić klucze na Vercelu (mail + antyspam), (2) zlecić zamknięcie narzędzia kompresji, (3) przenieść nagłówki bezpieczeństwa. To trzy konkretne zadania — po nich strona jest gotowa „na produkcję” z czystym sumieniem.</p>
+</div>
+
+<h2>Słowniczek (proste tłumaczenia)</h2>
+<dl class="glossary">
+<dt>Endpoint</dt><dd>Adres w aplikacji, pod który przeglądarka „wysyła paczkę” (np. <code>/api/kontakt</code> przyjmuje treść formularza).</dd>
+<dt>Nagłówki bezpieczeństwa / CSP</dt><dd>Krótkie instrukcje, które serwer wysyła przeglądarce: „nie pozwalaj na te niebezpieczne rzeczy”. Bez nich przeglądarka jest mniej ostrożna.</dd>
+<dt>Clickjacking</dt><dd>Podstęp: ktoś osadza Twoją stronę w niewidzialnej ramce na swojej i „kradnie” kliknięcia użytkownika.</dd>
+<dt>Rate limiting (limit zapytań)</dt><dd>Ograniczenie „ile razy w danym czasie ktoś może coś wysłać” — żeby spamer nie zalał formularza.</dd>
+<dt>Honeypot (pułapka)</dt><dd>Ukryte pole, którego człowiek nie widzi. Jeśli zostanie wypełnione, wiadomo że to bot.</dd>
+<dt>Turnstile</dt><dd>Cloudflare’owy „test, czy jesteś człowiekiem” (nowsza wersja CAPTCHA).</dd>
+<dt>Cache (zapamiętywanie)</dt><dd>Trzymanie gotowego wyniku, żeby nie liczyć go w kółko od nowa.</dd>
+<dt>Cold start (zimny start) / instancja</dt><dd>Serwer „usypia”, gdy nikt nie korzysta, i „budzi się” przy nowym ruchu — wtedy traci to, co miał w pamięci.</dd>
+<dt>Race condition (wyścig)</dt><dd>Dwie operacje dzieją się naraz i wchodzą sobie w drogę — wynik bywa przypadkowy.</dd>
+<dt>Fail-open / fail-closed</dt><dd>Co zrobić, gdy zabezpieczenie samo się zepsuje: „fail-open” = przepuść (wygoda), „fail-closed” = zablokuj (bezpieczeństwo).</dd>
+<dt>DoS (odmowa usługi)</dt><dd>Zasypanie serwera tak dużą liczbą żądań, że przestaje odpowiadać zwykłym gościom.</dd>
+</dl>
+
+<footer>
+Raport wygenerowany na podstawie realnego kodu repozytorium (przeczytane pliki: konfiguracje, 5 endpointów API, formularz, biblioteki treści/limitu/walidacji, panele admin, middleware, layout).
+Dokument prywatny — zapisany w <code>docs/</code>, celowo poza <code>public/</code>, więc nie jest publikowany na stronie. · Michał Stężały — portfolio · 11.06.2026
+</footer>
+
+</div>
+</body>
+</html>

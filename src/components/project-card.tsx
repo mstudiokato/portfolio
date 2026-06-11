@@ -1,7 +1,5 @@
 import Link from "next/link";
 import type { Project } from "@/lib/content";
-import { categoryLabel } from "@/lib/categories";
-import { Tag } from "@/components/ui/tag";
 import { ProjectImage } from "@/components/project-image";
 
 /**
@@ -54,14 +52,6 @@ export function ProjectCard({ project }: { project: Project }) {
           </Link>
         </h3>
 
-        {project.scope ? (
-          <p className="text-caption text-muted">{project.scope}</p>
-        ) : null}
-
-        {/* Kategoria — ta sama etykieta/pisownia co na /projekty (categoryLabel). */}
-        <div className="mt-1">
-          <Tag>{categoryLabel(project.category)}</Tag>
-        </div>
       </div>
     </article>
   );
