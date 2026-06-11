@@ -39,3 +39,20 @@ Launch docelowy na michal-stezaly.pl — wkrótce.
 - Landingi usługowe (/uslugi/branding-sportowy itp.)
 - CMS Keystatic — ewentualna rozbudowa
 - Więcej motion/polish wg pomiarów
+
+---
+
+# Notatki sesji — 2026-06-11
+
+## Ukończone w tej sesji
+- Security headers w Vercel (HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy itp.)
+- CSP fix dla Keystatic (poprawione dyrektywy, by panel CMS działał)
+- Formularz kontaktowy: ekran "success" po wysłaniu (success screen)
+- Case studies: 6 sztuk z flagami `featured`, sekcja "show-more" na /projekty
+- Nawigacja:
+  - CTA "Kontakt ↗"
+  - kolejność: LinkedIn przed przyciskiem CTA
+  - hamburger po prawej na mobile
+- Tagi kategorii przywrócone na kaflach projektów
+- Padding na /projekty (korekta odstępów)
+- Nawigacja poprzedni/następny na case studies — z tytułem projektu pod nazwą klienta
