@@ -21,9 +21,23 @@ const SECURITY_HEADERS = [
   { key: "Content-Security-Policy", value: CSP },
 ];
 
+// Panel Keystatic ma własny runtime, który CSP blokuje (inline scripts/styles,
+// connect do GitHub OAuth itd.). Dajemy mu podstawowe nagłówki bezpieczeństwa,
+// ale BEZ Content-Security-Policy, żeby panel ładował się normalnie.
+const KEYSTATIC_HEADERS = [
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+];
+
 const nextConfig: NextConfig = {
   async headers() {
-    return [{ source: "/:path*", headers: SECURITY_HEADERS }];
+    return [
+      // CSP + pełne nagłówki dla wszystkich tras POZA /keystatic.
+      { source: "/((?!keystatic).*)", headers: SECURITY_HEADERS },
+      // /keystatic — tylko podstawowe nagłówki, bez CSP.
+      { source: "/keystatic/:path*", headers: KEYSTATIC_HEADERS },
+    ];
   },
   async redirects() {
     return [
