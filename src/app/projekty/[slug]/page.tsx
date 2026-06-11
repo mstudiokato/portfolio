@@ -92,6 +92,7 @@ function ProjectFooterNav({ project }: { project: Project }) {
           >
             <span className="text-caption">← Poprzedni</span>
             <span className="font-display text-ink">{prev.client}</span>
+            <span className="text-caption text-muted">{prev.title}</span>
           </Link>
         ) : (
           <span />
@@ -103,6 +104,7 @@ function ProjectFooterNav({ project }: { project: Project }) {
           >
             <span className="text-caption">Następny →</span>
             <span className="font-display text-ink">{next.client}</span>
+            <span className="text-caption text-muted">{next.title}</span>
           </Link>
         ) : (
           <span />
