@@ -134,6 +134,7 @@ export function GeneratorForm() {
   const [copied, setCopied] = useState(false);
   const [fileError, setFileError] = useState("");
   const justGeneratedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Miniaturki — obiektowe URL-e tworzone z plików (revoke przy zmianie).
   useEffect(() => {
@@ -142,10 +143,12 @@ export function GeneratorForm() {
     return () => urls.forEach((u) => URL.revokeObjectURL(u));
   }, [files]);
 
-  // Sprzątanie timera "Gotowe ✓" przy odmontowaniu (brak setState po unmount).
+  // Sprzątanie timerów ("Gotowe ✓" / "Skopiowano ✓") przy odmontowaniu —
+  // brak setState po unmount.
   useEffect(() => {
     return () => {
       if (justGeneratedTimer.current) clearTimeout(justGeneratedTimer.current);
+      if (copiedTimer.current) clearTimeout(copiedTimer.current);
     };
   }, []);
 
@@ -187,7 +190,8 @@ export function GeneratorForm() {
     try {
       await navigator.clipboard.writeText(output);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
+      if (copiedTimer.current) clearTimeout(copiedTimer.current);
+      copiedTimer.current = setTimeout(() => setCopied(false), 2000);
     } catch {
       // Fallback: zaznacz textarea, żeby Michał mógł skopiować ręcznie.
       outputRef.current?.select();
