@@ -66,6 +66,8 @@ Na podstawie powyższych danych napisz masterprompt który:
 4. Projektuje strukturę strony dopasowaną do branży i grup docelowych klienta
 5. Zawiera wytyczne humanizacji designu
 
+Zanim zaczniesz pisać masterprompt — w jednym akapicie opisz DNA tej marki jak byś tłumaczył innemu designerowi przy kawie. Dopiero potem pisz masterprompt zaczynając od "# MASTERPROMPT —".
+
 ## Zasady projektowe których zawsze przestrzegasz
 
 Czego unikać bezwzględnie:
@@ -158,6 +160,8 @@ export function GeneratorForm() {
     setCopied(false);
   }
 
+  const isEmpty = notes.trim() === "" && url.trim() === "";
+
   return (
     <div className="mx-auto max-w-6xl px-6 py-10 md:py-14">
       {/* Nagłówek */}
@@ -201,17 +205,25 @@ export function GeneratorForm() {
             />
           </div>
 
-          {/* Generuj */}
+          {/* Generuj — aktywny dopiero gdy jest cokolwiek o kliencie */}
           <div>
             <button
               type="button"
               onClick={handleGenerate}
-              className="w-full rounded-button bg-lime px-6 py-4 text-base font-semibold text-navy transition-opacity hover:opacity-90"
+              disabled={isEmpty}
+              className={cn(
+                "w-full rounded-button px-6 py-4 text-base font-semibold transition-opacity",
+                isEmpty
+                  ? "cursor-not-allowed border border-border bg-surface text-muted"
+                  : "bg-lime text-navy hover:opacity-90",
+              )}
             >
               {justGenerated ? "Gotowe ✓" : "Generuj prompt"}
             </button>
             <p className="mt-2 text-xs text-muted">
-              Screenshoty klienta daj bezpośrednio w LLM razem z tym promptem
+              {isEmpty
+                ? "Wpisz cokolwiek o kliencie żeby wygenerować prompt"
+                : "Screenshoty klienta daj bezpośrednio w LLM razem z tym promptem"}
             </p>
           </div>
         </section>
