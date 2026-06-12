@@ -15,7 +15,7 @@ import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Container, Section } from "@/components/ui/layout";
 import { H1, Lead, Body, Label, Caption } from "@/components/ui/typography";
 import { ProjectImage } from "@/components/project-image";
-import { GallerySlider } from "@/components/gallery-slider";
+import { ProjectGalleryClient } from "@/components/project-gallery-client";
 
 export function generateStaticParams() {
   return getAllProjects().map((p) => ({ slug: p.slug }));
@@ -174,61 +174,6 @@ export default async function ProjectPage({
   );
 }
 
-// Mapowanie liczby kolumn → klasa Tailwind (statyczna, by nie zgubił jej JIT).
-const GRID_COLS: Record<number, string> = {
-  1: "grid-cols-1",
-  2: "grid-cols-2",
-  3: "grid-cols-3",
-};
-
-/**
- * Galeria zdjęć projektu — STAŁA wysokość (280px mobile / 420px desktop),
- * object-cover. Logika układu (spójna z GalleryBlock):
- *  - 1 zdjęcie → pełna szerokość (grid-cols-1);
- *  - 2–3 zdjęcia → grid-cols-{n};
- *  - 4+ zdjęć → slider ze strzałkami.
- */
-function ProjectGallery({ images }: { images: ImageRef[] }) {
-  const count = images.length;
-  if (count === 0) return null;
-
-  // Slider: 4 lub więcej zdjęć (stała wysokość, naturalna szerokość kafli).
-  if (count >= 4) {
-    return (
-      <GallerySlider>
-        {images.map((img) => (
-          <div
-            key={img.src}
-            data-gallery-item
-            className="shrink-0 snap-start"
-          >
-            <ProjectImage
-              src={img.src}
-              alt={img.alt}
-              ratio="strip"
-              sizes="(min-width: 1024px) 28rem, 80vw"
-            />
-          </div>
-        ))}
-      </GallerySlider>
-    );
-  }
-
-  // Grid 1–3 kolumn: stała wysokość, pełna szerokość komórki, object-cover.
-  return (
-    <div className={cn("grid gap-3", GRID_COLS[count])}>
-      {images.map((img) => (
-        <ProjectImage
-          key={img.src}
-          src={img.src}
-          alt={img.alt}
-          ratio="fixed"
-          sizes="(min-width: 640px) 33vw, 100vw"
-        />
-      ))}
-    </div>
-  );
-}
 
 /**
  * JEDEN spójny system etykiet na całej podstronie (META + nagłówki sekcji) —
@@ -357,7 +302,7 @@ function CaseStudyView({ project }: { project: Project }) {
         <section className="border-border mt-12 border-t pt-8">
           <SectionLabel>Galeria</SectionLabel>
           <div className="mt-6">
-            <ProjectGallery images={project.gallery} />
+            <ProjectGalleryClient images={project.gallery} />
           </div>
         </section>
       ) : null}
@@ -393,7 +338,7 @@ function GalleryView({ project }: { project: Project }) {
       {/* Galeria — slider gdy 5+ zdjęć lub zdjęcia poziome; inaczej zawijany rząd. */}
       {project.gallery.length > 0 ? (
         <div className="mt-10">
-          <ProjectGallery images={project.gallery} />
+          <ProjectGalleryClient images={project.gallery} />
         </div>
       ) : (
         <Caption className="mt-10">Galeria w przygotowaniu.</Caption>
