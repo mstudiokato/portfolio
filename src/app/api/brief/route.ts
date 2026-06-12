@@ -304,13 +304,15 @@ export async function POST(req: Request) {
 
   try {
     // 1. Mail do właściciela
+    console.log("[brief] Sending owner email", { company, email, attachments: attachments.length });
     const { error: ownerErr } = await resend.emails.send({
       from: MAIL_FROM,
       to: MAIL_TO,
       replyTo: email,
       subject: `Nowy brief — ${company}`,
       html: buildOwnerHtml(d),
-      attachments,
+      text: buildClientText(name, firstName),
+      ...(attachments.length > 0 ? { attachments } : {}),
     });
     if (ownerErr) {
       console.error("[brief] Resend (owner):", ownerErr);

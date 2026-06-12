@@ -567,46 +567,54 @@ function Step4({ data, set, errors }: StepProps) {
           </p>
           <div className="flex flex-col gap-2">
             {[
-              { v: "has-codes", label: "Tak, mam konkretne kolory" },
-              { v: "has-no-codes", label: "Mam kolory ale nie znam kodów" },
-              { v: "none", label: "Nie mam — wspólnie dobierzemy paletę która będzie pasować do Twojego stylu" },
-            ].map(({ v, label }) => (
-              <RadioCard
-                key={v}
-                name="colorsChoice"
-                value={v}
-                checked={data.colorsChoice === v}
-                onChange={(val) => { set("colorsChoice", val); set("colorsText", ""); }}
-              >
-                {label}
-              </RadioCard>
+              {
+                v: "has-codes",
+                label: "Tak, mam konkretne kolory",
+                field: (
+                  <input
+                    type="text"
+                    value={data.colorsText}
+                    onChange={(e) => set("colorsText", e.target.value)}
+                    placeholder="np. #FF0000, #002244, albo: ciemny granat i złoto"
+                    className={FIELD}
+                  />
+                ),
+              },
+              {
+                v: "has-no-codes",
+                label: "Mam kolory ale nie znam kodów",
+                field: (
+                  <textarea
+                    rows={2}
+                    value={data.colorsText}
+                    onChange={(e) => set("colorsText", e.target.value)}
+                    placeholder="Opisz je słowami — np. ciepły brąz, biel, odrobina zieleni"
+                    className={cn(FIELD, "resize-y")}
+                  />
+                ),
+              },
+              {
+                v: "none",
+                label: "Nie mam — wspólnie dobierzemy paletę która będzie pasować do Twojego stylu",
+                field: null,
+              },
+            ].map(({ v, label, field }) => (
+              <div key={v}>
+                <RadioCard
+                  name="colorsChoice"
+                  value={v}
+                  checked={data.colorsChoice === v}
+                  onChange={(val) => { set("colorsChoice", val); set("colorsText", ""); }}
+                >
+                  {label}
+                </RadioCard>
+                {data.colorsChoice === v && field ? (
+                  <div className="mt-2 pl-8">{field}</div>
+                ) : null}
+              </div>
             ))}
           </div>
           <FieldError msg={errors.colorsChoice} />
-
-          {data.colorsChoice === "has-codes" ? (
-            <div className="mt-3">
-              <input
-                type="text"
-                value={data.colorsText}
-                onChange={(e) => set("colorsText", e.target.value)}
-                placeholder="np. #FF0000, #002244, albo: ciemny granat i złoto"
-                className={FIELD}
-              />
-            </div>
-          ) : null}
-
-          {data.colorsChoice === "has-no-codes" ? (
-            <div className="mt-3">
-              <textarea
-                rows={2}
-                value={data.colorsText}
-                onChange={(e) => set("colorsText", e.target.value)}
-                placeholder="Opisz je słowami — np. ciepły brąz, biel, odrobina zieleni"
-                className={cn(FIELD, "resize-y")}
-              />
-            </div>
-          ) : null}
         </div>
 
         <div>
@@ -673,26 +681,27 @@ function Step5({ data, set, errors, toggleSection, toggleReady }: Step5Props) {
           <p className={LABEL}>Co ma znaleźć się na stronie?</p>
           <div className="flex flex-col gap-2">
             {SECTIONS.map((s) => (
-              <CheckCard
-                key={s}
-                checked={data.sections.includes(s)}
-                onChange={() => toggleSection(s)}
-              >
-                {s}
-              </CheckCard>
+              <div key={s}>
+                <CheckCard
+                  checked={data.sections.includes(s)}
+                  onChange={() => toggleSection(s)}
+                >
+                  {s}
+                </CheckCard>
+                {s === "Coś innego" && data.sections.includes(s) ? (
+                  <div className="mt-2 pl-8">
+                    <textarea
+                      rows={2}
+                      value={data.otherSection}
+                      onChange={(e) => set("otherSection", e.target.value)}
+                      placeholder="Napisz co masz na myśli"
+                      className={cn(FIELD, "resize-y")}
+                    />
+                  </div>
+                ) : null}
+              </div>
             ))}
           </div>
-          {data.sections.includes("Coś innego") ? (
-            <div className="mt-3">
-              <textarea
-                rows={2}
-                value={data.otherSection}
-                onChange={(e) => set("otherSection", e.target.value)}
-                placeholder="Napisz co masz na myśli"
-                className={cn(FIELD, "resize-y")}
-              />
-            </div>
-          ) : null}
         </div>
 
         <div>
