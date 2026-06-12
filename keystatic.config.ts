@@ -53,8 +53,8 @@ export default config({
       path: "src/content/projekty/*",
       format: { contentField: "content" },
       entryLayout: "content",
-      // Kolumny listy: kategoria → klient → rok, a kolumna slug (title) na końcu.
-      columns: ["category", "client", "year", "title"],
+      // Kolumny listy: tytuł → kategoria → klient → rok (slug zawsze pierwszy — limit Keystatic).
+      columns: ["title", "category", "client", "year"],
       schema: {
         title: fields.slug({
           name: {
