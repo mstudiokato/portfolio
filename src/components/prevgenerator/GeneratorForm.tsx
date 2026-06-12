@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 
-const MAX_FILES = 10;
-
 // ── Design tokens (spójne z /brief, contact-form) ───────────────────────────────
 
 const FIELD =
@@ -12,136 +10,117 @@ const FIELD =
 
 const LABEL = "block text-xs font-semibold text-muted uppercase tracking-widest mb-2";
 
-// ── Helpers ─────────────────────────────────────────────────────────────────────
+// ── Szablon promptu dla LLM ─────────────────────────────────────────────────────
+// Generator nie produkuje masterpromptu bezpośrednio — produkuje prompt dla LLM
+// (Claude Opus lub inny), który Michał wkleja razem ze screenshotami klienta.
+// LLM analizuje dane i pisze gotowy masterprompt do narzędzia generującego strony.
 
-function pluralFiles(n: number) {
-  if (n === 1) return "1 plik";
-  if (n >= 2 && n <= 4) return `${n} pliki`;
-  return `${n} plików`;
-}
-
-// ── Szablon masterpromptu ────────────────────────────────────────────────────────
-
-function buildMasterprompt(data: {
-  url: string;
-  notes: string;
-  fileNames: string[];
-}): string {
+function buildOpusPrompt(data: { url: string; notes: string }): string {
   const url = data.url.trim();
   const notes = data.notes.trim();
-  const { fileNames } = data;
 
-  const kontekst = [
-    url ? `Strona klienta: ${url}` : "",
-    notes ? `Informacje o kliencie:\n${notes}` : "Klient: [do uzupełnienia]",
-  ]
-    .filter(Boolean)
-    .join("\n");
+  return `Jesteś doświadczonym Senior Graphic Designerem z 15-letnim doświadczeniem w brandingu i projektowaniu stron internetowych.
 
-  const materialy =
-    fileNames.length > 0
-      ? `Załączone screenshoty do analizy: ${fileNames.join(", ")}
-Przeanalizuj je pod kątem: obecnego stylu marki, kolorystyki, typografii, ogólnego klimatu. Użyj jako punktu wyjścia — zachowaj DNA marki, ale pokaż jak mogłoby wyglądać premium.`
-      : "[brak screenshotów — bazuj na notatkach]";
+Twoim zadaniem jest stworzenie szczegółowego MASTERPROMPTU do wygenerowania wizualizacji strony internetowej dla poniższego klienta. Ten masterprompt trafi do narzędzia AI do generowania stron (np. NanoBanana, Seedance lub podobnego).
 
-  return `# MASTERPROMPT — Wizualizacja strony klienta
+## Nadrzędna filozofia projektu — The $10K Checklist
+Każda decyzja projektowa w masterprompcie który napiszesz musi przejść przez osiem filtrów które oddzielają stronę za $10K od strony za $200:
 
-## Kontekst klienta
-${kontekst}
+01. Point of view, not a template.
+    Strona ma konkretny design direction — brutalist, editorial, dark-luxury, retro-modern, cokolwiek pasuje do TEGO klienta — i realizuje go bez wahania. Strona za $200 jest generyczna. Strona za $10K ma smak i punkt widzenia.
 
-## Cel wizualizacji
-Stwórz wizualizację strony internetowej która pokazuje jak MOGŁABY wyglądać nowa strona tego klienta. Służy jako propozycja kierunku wizualnego do akceptacji — nie finalny projekt. Ma zachwycić klienta i skłonić go do pytania "kiedy zaczynamy?".
+02. Typography that does work.
+    Para display + body, żadna z nich to nie Inter ani Roboto. Skala i grubość budują hierarchię. Nagłówki wyglądają jak wybrane, nie domyślne.
 
-## Materiały referencyjne
-${materialy}
+03. A restrained color system.
+    3-5 kolorów używanych konsekwentnie. Żadnych tęczowych palet. Premium sygnalizowane przez powściągliwość, nie dekorację.
 
-## Design direction
-Styl: nowoczesny, profesjonalny, dopasowany do branży klienta
-Inspiracje: premium sports branding, editorial layouts, dopracowane systemy wizualne
-Czego unikać bezwzględnie: generycznego SaaS looku, fioletowych gradientów AI, glassmorphismu, blobów 3D, przesadnego parallaxu, szablonowego wyglądu 2024/2025
+04. Hierarchy that breathes.
+    Whitespace, skala i kontrast prowadzą wzrok bez wysiłku. Strona ma wyraźne priorytety: primary, secondary, tertiary — żadnych ścian równorzędnej treści.
 
-## Kolorystyka
-Dobierz paletę dopasowaną do branży i charakteru klienta.
-Zasady:
-- Użyj kulturowych palet inspirowanych konkretnym miejscem lub nastrojem
-- Dodaj 2-3 nieoczekiwane akcenty które działają
-- Jeden wyrazisty kolor jako akcent — nie dominanta
-- Unikaj domyślnej palety Tailwind (gray-50, blue-500 itp.)
-- Unikaj perfekcyjnie symetrycznych, "bezpiecznych" kombinacji
+05. Imagery with intent.
+    Nie domyślne stocki z Unsplash które wszyscy widzieli. Albo custom fotografia, albo generowane assety pasujące do art direction, albo curation tak precyzyjna że obrazy wyglądają jak zamówione.
 
-## Typografia
-Mieszaj kultury designerskie — np. japoński minimalizm z europejskim editorialem.
-Zasady:
-- NIE używaj Inter jako głównej czcionki
-- NIE używaj Poppins+Roboto combo
-- NIE używaj tylko font-weight 400/600/800
-- Użyj zmiennych fontów z dynamicznymi wagami
-- Stwórz niestandardowe, ryzykowne pary czcionek z duszą
+06. Motion that whispers.
+    Mikrointerakcje i scroll behavior wyglądają jak ręcznie zrobione, nie AOS-fade-up na wszystkim. Designer kiwa głową, nie przewraca oczami.
 
-## Struktura strony
-Hero z mocnym nagłówkiem i pojedynczym CTA →
-O firmie/wartościach →
-Usługi lub produkty →
-Realizacje lub przykłady prac →
-Opinie/social proof →
-Kontakt
+07. Mobile that's designed, not shrunk.
+    Decyzje layoutu na telefonie są inne niż na desktopie — nie skompresowana wersja desktopu. Tu 90% tanich stron odpada.
 
-Layout — unikaj:
-- grid grid-cols-3 gap-8 wszędzie
+08. The invisible expensive stuff.
+    Ładowanie poniżej 2s, WCAG AA kontrast, keyboard navigation, semantyczny HTML, prawdziwe meta tagi. Użytkownicy tego nie widzą — ale czują "ta strona jest szybka i działa". To różnica między drogim a tanim.
+
+Każda sekcja masterpromptu który napiszesz musi respektować te osiem zasad. Jeśli jakaś decyzja nie przechodzi przez ten filtr — zmień ją.
+
+## Dane klienta
+${notes ? notes : "[brak danych — uzupełnij przed wysłaniem]"}
+${url ? `\nStrona klienta do analizy: ${url}` : ""}
+
+## Twoje zadanie
+Na podstawie powyższych danych napisz masterprompt który:
+
+1. Określa dokładny design direction dla tego klienta
+   (nastrój, styl, inspiracje — wyprowadzone wyłącznie z danych klienta i jego branży, nie generyczne)
+2. Definiuje paletę kolorów (bazując na danych klienta — jeśli są wskazówki kolorystyczne, użyj ich jako punktu wyjścia; jeśli nie ma — dobierz do branży i klimatu)
+3. Dobiera typografię z charakterem dopasowaną do tego konkretnego klienta
+4. Projektuje strukturę strony dopasowaną do branży i grup docelowych klienta
+5. Zawiera wytyczne humanizacji designu
+
+## Zasady projektowe których zawsze przestrzegasz
+
+Czego unikać bezwzględnie:
+- Generycznego SaaS looku
+- Fioletowych gradientów AI
+- Glassmorphismu, blobów 3D
+- Przesadnego parallaxu
+- Szablonowego wyglądu 2024/2025
+- Inter jako głównej czcionki
+- Poppins+Roboto combo
+- Font-weight tylko 400/600/800
+- grid-cols-3 gap-8 wszędzie
 - Hero z tekstem idealnie na środku
-- 3-kolumnowych sekcji features
 - max-w-7xl dla każdego kontenera
 - py-16/py-12 dla każdej sekcji
 
-Layout — rób to zamiast:
+Co robić zamiast:
+- Palety inspirowane charakterem i klimatem tego konkretnego klienta
+- 2-3 nieoczekiwane akcenty które działają
+- Zmienne fonty z dynamicznymi wagami
+- Niestandardowe pary czcionek z charakterem
 - Bento box layouts, nieregularne siatki
 - Elementy zachodzące na siebie organicznie
 - Nieregularne marginesy i organiczna biała przestrzeń
+- Celowe niedoskonałości (20% designu)
+- Mikroanimacje 200-500ms z cubic-bezier
 
-## Humanizacja designu
-Celowe niedoskonałości (20% designu):
-- Nieregularne odstępy między sekcjami (1.75rem 2.1rem 2.3rem zamiast 2rem wszędzie)
-- Lekko off-center wyrównanie tekstu (2-3%)
-- Subtelne wariacje powtarzalnych elementów
-
-Mikroanimacje 200-500ms z organicznym easingiem (cubic-bezier).
-Hover effects z charakterem — nieoczekiwane ale subtelne.
-
-## Wymagania techniczne
+## Wymagania techniczne masterpromptu
+Masterprompt który napiszesz musi nakazywać:
 - Wszystko w 1 pliku HTML z wbudowanym CSS i JavaScript
 - Favicon jako inline SVG
 - Responsive, mobile-first
-- Semantyczny HTML5, czyste klasy
+- Semantyczny HTML5
 - WCAG 2.1 basics
 - Smooth scrolling, lazy loading
 - Keyboard navigation
 
-## Jakość wykonania
-Daj z siebie wszystko — to ma być Twoje najlepsze dzieło.
-Jakość która sprawi że designerzy Apple i Tesla powiedzą: wow.
-To ma wyglądać jak projekt za kilka–kilkanaście tysięcy złotych, pokazujący klientowi "a gdyby twoja strona wyglądała tak?"`;
+## Format wyjściowy
+Napisz masterprompt gotowy do skopiowania i wklejenia w narzędzie do generowania stron. Zacznij od "# MASTERPROMPT —" i pisz bezpośrednio — bez wstępów, bez komentarzy, bez "oto masterprompt:".
+
+## Ważne
+Jeśli przekazuję Ci screenshoty — przeanalizuj je dokładnie przed napisaniem masterpromptu. Screenshoty pokazują obecną stronę lub materiały klienta — wyciągnij z nich DNA marki i użyj jako punktu wyjścia.`;
 }
 
 // ── Komponent ────────────────────────────────────────────────────────────────────
 
 export function GeneratorForm() {
-  const [files, setFiles] = useState<File[]>([]);
-  const [thumbnailUrls, setThumbnailUrls] = useState<string[]>([]);
   const [notes, setNotes] = useState("");
   const [url, setUrl] = useState("");
   const [output, setOutput] = useState("");
   const [justGenerated, setJustGenerated] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [fileError, setFileError] = useState("");
   const justGeneratedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Miniaturki — obiektowe URL-e tworzone z plików (revoke przy zmianie).
-  useEffect(() => {
-    const urls = files.map((f) => URL.createObjectURL(f));
-    setThumbnailUrls(urls);
-    return () => urls.forEach((u) => URL.revokeObjectURL(u));
-  }, [files]);
+  const outputRef = useRef<HTMLTextAreaElement>(null);
 
   // Sprzątanie timerów ("Gotowe ✓" / "Skopiowano ✓") przy odmontowaniu —
   // brak setState po unmount.
@@ -152,34 +131,8 @@ export function GeneratorForm() {
     };
   }, []);
 
-  function handleFiles(e: React.ChangeEvent<HTMLInputElement>) {
-    const selected = Array.from(e.target.files ?? []);
-    const remaining = MAX_FILES - files.length;
-    const allowed = selected.slice(0, remaining);
-    if (selected.length > remaining) {
-      setFileError(`Możesz dodać maks. ${MAX_FILES} plików łącznie (dodano ${allowed.length}).`);
-    } else {
-      setFileError("");
-    }
-    if (allowed.length > 0) setFiles((f) => [...f, ...allowed]);
-    e.target.value = "";
-  }
-
-  function removeFile(i: number) {
-    setFiles((f) => f.filter((_, idx) => idx !== i));
-    setFileError("");
-  }
-
   function handleGenerate() {
-    // Składanie promptu jest synchroniczne — generujemy natychmiast.
-    // fileNames to same nazwy (prompt jest tekstowy); pliki Michał wrzuca
-    // osobno do NanoBanana/Seedance.
-    const prompt = buildMasterprompt({
-      url,
-      notes,
-      fileNames: files.map((_, i) => `screenshot_${i + 1}.jpg`),
-    });
-    setOutput(prompt);
+    setOutput(buildOpusPrompt({ url, notes }));
     // Wizualne potwierdzenie na przycisku przez 800ms — bez opóźniania generowania.
     setJustGenerated(true);
     if (justGeneratedTimer.current) clearTimeout(justGeneratedTimer.current);
@@ -199,15 +152,11 @@ export function GeneratorForm() {
   }
 
   function handleClearAll() {
-    setFiles([]);
     setNotes("");
     setUrl("");
     setOutput("");
-    setFileError("");
     setCopied(false);
   }
-
-  const outputRef = useRef<HTMLTextAreaElement>(null);
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-10 md:py-14">
@@ -215,69 +164,14 @@ export function GeneratorForm() {
       <header className="mb-8 md:mb-12">
         <h1 className="font-display text-h2 text-ink">Preview Generator</h1>
         <p className="text-muted mt-2 text-base leading-relaxed">
-          Złóż masterprompt do wizualizacji strony klienta
+          Wpisz co wiesz o kliencie → skopiuj → wklej w LLM razem ze screenshotami klienta
         </p>
       </header>
 
       <div className="grid gap-8 lg:grid-cols-2">
         {/* ── Wejście ──────────────────────────────────────────────────────── */}
         <section className="flex flex-col gap-6">
-          {/* Pole 1 — Screenshoty */}
-          <div>
-            <label className={LABEL}>Screenshoty klienta</label>
-            <p className="text-muted mb-2 text-sm">
-              Wrzuć co masz — strona, Instagram, wizytówka, cokolwiek
-            </p>
-
-            {files.length < MAX_FILES ? (
-              <label
-                htmlFor="pg-files"
-                className="flex cursor-pointer flex-col items-center gap-2 rounded-card border-2 border-dashed border-border px-4 py-8 text-center transition-colors hover:border-muted"
-              >
-                <span className="text-2xl">📎</span>
-                <span className="text-base text-ink">Kliknij żeby dodać pliki</span>
-                <span className="text-sm text-muted">
-                  JPG, PNG, GIF, WEBP — maks. {MAX_FILES} plików łącznie
-                </span>
-                <input
-                  id="pg-files"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleFiles}
-                  className="sr-only"
-                />
-              </label>
-            ) : null}
-
-            {thumbnailUrls.length > 0 ? (
-              <div className="mt-3">
-                <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-                  {thumbnailUrls.map((u, i) => (
-                    <div
-                      key={i}
-                      className="relative aspect-square overflow-hidden rounded-card bg-surface"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={u} alt={`Screenshot ${i + 1}`} className="h-full w-full object-cover" />
-                      <button
-                        type="button"
-                        onClick={() => removeFile(i)}
-                        aria-label={`Usuń plik ${i + 1}`}
-                        className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-navy/80 text-xs text-ink transition-colors hover:bg-red-500"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ))}
-                </div>
-                <p className="mt-2 text-sm text-muted">{pluralFiles(files.length)}</p>
-              </div>
-            ) : null}
-            {fileError ? <p className="mt-1.5 text-sm text-red-400">{fileError}</p> : null}
-          </div>
-
-          {/* Pole 2 — Notatki */}
+          {/* Notatki */}
           <div>
             <label htmlFor="pg-notes" className={LABEL}>
               Co wiesz o kliencie
@@ -286,12 +180,12 @@ export function GeneratorForm() {
               id="pg-notes"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Wklej tu wszystko co masz — tekst ze strony, opis z rozmowy, obserwacje, nazwa firmy, branża, co sprzedają, do kogo, jakie mają kolory, co Ci się podoba/nie podoba w ich obecnej stronie... im więcej tym lepiej, może być chaos"
+              placeholder="Wpisz wszystko co masz — nazwa firmy, branża, co sprzedają, do kogo, obecna strona (dobra/zła?), klimat marki, kolory jeśli znasz, co Ci się podoba/nie podoba, wrażenia z rozmowy... im więcej tym lepiej, może być totalny chaos"
               className={cn(FIELD, "min-h-[200px] resize-y")}
             />
           </div>
 
-          {/* Pole 3 — URL */}
+          {/* URL */}
           <div>
             <label htmlFor="pg-url" className={LABEL}>
               Link do strony klienta (opcjonalnie)
@@ -301,36 +195,38 @@ export function GeneratorForm() {
               type="text"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://... — tylko dla referencji, nie jest scrapowany"
+              placeholder="https://... — LLM uwzględni jako kontekst"
               className={FIELD}
               inputMode="url"
             />
-            <p className="text-muted mt-2 text-sm">
-              Wklej jeśli masz — pojawi się w prompcie jako kontekst
-            </p>
           </div>
 
           {/* Generuj */}
-          <button
-            type="button"
-            onClick={handleGenerate}
-            className="w-full rounded-button bg-lime px-6 py-4 text-base font-semibold text-navy transition-opacity hover:opacity-90"
-          >
-            {justGenerated ? "Gotowe ✓" : "Generuj masterprompt"}
-          </button>
+          <div>
+            <button
+              type="button"
+              onClick={handleGenerate}
+              className="w-full rounded-button bg-lime px-6 py-4 text-base font-semibold text-navy transition-opacity hover:opacity-90"
+            >
+              {justGenerated ? "Gotowe ✓" : "Generuj prompt"}
+            </button>
+            <p className="mt-2 text-xs text-muted">
+              Screenshoty klienta daj bezpośrednio w LLM razem z tym promptem
+            </p>
+          </div>
         </section>
 
         {/* ── Wyjście ──────────────────────────────────────────────────────── */}
         <section className="flex flex-col gap-4">
           <label htmlFor="pg-output" className={LABEL}>
-            Wygenerowany masterprompt
+            Wygenerowany prompt
           </label>
           <textarea
             id="pg-output"
             ref={outputRef}
             value={output}
             onChange={(e) => setOutput(e.target.value)}
-            placeholder="Tu pojawi się wygenerowany masterprompt…"
+            placeholder="Tu pojawi się prompt do wklejenia w LLM…"
             spellCheck={false}
             className="w-full min-h-[400px] resize-y rounded-button border border-border bg-section px-4 py-3 font-mono text-[13px] leading-[1.6] text-ink placeholder:text-muted focus-visible:border-lime focus:outline-none"
           />
