@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Script from "next/script";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
+import {
+  TurnstileWidget,
+  type TurnstileHandle,
+} from "@/components/turnstile-widget";
 
 const CONTACT_EMAIL = "kontakt@michal-stezaly.pl";
-const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 const MAX_FILES = 10;
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
@@ -756,7 +758,12 @@ function Step5({ data, set, errors, toggleSection, toggleReady }: Step5Props) {
   );
 }
 
-function Step6({ data, set, errors }: StepProps) {
+function Step6({
+  data,
+  set,
+  errors,
+  turnstileRef,
+}: StepProps & { turnstileRef: React.Ref<TurnstileHandle> }) {
   return (
     <>
       <StepHeader
@@ -842,9 +849,7 @@ function Step6({ data, set, errors }: StepProps) {
         </div>
 
         {/* Turnstile */}
-        {SITE_KEY ? (
-          <div className="cf-turnstile" data-sitekey={SITE_KEY} data-theme="dark" />
-        ) : null}
+        <TurnstileWidget ref={turnstileRef} />
 
         {/* Zgoda RODO */}
         <div>
@@ -909,6 +914,7 @@ export function BriefForm() {
   const [serverError, setServerError] = useState("");
   const [thumbnailUrls, setThumbnailUrls] = useState<string[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+  const turnstileRef = useRef<TurnstileHandle>(null);
 
   useEffect(() => {
     const urls = data.files.map((f) => URL.createObjectURL(f));
@@ -1028,10 +1034,7 @@ export function BriefForm() {
       fd.append("ready", JSON.stringify(data.ready));
 
       // Turnstile token
-      const token =
-        (containerRef.current?.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement | null)
-          ?.value ?? "";
-      fd.append("turnstileToken", token);
+      fd.append("turnstileToken", turnstileRef.current?.getToken() ?? "");
 
       // Kompresja i dołączenie plików
       for (let i = 0; i < data.files.length; i++) {
@@ -1052,11 +1055,13 @@ export function BriefForm() {
           `Coś poszło nie tak. Spróbuj jeszcze raz lub napisz bezpośrednio na ${CONTACT_EMAIL}`,
       );
       setStatus("error");
+      turnstileRef.current?.reset();
     } catch {
       setServerError(
         `Coś poszło nie tak. Spróbuj jeszcze raz lub napisz bezpośrednio na ${CONTACT_EMAIL}`,
       );
       setStatus("error");
+      turnstileRef.current?.reset();
     }
   }
 
@@ -1088,13 +1093,6 @@ export function BriefForm() {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-navy">
-      {SITE_KEY && step === 6 ? (
-        <Script
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-          strategy="afterInteractive"
-        />
-      ) : null}
-
       {/* Progress bar */}
       <div className="sticky top-[var(--header-h,65px)] z-10 bg-navy/95 backdrop-blur-sm">
         <div className="h-1 bg-border">
@@ -1135,7 +1133,9 @@ export function BriefForm() {
             toggleReady={toggleReady}
           />
         ) : null}
-        {step === 6 ? <Step6 data={data} set={set} errors={errors} /> : null}
+        {step === 6 ? (
+          <Step6 data={data} set={set} errors={errors} turnstileRef={turnstileRef} />
+        ) : null}
 
         {/* Nawigacja */}
         <div className="mt-10 flex items-center gap-3">

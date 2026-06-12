@@ -1,9 +1,12 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Script from "next/script";
 import Link from "next/link";
 import { contactSchema } from "@/lib/contact-schema";
+import {
+  TurnstileWidget,
+  type TurnstileHandle,
+} from "@/components/turnstile-widget";
 
 const FIELD =
   "bg-surface border-border rounded-button text-ink placeholder:text-muted mt-2 w-full border px-4 py-3 focus-visible:border-lime";
@@ -13,16 +16,9 @@ type FieldErrors = Partial<
   Record<"name" | "email" | "subject" | "message" | "consent", string>
 >;
 
-const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-
-declare global {
-  interface Window {
-    turnstile?: { reset: (el?: string | HTMLElement) => void };
-  }
-}
-
 export function ContactForm({ calUrl }: { calUrl: string }) {
   const formRef = useRef<HTMLFormElement>(null);
+  const turnstileRef = useRef<TurnstileHandle>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -71,12 +67,7 @@ export function ContactForm({ calUrl }: { calUrl: string }) {
     setStatus("loading");
     setServerError("");
 
-    const token =
-      (
-        formRef.current?.querySelector(
-          '[name="cf-turnstile-response"]',
-        ) as HTMLInputElement | null
-      )?.value ?? "";
+    const token = turnstileRef.current?.getToken() ?? "";
 
     try {
       const res = await fetch("/api/kontakt", {
@@ -107,7 +98,7 @@ export function ContactForm({ calUrl }: { calUrl: string }) {
           consent: false,
           firma: "",
         });
-        window.turnstile?.reset();
+        turnstileRef.current?.reset();
         return;
       }
 
@@ -116,13 +107,13 @@ export function ContactForm({ calUrl }: { calUrl: string }) {
           "Coś poszło nie tak, spróbuj ponownie lub napisz bezpośrednio na kontakt@michal-stezaly.pl",
       );
       setStatus("error");
-      window.turnstile?.reset();
+      turnstileRef.current?.reset();
     } catch {
       setServerError(
         "Coś poszło nie tak. Napisz bezpośrednio na kontakt@michal-stezaly.pl",
       );
       setStatus("error");
-      window.turnstile?.reset();
+      turnstileRef.current?.reset();
     }
   }
 
@@ -170,13 +161,6 @@ export function ContactForm({ calUrl }: { calUrl: string }) {
       className="flex flex-col gap-5"
       aria-label="Formularz kontaktowy"
     >
-      {SITE_KEY ? (
-        <Script
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-          strategy="afterInteractive"
-        />
-      ) : null}
-
       <div>
         <label htmlFor="cf-name" className="text-label text-muted uppercase">
           Imię i nazwisko
@@ -286,13 +270,7 @@ export function ContactForm({ calUrl }: { calUrl: string }) {
       </div>
 
       {/* Widget Turnstile (gdy skonfigurowany site key). */}
-      {SITE_KEY ? (
-        <div
-          className="cf-turnstile"
-          data-sitekey={SITE_KEY}
-          data-theme="dark"
-        />
-      ) : null}
+      <TurnstileWidget ref={turnstileRef} />
 
       {serverError ? (
         <p role="alert" className="text-caption text-red-400">
