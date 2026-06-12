@@ -58,7 +58,7 @@ const nextConfig: NextConfig = {
       // realnego routingu ani zasobów z /public.
       {
         source:
-          "/:path((?!api/|_next/|projekty$|projekty/|projekty\\?|polityka-prywatnosci|design-system|keystatic|admin|galerie/|klienci/|opinie/|ikonySpec/)(?!.*\\.).+)",
+          "/:path((?!api/|_next/|projekty$|projekty/|projekty\\?|polityka-prywatnosci|design-system|keystatic|admin|brief$|brief/|galerie/|klienci/|opinie/|ikonySpec/)(?!.*\\.).+)",
         destination: "/projekty",
         permanent: false,
       },
