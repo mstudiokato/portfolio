@@ -133,6 +133,7 @@ export function GeneratorForm() {
   const [justGenerated, setJustGenerated] = useState(false);
   const [copied, setCopied] = useState(false);
   const [fileError, setFileError] = useState("");
+  const justGeneratedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Miniaturki — obiektowe URL-e tworzone z plików (revoke przy zmianie).
   useEffect(() => {
@@ -140,6 +141,13 @@ export function GeneratorForm() {
     setThumbnailUrls(urls);
     return () => urls.forEach((u) => URL.revokeObjectURL(u));
   }, [files]);
+
+  // Sprzątanie timera "Gotowe ✓" przy odmontowaniu (brak setState po unmount).
+  useEffect(() => {
+    return () => {
+      if (justGeneratedTimer.current) clearTimeout(justGeneratedTimer.current);
+    };
+  }, []);
 
   function handleFiles(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = Array.from(e.target.files ?? []);
@@ -171,7 +179,8 @@ export function GeneratorForm() {
     setOutput(prompt);
     // Wizualne potwierdzenie na przycisku przez 800ms — bez opóźniania generowania.
     setJustGenerated(true);
-    window.setTimeout(() => setJustGenerated(false), 800);
+    if (justGeneratedTimer.current) clearTimeout(justGeneratedTimer.current);
+    justGeneratedTimer.current = setTimeout(() => setJustGenerated(false), 800);
   }
 
   async function handleCopy() {
