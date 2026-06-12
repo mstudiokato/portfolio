@@ -106,7 +106,13 @@ Masterprompt który napiszesz musi nakazywać:
 - Keyboard navigation
 
 ## Format wyjściowy
-Napisz masterprompt gotowy do skopiowania i wklejenia w narzędzie do generowania stron. Zacznij od "# MASTERPROMPT —" i pisz bezpośrednio — bez wstępów, bez komentarzy, bez "oto masterprompt:".
+Odpowiedz w dokładnie dwóch częściach, nic poza tym:
+
+CZĘŚĆ 1 — jeden akapit zaczynający się od "DNA marki:". Opisz charakter tej marki jak byś tłumaczył innemu designerowi przy kawie. Bez nagłówków, bez bulletów.
+
+CZĘŚĆ 2 — masterprompt zaczynający się od "# MASTERPROMPT —". Pisz bezpośrednio, bez komentarzy, bez "oto masterprompt".
+
+Żadnych wstępów przed CZĘŚCIĄ 1. Żadnych komentarzy między częściami. Żadnego podsumowania po CZĘŚCI 2.
 
 ## Ważne
 Jeśli przekazuję Ci screenshoty — przeanalizuj je dokładnie przed napisaniem masterpromptu. Screenshoty pokazują obecną stronę lub materiały klienta — wyciągnij z nich DNA marki i użyj jako punktu wyjścia.`;
@@ -160,7 +166,7 @@ export function GeneratorForm() {
     setCopied(false);
   }
 
-  const isEmpty = notes.trim() === "" && url.trim() === "";
+  const isEmpty = notes.trim() === "";
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-10 md:py-14">
@@ -222,7 +228,7 @@ export function GeneratorForm() {
             </button>
             <p className="mt-2 text-xs text-muted">
               {isEmpty
-                ? "Wpisz cokolwiek o kliencie żeby wygenerować prompt"
+                ? "Wpisz cokolwiek o kliencie — URL to za mało bez opisu"
                 : "Screenshoty klienta daj bezpośrednio w LLM razem z tym promptem"}
             </p>
           </div>
