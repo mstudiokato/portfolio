@@ -27,9 +27,13 @@ async function verifyTurnstile(token: string | undefined, ip: string): Promise<b
       headers: { "content-type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ secret, response: token, remoteip: ip }),
     });
-    const data = (await res.json()) as { success?: boolean };
+    const data = (await res.json()) as { success?: boolean; "error-codes"?: string[] };
+    if (!data?.success) {
+      console.error("[brief] Turnstile failed:", JSON.stringify(data));
+    }
     return Boolean(data?.success);
-  } catch {
+  } catch (e) {
+    console.error("[brief] Turnstile exception:", e);
     return false;
   }
 }

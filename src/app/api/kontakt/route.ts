@@ -37,9 +37,13 @@ async function verifyTurnstile(
         body: new URLSearchParams({ secret, response: token, remoteip: ip }),
       },
     );
-    const data = (await res.json()) as { success?: boolean };
+    const data = (await res.json()) as { success?: boolean; "error-codes"?: string[] };
+    if (!data?.success) {
+      console.error("[kontakt] Turnstile failed:", JSON.stringify(data));
+    }
     return Boolean(data?.success);
-  } catch {
+  } catch (e) {
+    console.error("[kontakt] Turnstile exception:", e);
     return false;
   }
 }
