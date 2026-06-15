@@ -48,10 +48,15 @@ export function StatsAndClients() {
                     {/* Prefix (np. „Ponad") nad liczbą. Gdy brak — pusty placeholder
                         o tych samych klasach rezerwuje wiersz, by górne krawędzie
                         wszystkich liczb były wyrównane (md:items-start). */}
+                    {/* Stagger: kolejne bloki wchodzą z opóźnieniem 0/0.15/0.3 s.
+                        Prefix, liczba i jednostka dzielą ten sam delay → wchodzą
+                        razem (np. „PONAD", „14" i „LAT"). */}
                     {s.prefix ? (
-                      <span className="text-muted mb-1 text-[0.65rem] font-semibold tracking-[0.16em] uppercase lg:mb-0.5 lg:text-[0.52rem]">
-                        {s.prefix}
-                      </span>
+                      <CountUp
+                        value={s.prefix}
+                        delay={i * 0.15}
+                        className="text-muted mb-1 text-[0.65rem] font-semibold tracking-[0.16em] uppercase lg:mb-0.5 lg:text-[0.52rem]"
+                      />
                     ) : (
                       <span
                         aria-hidden="true"
@@ -64,12 +69,17 @@ export function StatsAndClients() {
                         wyeksponowany jako główny akcent — większy font, jednostka
                         w tym samym kolorze obok liczby. */}
                     <dd className="font-display text-lime text-[clamp(2.25rem,4vw,2.8rem)] leading-none font-semibold tabular-nums">
-                      <CountUp value={s.value} />
+                      <CountUp value={s.value} delay={i * 0.15} />
                       {/* Jednostka (np. „LAT") w TYM SAMYM rozmiarze co liczba —
                           wszystkie trzy bloki (14 LAT, 1000+, 30+) mają identyczny
-                          rozmiar fontu. Etykiety pod spodem zostają mniejsze. */}
+                          rozmiar fontu. Etykiety pod spodem zostają mniejsze.
+                          Ten sam delay co liczba → „14" i „LAT" wchodzą razem. */}
                       {s.unit ? (
-                        <span className="ml-1.5 tracking-tight">{s.unit}</span>
+                        <CountUp
+                          value={s.unit}
+                          delay={i * 0.15}
+                          className="ml-1.5 tracking-tight"
+                        />
                       ) : null}
                     </dd>
                     {/* Mobile: mniejszy font + zawijanie (np. „Lat doświadczenia"),
