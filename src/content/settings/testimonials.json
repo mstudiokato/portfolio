@@ -31,7 +31,9 @@
     },
     {
       "name": "Monika Płaczkowska",
-      "roles": [],
+      "roles": [
+        "Strateg biznesu sportowego"
+      ],
       "quote": "Michał to osoba, na której zawsze można polegać: profesjonalny, kreatywny \ni skuteczny w działaniu (szczególnie w projektach \"na wczoraj\"). Współpraca \nz nim przebiega sprawnie, a efekty jego pracy konsekwentnie przewyższają oczekiwania.",
       "quoteColor": "white",
       "image": "/opinie/items/3/image.png"
