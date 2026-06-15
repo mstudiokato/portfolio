@@ -40,6 +40,9 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Tylko UI panelu. /api/keystatic celowo POMINIĘTE — patrz komentarz wyżej.
-  matcher: ["/keystatic/:path*"],
+  // /keystatic WYKLUCZONE — kanonizacja hosta tam tworzyła pętlę 308 z
+  // redirectem domenowym Vercela (.pl ↔ .vercel.app). Panel CMS działa na
+  // każdej domenie, więc nie wymaga kanonizacji. /api (w tym /api/keystatic
+  // OAuth callback), /_next i favicon też pominięte.
+  matcher: ["/((?!keystatic|api|_next|favicon.ico).*)"],
 };
