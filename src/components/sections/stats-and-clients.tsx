@@ -54,7 +54,7 @@ export function StatsAndClients() {
                     {s.prefix ? (
                       <CountUp
                         value={s.prefix}
-                        delay={i * 0.15}
+                        delay={i * 0.1}
                         className="text-muted mb-1 text-[0.65rem] font-semibold tracking-[0.16em] uppercase lg:mb-0.5 lg:text-[0.52rem]"
                       />
                     ) : (
@@ -69,7 +69,7 @@ export function StatsAndClients() {
                         wyeksponowany jako główny akcent — większy font, jednostka
                         w tym samym kolorze obok liczby. */}
                     <dd className="font-display text-lime text-[clamp(2.25rem,4vw,2.8rem)] leading-none font-semibold tabular-nums">
-                      <CountUp value={s.value} delay={i * 0.15} />
+                      <CountUp value={s.value} delay={i * 0.1} />
                       {/* Jednostka (np. „LAT") w TYM SAMYM rozmiarze co liczba —
                           wszystkie trzy bloki (14 LAT, 1000+, 30+) mają identyczny
                           rozmiar fontu. Etykiety pod spodem zostają mniejsze.
@@ -77,7 +77,7 @@ export function StatsAndClients() {
                       {s.unit ? (
                         <CountUp
                           value={s.unit}
-                          delay={i * 0.15}
+                          delay={i * 0.1}
                           className="ml-1.5 tracking-tight"
                         />
                       ) : null}

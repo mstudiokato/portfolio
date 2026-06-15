@@ -36,7 +36,7 @@ export function CountUp({
       initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: reduce ? 0 : 0.6, ease: "easeOut", delay: reduce ? 0 : delay }}
+      transition={{ duration: reduce ? 0 : 0.4, ease: "easeOut", delay: reduce ? 0 : delay }}
     >
       {value}
     </motion.span>
