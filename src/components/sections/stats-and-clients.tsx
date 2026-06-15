@@ -1,8 +1,8 @@
 import { Fragment } from "react";
-import Image from "next/image";
 import { Section } from "@/components/ui/layout";
 import { Label } from "@/components/ui/typography";
 import { CountUp } from "@/components/count-up";
+import { ClientsMarquee } from "@/components/sections/clients-marquee";
 import { STATS, CREDIBILITY, STATS_LABEL_COLOR } from "@/lib/site-content";
 import { textColorHex } from "@/lib/text-color";
 
@@ -95,46 +95,7 @@ export function StatsAndClients() {
           <div className="border-border mt-2 min-w-0 border-t pt-8 xl:mt-0 xl:flex xl:flex-col xl:border-t-0 xl:border-l xl:pt-0 xl:pl-8">
             <Label>— Pracowałem m.in. dla:</Label>
             <div className="marquee-mask relative mt-6 w-full max-w-full overflow-hidden">
-              {/* style width:max-content — bardziej kompatybilne z Safari niż
-                  Tailwind w-max (Safari czasem nie oblicza go przed pierwszą
-                  klatką animacji → dziury w marquee). */}
-              <ul
-                className="marquee-track flex items-center"
-                style={{ width: "max-content" }}
-              >
-                {marqueeClients.map((c, i) => (
-                  <Fragment key={`${c.name}-${i}`}>
-                    {/* Logo bez ramki, object-contain. BEZ stałej wysokości li —
-                        rząd rośnie do najwyższego logo, więc maska (overflow-hidden,
-                        potrzebna do poziomego marquee) nie przycina dużych logotypów
-                        niezależnie od logoSize (20–200%). */}
-                    <li className="flex shrink-0 items-center">
-                      {c.logoExists && c.logo ? (
-                        <Image
-                          src={c.logo}
-                          alt={c.name}
-                          width={200}
-                          height={56}
-                          unoptimized
-                          // Wysokość bazowa 56px skalowana przez logoSize (%) z
-                          // Keystatic (Klienci → Rozmiar logo). 100% = 56px.
-                          style={{ height: `${(56 * c.logoSize) / 100}px` }}
-                          className="w-auto object-contain"
-                        />
-                      ) : (
-                        <span className="text-muted font-mono text-sm whitespace-nowrap">
-                          {c.name}
-                        </span>
-                      )}
-                    </li>
-                    {/* Pionowy separator 1px (#1F2D44) między logami. */}
-                    <li
-                      aria-hidden="true"
-                      className="bg-border mx-6 h-12 w-px shrink-0 self-center"
-                    />
-                  </Fragment>
-                ))}
-              </ul>
+              <ClientsMarquee items={marqueeClients} />
             </div>
           </div>
         </div>

@@ -119,12 +119,21 @@ body {
 }
 .marquee-track {
   animation: marquee 30s linear infinite;
+  /* Start wstrzymany — animację uruchamia klasa .marquee-track--ready dopiero
+     po załadowaniu logotypów. iOS Safari zamraża wartość keyframe translateX(-50%)
+     w chwili startu; jeśli ruszy zanim obrazy nadadzą <ul> pełną szerokość, -50%
+     liczy się od zaniżonej szerokości i marquee stoi (losowo, zależnie od cache). */
+  animation-play-state: paused;
   /* GPU acceleration — Safari nie gubi klatek i poprawnie oblicza max-content
      przed startem animacji (fix dziur w marquee na iOS Safari). */
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+/* Uruchomienie po załadowaniu wszystkich logotypów (JS dodaje klasę). */
+.marquee-track--ready {
+  animation-play-state: running;
 }
 /* Pauza na hover TYLKO na urządzeniach wskaźnikowych (mysz). Na mobile dotyk
    nie zatrzymuje marquee (touch nie wyzwala :hover trwale → bug zatrzymania). */
