@@ -104,8 +104,8 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   manifest: "/site.webmanifest",
-  // Strona w budowie na subdomenie *.netlify.app — nie indeksujemy do launchu (masterprompt sek. 12, Etap 10).
-  robots: { index: false, follow: false },
+  // Launch produkcyjny na michal-stezaly.pl — indeksacja włączona.
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
