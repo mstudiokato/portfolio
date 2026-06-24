@@ -20,21 +20,21 @@
       "image": "/opinie/items/1/image.png"
     },
     {
+      "name": "Monika Płaczkowska",
+      "roles": [
+        "Strateg biznesu sportowego"
+      ],
+      "quote": "Michał to osoba, na której zawsze można polegać: profesjonalny, kreatywny \ni skuteczny w działaniu (szczególnie w projektach \"na wczoraj\"). Współpraca \nz nim przebiega sprawnie, a efekty jego pracy konsekwentnie przewyższają oczekiwania.",
+      "quoteColor": "white",
+      "image": "/opinie/items/2/image.png"
+    },
+    {
       "name": "Marcin Janicki",
       "roles": [
         "Prezes Zarządu - Pierwsza Liga Piłkarska",
         "Prezes Zarządu - ŁKS Łódź"
       ],
       "quote": "Zawsze zaangażowany na 100% Kreatywny i nietuzinkowy. Wszystkie aktywności na czas. Praca z Michałem to czysta przyjemność.",
-      "quoteColor": "white",
-      "image": "/opinie/items/2/image.png"
-    },
-    {
-      "name": "Monika Płaczkowska",
-      "roles": [
-        "Strateg biznesu sportowego"
-      ],
-      "quote": "Michał to osoba, na której zawsze można polegać: profesjonalny, kreatywny \ni skuteczny w działaniu (szczególnie w projektach \"na wczoraj\"). Współpraca \nz nim przebiega sprawnie, a efekty jego pracy konsekwentnie przewyższają oczekiwania.",
       "quoteColor": "white",
       "image": "/opinie/items/3/image.png"
     }
