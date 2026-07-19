@@ -1,0 +1,23 @@
+{
+  "category": "branding",
+  "title": "Retro automat do gier",
+  "year": "2026",
+  "description": "Na zlecenie klienta stworzono projekt oklejenia automatu do gier w stylistyce klubu GKS Katowice.",
+  "showDescription": true,
+  "descriptionColor": "white",
+  "order": 1,
+  "images": [
+    {
+      "src": "/galerie/retro-automat-do-gier/images/0/src.jpeg",
+      "alt": "Retro automat do gier"
+    },
+    {
+      "src": "/galerie/retro-automat-do-gier/images/1/src.jpeg",
+      "alt": "Retro automat do gier"
+    },
+    {
+      "src": "/galerie/retro-automat-do-gier/images/2/src.jpeg",
+      "alt": "Retro automat do gier"
+    }
+  ]
+}
